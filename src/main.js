@@ -1,37 +1,31 @@
-import brain from 'brain.js';
-import colors from './dataset';
-import '@simonwep/pickr/dist/themes/classic.min.css';
 import Pickr from '@simonwep/pickr'
-import '@simonwep/pickr/dist/themes/nano.min.css'
-import { getAccuracy } from './getAccuracy';
+import '@simonwep/pickr/dist/themes/nano.min.css';
 import model from './model'
+import Mustache from 'mustache'
+import stub from './code.stub.html'
+
+function rgbToHex(r, g, b) {
+  r = parseInt(r);
+  g = parseInt(g);
+  b = parseInt(b);
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
 
 const pickrButton = Pickr.create({
   el: '.pickr',
   theme: 'nano', // or 'monolith', or 'nano'
-  swatches: [
-    'rgba(244, 67, 54, 1)',
-    'rgba(233, 30, 99, 1)',
-    'rgba(156, 39, 176, 1)',
-    'rgba(103, 58, 183, 1)',
-    'rgba(0, 105, 255, 1)',
-    'rgba(33, 150, 243, 1)',
-    'rgba(3, 169, 244, 1)',
-    'rgba(0, 188, 212, 1)',
-    'rgba(0, 150, 136, 1)',
-    'rgba(76, 175, 80, 1)',
-    'rgba(139, 195, 74, 1)',
-    'rgba(205, 220, 57, 1)',
-    'rgba(255, 235, 59, 1)',
-    'rgba(255, 193, 7, 1)'
-  ],
-  default: '#0069FF',
+
+  default: '#2961B1',
   comparison: false,
+  showAlways: true,
+  container: '.pickr-ctrl',
+  appClass: 'picker',
+  useAsButton: true,
   components: {
 
     // Main components
     preview: true,
-    opacity: true,
+    opacity: false,
     hue: true,
 
     // Input / output Options
@@ -41,76 +35,23 @@ const pickrButton = Pickr.create({
   }
 });
 
+let output = model('#376AB4');
+draw(output);
+
 pickrButton.on('change', instance => {
-  let out = model(instance.toHEXA().toString())
+  output = model(instance.toHEXA().toString())
 
-  draw(out);
+  draw(output);
 });
 
-const hexToRgb = (hex, id = '') => {
-  let arr = hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
-    , (m, r, g, b) => '#' + r + r + g + g + b + b)
-    .substring(1).match(/.{2}/g)
-    .map(x => parseInt(x, 16));
 
-  let keys = [
-    'r' + id,
-    'g' + id,
-    'b' + id
-  ];
-
-  let output = {};
-
-  keys.forEach((key, num) => {
-    output[key] = arr[num]/255
-  });
-
-  return output;
-};
-
-let dataset = [];
-
-colors.forEach((color, key) => {
-  Object.keys(color).forEach((inputShade) => {
-    let output = {};
-
-    Object.keys(color).forEach((outputShade) => {
-        Object.assign(output, hexToRgb(color[outputShade], outputShade/100))
-    });
-
-    dataset.push({
-      input: hexToRgb(color[inputShade]),
-      output: output
-    });
-
-  });
+document.querySelector('.name').addEventListener('input', (e) => {
+  let name = 'valencia'; 
+  if(e.target.value !== '') name = e.target.value;
+  draw(output, name)
 });
 
-const SPLIT = 90;
-const trainData = dataset.slice(0, SPLIT);
-const testData = dataset.slice(SPLIT + 1);
-
-// const net = new brain.NeuralNetwork({
-//   activation: 'sigmoid',
-//   hiddenLayers: [50],
-//   iterations: 300,
-//   learningRate: 0.0001
-// });
-
-//net.train(trainData);
-//console.log(net.toFunction())
-
-
-
-//const accuracy = getAccuracy(net, testData);
-// console.log('mae: ', accuracy);
-//
-// document.getElementById('result').innerHTML = brain.utilities.toSVG(
-//   net,
-//   //options
-// );
-
-function draw(output)
+function draw(output, name = 'valencia')
 {
   document.getElementById('output1').style.backgroundColor = 'rgb(' + output.r1*255 + ',' + output.g1*255 + ',' + output.b1*255 + ')';
   document.getElementById('output2').style.backgroundColor = 'rgb(' + output.r2*255 + ',' + output.g2*255 + ',' + output.b2*255 + ')';
@@ -121,6 +62,41 @@ function draw(output)
   document.getElementById('output7').style.backgroundColor = 'rgb(' + output.r7*255 + ',' + output.g7*255 + ',' + output.b7*255 + ')';
   document.getElementById('output8').style.backgroundColor = 'rgb(' + output.r8*255 + ',' + output.g8*255 + ',' + output.b8*255 + ')';
   document.getElementById('output9').style.backgroundColor = 'rgb(' + output.r9*255 + ',' + output.g9*255 + ',' + output.b9*255 + ')';
+  document.getElementById('text1').style.color = 'rgb(' + output.r1*255 + ',' + output.g1*255 + ',' + output.b1*255 + ')';
+  document.getElementById('text2').style.color = 'rgb(' + output.r2*255 + ',' + output.g2*255 + ',' + output.b2*255 + ')';
+  document.getElementById('text3').style.color = 'rgb(' + output.r3*255 + ',' + output.g3*255 + ',' + output.b3*255 + ')';
+  document.getElementById('text4').style.color = 'rgb(' + output.r4*255 + ',' + output.g4*255 + ',' + output.b4*255 + ')';
+  document.getElementById('text5').style.color = 'rgb(' + output.r5*255 + ',' + output.g5*255 + ',' + output.b5*255 + ')';
+  document.getElementById('text6').style.color = 'rgb(' + output.r6*255 + ',' + output.g6*255 + ',' + output.b6*255 + ')';
+  document.getElementById('text7').style.color = 'rgb(' + output.r7*255 + ',' + output.g7*255 + ',' + output.b7*255 + ')';
+  document.getElementById('text8').style.color = 'rgb(' + output.r8*255 + ',' + output.g8*255 + ',' + output.b8*255 + ')';
+  document.getElementById('text9').style.color = 'rgb(' + output.r9*255 + ',' + output.g9*255 + ',' + output.b9*255 + ')';
+  document.getElementById('hex1').innerHTML = rgbToHex(output.r1*255, output.g1*255, output.b1*255);
+  document.getElementById('hex2').innerHTML = rgbToHex(output.r2*255, output.g2*255, output.b2*255);
+  document.getElementById('hex3').innerHTML = rgbToHex(output.r3*255, output.g3*255, output.b3*255);
+  document.getElementById('hex4').innerHTML = rgbToHex(output.r4*255, output.g4*255, output.b4*255);
+  document.getElementById('hex5').innerHTML = rgbToHex(output.r5*255, output.g5*255, output.b5*255);
+  document.getElementById('hex6').innerHTML = rgbToHex(output.r6*255, output.g6*255, output.b6*255);
+  document.getElementById('hex7').innerHTML = rgbToHex(output.r7*255, output.g7*255, output.b7*255);
+  document.getElementById('hex8').innerHTML = rgbToHex(output.r8*255, output.g8*255, output.b8*255);
+  document.getElementById('hex9').innerHTML = rgbToHex(output.r9*255, output.g9*255, output.b9*255);
+
+  let view = (output, name) => {
+    return {
+      'name': name,
+      '100': rgbToHex(output.r1*255, output.g1*255, output.b1*255),
+      '200': rgbToHex(output.r2*255, output.g2*255, output.b2*255),
+      '300': rgbToHex(output.r3*255, output.g3*255, output.b3*255),
+      '400': rgbToHex(output.r4*255, output.g4*255, output.b4*255),
+      '500': rgbToHex(output.r5*255, output.g5*255, output.b5*255),
+      '600': rgbToHex(output.r6*255, output.g6*255, output.b6*255),
+      '700': rgbToHex(output.r7*255, output.g7*255, output.b7*255),
+      '800': rgbToHex(output.r8*255, output.g8*255, output.b8*255),
+      '900': rgbToHex(output.r9*255, output.g9*255, output.b9*255)
+    }
+  };
+
+  document.querySelector('.code').innerHTML = Mustache.render(stub, view(output, name));
 }
 
 

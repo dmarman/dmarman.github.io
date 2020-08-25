@@ -3,19 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="./main.css">
 </head>
 <body>
-    <div id="result"></div>
-    <div class="pickr"></div>
-    <div id="output1" style="height:40px">100</div>
-    <div id="output2" style="height:40px">200</div>
-    <div id="output3" style="height:40px">300</div>
-    <div id="output4" style="height:40px">400</div>
-    <div id="output5" style="height:40px">500</div>
-    <div id="output6" style="height:40px">600</div>
-    <div id="output7" style="height:40px">700</div>
-    <div id="output8" style="height:40px">800</div>
-    <div id="output9" style="height:40px">900</div>
+<div class="flex items-start">
+    <div class="m-4">
+        <div class="w-full mb-4">
+            <label class="font-semibold">Color name</label>
+            <input type="text" placeholder="eg. valencia" class="bg-gray-200 w-full px-4 py-2 rounded-lg name" value="valencia">
+        </div>
+        <div class="pickr"></div>
+        <div class="pickr-ctrl"></div>
+    </div>
+    <div class="w-64">
+        <div class="flex m-4 items-center">
+            <div id="text1" class="text-2xl mx-4">Aa</div>
+            <div id="output1" class="w-16 h-16 rounded-lg shadow-inner"></div>
+            <div class="ml-2 text-gray-800 leading-none pl-1">
+                <div class="font-semibold">100</div>
+                <div id="hex1" class="mt-1 font-normal opacity-75 uppercase">#ASD234</div>
+            </div>
+            <div id="className1" class="font-mono text-sm text-purple-700 whitespace-no-wrap"></div>
+        </div>
+        <div class="flex m-4 items-center">
+            <div id="text2" class="text-2xl mx-4">Aa</div>
+            <div id="output2" class="w-16 h-16 rounded-lg shadow-inner"></div>
+            <div class="ml-2 text-gray-800 leading-none pl-1">
+                <div class="font-semibold">200</div>
+                <div id="hex2" class="mt-1 font-normal opacity-75 uppercase">#ASD234</div>
+            </div>
+            <div id="className2" class="font-mono text-sm text-purple-700 whitespace-no-wrap"></div>
+        </div>
+        <div class="flex m-4 items-center">
+            <div id="text3" class="text-2xl mx-4">Aa</div>
+            <div id="output3" class="w-16 h-16 rounded-lg shadow-inner"></div>
+            <div class="ml-2 text-gray-800 leading-none pl-1">
+                <div class="font-semibold">300</div>
+                <div id="hex3" class="mt-1 font-normal opacity-75 uppercase">#ASD234</div>
+            </div>
+            <div id="className3" class="font-mono text-sm text-purple-700 whitespace-no-wrap"></div>
+        </div>
+        <div class="flex m-4 items-center">
+            <div id="text4" class="text-2xl mx-4">Aa</div>
+            <div id="output4" class="w-16 h-16 rounded-lg shadow-inner"></div>
+            <div class="ml-2 text-gray-800 leading-none pl-1">
+                <div class="font-semibold">400</div>
+                <div id="hex4" class="mt-1 font-normal opacity-75 uppercase">#ASD234</div>
+            </div>
+            <div id="className4" class="font-mono text-sm text-purple-700 whitespace-no-wrap"></div>
+        </div>
+        <div class="flex m-4 items-center">
+            <div id="text5" class="text-2xl mx-4">Aa</div>
+            <div id="output5" class="w-16 h-16 rounded-lg shadow-inner"></div>
+            <div class="ml-2 text-gray-800 leading-none pl-1">
+                <div class="font-semibold">500</div>
+                <div id="hex5" class="mt-1 font-normal opacity-75 uppercase">#ASD234</div>
+            </div>
+            <div id="className5" class="font-mono text-sm text-purple-700 whitespace-no-wrap"></div>
+        </div>
+        <div class="flex m-4 items-center">
+            <div id="text6" class="text-2xl mx-4">Aa</div>
+            <div id="output6" class="w-16 h-16 rounded-lg shadow-inner"></div>
+            <div class="ml-2 text-gray-800 leading-none pl-1">
+                <div class="font-semibold">600</div>
+                <div id="hex6" class="mt-1 font-normal opacity-75 uppercase">#ASD234</div>
+            </div>
+            <div id="className6" class="font-mono text-sm text-purple-700 whitespace-no-wrap"></div>
+        </div>
+        <div class="flex m-4 items-center">
+            <div id="text7" class="text-2xl mx-4">Aa</div>
+            <div id="output7" class="w-16 h-16 rounded-lg shadow-inner"></div>
+            <div class="ml-2 text-gray-800 leading-none pl-1">
+                <div class="font-semibold">700</div>
+                <div id="hex7" class="mt-1 font-normal opacity-75 uppercase">#ASD234</div>
+            </div>
+            <div id="className7" class="font-mono text-sm text-purple-700 whitespace-no-wrap"></div>
+        </div>
+        <div class="flex m-4 items-center">
+            <div id="text8" class="text-2xl mx-4">Aa</div>
+            <div id="output8" class="w-16 h-16 rounded-lg shadow-inner"></div>
+            <div class="ml-2 text-gray-800 leading-none pl-1">
+                <div class="font-semibold">800</div>
+                <div id="hex8" class="mt-1 font-normal opacity-75 uppercase">#ASD234</div>
+            </div>
+            <div id="className8" class="font-mono text-sm text-purple-700 whitespace-no-wrap"></div>
+        </div>
+        <div class="flex m-4 items-center">
+            <div id="text9" class="text-2xl mx-4">Aa</div>
+            <div id="output9" class="w-16 h-16 rounded-lg shadow-inner"></div>
+            <div class="ml-2 text-gray-800 leading-none pl-1">
+                <div class="font-semibold">900</div>
+                <div id="hex9" class="mt-1 font-normal opacity-75 uppercase">#ASD234</div>
+            </div>
+            <div id="className9" class="font-mono text-sm text-purple-700 whitespace-no-wrap"></div>
+        </div>
+    </div>
+    <div class="font-mono text-sm bg-gray-800 text-gray-200 rounded-lg m-4 p-4 code pr-12"></div>
+</div>
+    <style>
+        .picker {
+            position: inherit;
+        }
+        .pcr-app[data-theme=nano] {
+            width: 300px;
+        }
+        .pcr-app[data-theme=nano] .pcr-selection .pcr-color-chooser, .pcr-app[data-theme=nano] .pcr-selection .pcr-color-opacity {
+            height: 0.9em;
+            margin: 0 .6em;
+        }
+        .pcr-app[data-theme=nano] .pcr-selection {
+            height: 300px;
+        }
+    </style>
 </body>
 </html>
 
