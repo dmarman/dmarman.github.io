@@ -15,11 +15,11 @@
         <div class="pickr"></div>
         <div class="pickr-ctrl"></div>
     </div>
-    <div class="w-64">
+    <div class="px-8">
         <div class="flex m-4 items-center">
             <div id="text0.5" class="text-2xl mx-4">Aa</div>
             <div id="output0.5" class="w-16 h-16 rounded-lg shadow-inner"></div>
-            <div class="ml-2 text-gray-800 leading-none pl-1">
+            <div class="ml-2 text-gray-800 leading-none pl-1 w-24">
                 <div class="font-semibold">50</div>
                 <div id="hex0.5" class="mt-1 font-normal opacity-75 uppercase">#ASD234</div>
             </div>
@@ -107,21 +107,37 @@
             <div id="className9" class="font-mono text-sm text-purple-700 whitespace-no-wrap"></div>
         </div>
     </div>
-    <div class="font-mono text-sm bg-gray-800 text-gray-200 rounded-lg m-4 p-4 code pr-12"></div>
+    <div class="font-mono text-sm bg-gray-800 text-gray-200 rounded-lg m-4 p-4 code pr-12 flex-grow"></div>
 </div>
     <style>
         .picker {
             position: inherit;
         }
         .pcr-app[data-theme=nano] {
-            width: 300px;
+            width: 500px;
+            border-radius: 0.5rem;
         }
         .pcr-app[data-theme=nano] .pcr-selection .pcr-color-chooser, .pcr-app[data-theme=nano] .pcr-selection .pcr-color-opacity {
             height: 0.9em;
-            margin: 0 .6em;
+            margin: 0;
+            margin-right: .6em;
+            margin-top: 25px;
+
         }
         .pcr-app[data-theme=nano] .pcr-selection {
-            height: 300px;
+            height: 500px;
+        }
+        .pcr-app[data-theme=nano] .pcr-selection .pcr-color-preview .pcr-current-color {
+            width: 4em;
+            height: 4em;
+            border-radius: 0.5rem;
+            margin-left: 0;
+        }
+        .pcr-app[data-theme=nano] .pcr-selection .pcr-color-preview {
+            margin-left: 0;
+        }
+        .pcr-app .pcr-interaction .pcr-result {
+            border-radius: .4rem;
         }
     </style>
 </body>
