@@ -1503,7 +1503,7 @@ module.exports = function (css) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<span class=\"text-gray-500\">// tailwind.config.js</span><br>\nmodule.exports = {<br>\n&nbsp;&nbsp;theme: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;extend: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colors: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{name}}: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'100': '{{100}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'200': '{{200}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'300': '{{300}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'400': '{{400}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'500': '{{500}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'600': '{{600}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'700': '{{700}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'800': '{{800}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'900': '{{900}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;}<br>\n}";
+module.exports = "<span class=\"text-gray-500\">// tailwind.config.js</span><br>\nmodule.exports = {<br>\n&nbsp;&nbsp;theme: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;extend: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colors: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{name}}: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'50': &nbsp;'{{50}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'100': '{{100}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'200': '{{200}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'300': '{{300}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'400': '{{400}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'500': '{{500}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'600': '{{600}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'700': '{{700}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'800': '{{800}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'900': '{{900}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;}<br>\n}";
 
 /***/ }),
 
@@ -1585,6 +1585,7 @@ document.querySelector('.name').addEventListener('input', function (e) {
 
 function draw(output) {
   var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'valencia';
+  document.getElementById('output0.5').style.backgroundColor = 'rgb(' + output['r0.5'] * 255 + ',' + output['g0.5'] * 255 + ',' + output['b0.5'] * 255 + ')';
   document.getElementById('output1').style.backgroundColor = 'rgb(' + output.r1 * 255 + ',' + output.g1 * 255 + ',' + output.b1 * 255 + ')';
   document.getElementById('output2').style.backgroundColor = 'rgb(' + output.r2 * 255 + ',' + output.g2 * 255 + ',' + output.b2 * 255 + ')';
   document.getElementById('output3').style.backgroundColor = 'rgb(' + output.r3 * 255 + ',' + output.g3 * 255 + ',' + output.b3 * 255 + ')';
@@ -1594,6 +1595,7 @@ function draw(output) {
   document.getElementById('output7').style.backgroundColor = 'rgb(' + output.r7 * 255 + ',' + output.g7 * 255 + ',' + output.b7 * 255 + ')';
   document.getElementById('output8').style.backgroundColor = 'rgb(' + output.r8 * 255 + ',' + output.g8 * 255 + ',' + output.b8 * 255 + ')';
   document.getElementById('output9').style.backgroundColor = 'rgb(' + output.r9 * 255 + ',' + output.g9 * 255 + ',' + output.b9 * 255 + ')';
+  document.getElementById('text0.5').style.color = 'rgb(' + output['r0.5'] * 255 + ',' + output['g0.5'] * 255 + ',' + output['b0.5'] * 255 + ')';
   document.getElementById('text1').style.color = 'rgb(' + output.r1 * 255 + ',' + output.g1 * 255 + ',' + output.b1 * 255 + ')';
   document.getElementById('text2').style.color = 'rgb(' + output.r2 * 255 + ',' + output.g2 * 255 + ',' + output.b2 * 255 + ')';
   document.getElementById('text3').style.color = 'rgb(' + output.r3 * 255 + ',' + output.g3 * 255 + ',' + output.b3 * 255 + ')';
@@ -1603,6 +1605,7 @@ function draw(output) {
   document.getElementById('text7').style.color = 'rgb(' + output.r7 * 255 + ',' + output.g7 * 255 + ',' + output.b7 * 255 + ')';
   document.getElementById('text8').style.color = 'rgb(' + output.r8 * 255 + ',' + output.g8 * 255 + ',' + output.b8 * 255 + ')';
   document.getElementById('text9').style.color = 'rgb(' + output.r9 * 255 + ',' + output.g9 * 255 + ',' + output.b9 * 255 + ')';
+  document.getElementById('hex0.5').innerHTML = rgbToHex(output['r0.5'] * 255, output['g0.5'] * 255, output['b0.5'] * 255);
   document.getElementById('hex1').innerHTML = rgbToHex(output.r1 * 255, output.g1 * 255, output.b1 * 255);
   document.getElementById('hex2').innerHTML = rgbToHex(output.r2 * 255, output.g2 * 255, output.b2 * 255);
   document.getElementById('hex3').innerHTML = rgbToHex(output.r3 * 255, output.g3 * 255, output.b3 * 255);
@@ -1616,6 +1619,7 @@ function draw(output) {
   var view = function view(output, name) {
     return {
       'name': name,
+      '50': rgbToHex(output['r0.5'] * 255, output['g0.5'] * 255, output['b0.5'] * 255),
       '100': rgbToHex(output.r1 * 255, output.g1 * 255, output.b1 * 255),
       '200': rgbToHex(output.r2 * 255, output.g2 * 255, output.b2 * 255),
       '300': rgbToHex(output.r3 * 255, output.g3 * 255, output.b3 * 255),
@@ -1643,33 +1647,36 @@ function draw(output) {
 function model(input) {
   input = hexToRgb(input);
   return {
-    'r1': 1 / (1 + 1 / Math.exp(3.3931996822357178 + 2.9373438358306885 * (input['r'] || 0) - 1.5267738103866577 * (input['g'] || 0) - 1.329411506652832 * (input['b'] || 0))),
-    'g1': 1 / (1 + 1 / Math.exp(4.262808799743652 - 1.134360909461975 * (input['r'] || 0) + 2.66113018989563 * (input['g'] || 0) - 2.068115711212158 * (input['b'] || 0))),
-    'b1': 1 / (1 + 1 / Math.exp(3.578423023223877 - 0.7391670942306519 * (input['r'] || 0) - 1.3643906116485596 * (input['g'] || 0) + 2.260179281234741 * (input['b'] || 0))),
-    'r2': 1 / (1 + 1 / Math.exp(2.0889370441436768 + 3.4699435234069824 * (input['r'] || 0) - 2.027162790298462 * (input['g'] || 0) - 1.3158624172210693 * (input['b'] || 0))),
-    'g2': 1 / (1 + 1 / Math.exp(2.70823335647583 - 1.1384357213974 * (input['r'] || 0) + 2.571422815322876 * (input['g'] || 0) - 1.8921228647232056 * (input['b'] || 0))),
-    'b2': 1 / (1 + 1 / Math.exp(2.1019656658172607 - 0.7525323033332825 * (input['r'] || 0) - 1.7548892498016357 * (input['g'] || 0) + 2.678703546524048 * (input['b'] || 0))),
-    'r3': 1 / (1 + 1 / Math.exp(1.4434012174606323 + 4.219131946563721 * (input['r'] || 0) - 2.78094482421875 * (input['g'] || 0) - 1.3074277639389038 * (input['b'] || 0))),
-    'g3': 1 / (1 + 1 / Math.exp(1.8724956512451172 - 1.2183971405029297 * (input['r'] || 0) + 2.4154160022735596 * (input['g'] || 0) - 1.5907050371170044 * (input['b'] || 0))),
-    'b3': 1 / (1 + 1 / Math.exp(1.3894414901733398 - 1.1438252925872803 * (input['r'] || 0) - 2.0477025508880615 * (input['g'] || 0) + 3.356908082962036 * (input['b'] || 0))),
-    'r4': 1 / (1 + 1 / Math.exp(0.9037853479385376 + 5.375821113586426 * (input['r'] || 0) - 3.743346691131592 * (input['g'] || 0) - 1.540840744972229 * (input['b'] || 0))),
-    'g4': 1 / (1 + 1 / Math.exp(1.2082021236419678 - 1.4940873384475708 * (input['r'] || 0) + 2.711359739303589 * (input['g'] || 0) - 1.653975248336792 * (input['b'] || 0))),
-    'b4': 1 / (1 + 1 / Math.exp(0.8242194652557373 - 1.6730866432189941 * (input['r'] || 0) - 2.42012619972229 * (input['g'] || 0) + 4.251338005065918 * (input['b'] || 0))),
-    'r5': 1 / (1 + 1 / Math.exp(0.4614700675010681 + 6.209679126739502 * (input['r'] || 0) - 4.344320774078369 * (input['g'] || 0) - 1.732921838760376 * (input['b'] || 0))),
-    'g5': 1 / (1 + 1 / Math.exp(0.6249168515205383 - 1.3420605659484863 * (input['r'] || 0) + 2.5369529724121094 * (input['g'] || 0) - 1.5832467079162598 * (input['b'] || 0))),
-    'b5': 1 / (1 + 1 / Math.exp(0.35692787170410156 - 1.7342549562454224 * (input['r'] || 0) - 2.8520147800445557 * (input['g'] || 0) + 4.867735385894775 * (input['b'] || 0))),
-    'r6': 1 / (1 + 1 / Math.exp(-0.1365586370229721 + 5.385352611541748 * (input['r'] || 0) - 3.6185216903686523 * (input['g'] || 0) - 1.4202663898468018 * (input['b'] || 0))),
-    'g6': 1 / (1 + 1 / Math.exp(0.10586927086114883 - 1.5270283222198486 * (input['r'] || 0) + 2.669273853302002 * (input['g'] || 0) - 1.5401948690414429 * (input['b'] || 0))),
-    'b6': 1 / (1 + 1 / Math.exp(-0.16909156739711761 - 2.0936553478240967 * (input['r'] || 0) - 2.6209301948547363 * (input['g'] || 0) + 5.135876655578613 * (input['b'] || 0))),
-    'r7': 1 / (1 + 1 / Math.exp(-0.6450396776199341 + 4.142667293548584 * (input['r'] || 0) - 2.6349234580993652 * (input['g'] || 0) - 0.9859451055526733 * (input['b'] || 0))),
-    'g7': 1 / (1 + 1 / Math.exp(-0.3415127694606781 - 1.3362336158752441 * (input['r'] || 0) + 2.370952606201172 * (input['g'] || 0) - 1.3531779050827026 * (input['b'] || 0))),
-    'b7': 1 / (1 + 1 / Math.exp(-0.5134440064430237 - 1.5882891416549683 * (input['r'] || 0) - 2.211850881576538 * (input['g'] || 0) + 4.3141021728515625 * (input['b'] || 0))),
-    'r8': 1 / (1 + 1 / Math.exp(-0.9648312330245972 + 3.0873806476593018 * (input['r'] || 0) - 1.7336136102676392 * (input['g'] || 0) - 0.8347358703613281 * (input['b'] || 0))),
-    'g8': 1 / (1 + 1 / Math.exp(-0.7691812515258789 - 1.0916533470153809 * (input['r'] || 0) + 1.904859185218811 * (input['g'] || 0) - 1.0584231615066528 * (input['b'] || 0))),
-    'b8': 1 / (1 + 1 / Math.exp(-0.8678452968597412 - 0.955710232257843 * (input['r'] || 0) - 1.7320175170898438 * (input['g'] || 0) + 3.140606641769409 * (input['b'] || 0))),
-    'r9': 1 / (1 + 1 / Math.exp(-1.2401903867721558 + 2.3200371265411377 * (input['r'] || 0) - 1.14811110496521 * (input['g'] || 0) - 0.7518591284751892 * (input['b'] || 0))),
-    'g9': 1 / (1 + 1 / Math.exp(-1.072513222694397 - 0.9722929000854492 * (input['r'] || 0) + 1.5720200538635254 * (input['g'] || 0) - 0.7999172210693359 * (input['b'] || 0))),
-    'b9': 1 / (1 + 1 / Math.exp(-1.170242190361023 - 0.6915587782859802 * (input['r'] || 0) - 1.4467790126800537 * (input['g'] || 0) + 2.5076963901519775 * (input['b'] || 0)))
+    'r0.5': 1 / (1 + 1 / Math.exp(3.7042856216430664 + 2.0558645725250244 * (input['r'] || 0) - 0.8052007555961609 * (input['g'] || 0) - 1.552907109260559 * (input['b'] || 0))),
+    'g0.5': 1 / (1 + 1 / Math.exp(3.8202731609344482 - 0.9325829148292542 * (input['r'] || 0) + 1.6085227727890015 * (input['g'] || 0) - 1.0794157981872559 * (input['b'] || 0))),
+    'b0.5': 1 / (1 + 1 / Math.exp(3.5643177032470703 - 0.9341196417808533 * (input['r'] || 0) - 1.1582318544387817 * (input['g'] || 0) + 2.1782171726226807 * (input['b'] || 0))),
+    'r1': 1 / (1 + 1 / Math.exp(3.08162260055542 + 2.540830373764038 * (input['r'] || 0) - 1.3459936380386353 * (input['g'] || 0) - 1.2535480260849 * (input['b'] || 0))),
+    'g1': 1 / (1 + 1 / Math.exp(3.455075740814209 - 1.0573184490203857 * (input['r'] || 0) + 1.9097195863723755 * (input['g'] || 0) - 1.1826997995376587 * (input['b'] || 0))),
+    'b1': 1 / (1 + 1 / Math.exp(2.5855605602264404 - 0.49843427538871765 * (input['r'] || 0) - 2.069974184036255 * (input['g'] || 0) + 3.3401777744293213 * (input['b'] || 0))),
+    'r2': 1 / (1 + 1 / Math.exp(2.187880516052246 + 2.8385674953460693 * (input['r'] || 0) - 1.8373974561691284 * (input['g'] || 0) - 1.1415364742279053 * (input['b'] || 0))),
+    'g2': 1 / (1 + 1 / Math.exp(2.4381492137908936 - 1.0024542808532715 * (input['r'] || 0) + 1.7751426696777344 * (input['g'] || 0) - 1.1822043657302856 * (input['b'] || 0))),
+    'b2': 1 / (1 + 1 / Math.exp(1.6965689659118652 - 0.47391772270202637 * (input['r'] || 0) - 2.8407387733459473 * (input['g'] || 0) + 3.6773550510406494 * (input['b'] || 0))),
+    'r3': 1 / (1 + 1 / Math.exp(1.5726559162139893 + 3.6203320026397705 * (input['r'] || 0) - 2.7055838108062744 * (input['g'] || 0) - 0.9370414614677429 * (input['b'] || 0))),
+    'g3': 1 / (1 + 1 / Math.exp(1.6196645498275757 - 1.0084878206253052 * (input['r'] || 0) + 1.4784040451049805 * (input['g'] || 0) - 0.8537490367889404 * (input['b'] || 0))),
+    'b3': 1 / (1 + 1 / Math.exp(1.0520378351211548 - 0.7193269729614258 * (input['r'] || 0) - 3.905910015106201 * (input['g'] || 0) + 4.794988632202148 * (input['b'] || 0))),
+    'r4': 1 / (1 + 1 / Math.exp(0.8504598736763 + 5.692114353179932 * (input['r'] || 0) - 4.25808572769165 * (input['g'] || 0) - 1.3120756149291992 * (input['b'] || 0))),
+    'g4': 1 / (1 + 1 / Math.exp(0.7667722702026367 - 1.0021871328353882 * (input['r'] || 0) + 1.4443044662475586 * (input['g'] || 0) - 0.8525199890136719 * (input['b'] || 0))),
+    'b4': 1 / (1 + 1 / Math.exp(0.3991137444972992 - 1.1908315420150757 * (input['r'] || 0) - 4.205316543579102 * (input['g'] || 0) + 5.516847133636475 * (input['b'] || 0))),
+    'r5': 1 / (1 + 1 / Math.exp(0.21249565482139587 + 7.174017906188965 * (input['r'] || 0) - 5.066565990447998 * (input['g'] || 0) - 1.6897014379501343 * (input['b'] || 0))),
+    'g5': 1 / (1 + 1 / Math.exp(0.057282425463199615 - 0.9389700293540955 * (input['r'] || 0) + 1.4874229431152344 * (input['g'] || 0) - 1.005987286567688 * (input['b'] || 0))),
+    'b5': 1 / (1 + 1 / Math.exp(-0.24993392825126648 - 1.3151133060455322 * (input['r'] || 0) - 4.503207206726074 * (input['g'] || 0) + 6.139766216278076 * (input['b'] || 0))),
+    'r6': 1 / (1 + 1 / Math.exp(-0.5724363923072815 + 6.213512897491455 * (input['r'] || 0) - 4.4133687019348145 * (input['g'] || 0) - 0.9409581422805786 * (input['b'] || 0))),
+    'g6': 1 / (1 + 1 / Math.exp(-0.5009855031967163 - 1.229751467704773 * (input['r'] || 0) + 1.8716267347335815 * (input['g'] || 0) - 1.2199825048446655 * (input['b'] || 0))),
+    'b6': 1 / (1 + 1 / Math.exp(-0.8754111528396606 - 1.6879245042800903 * (input['r'] || 0) - 4.369725227355957 * (input['g'] || 0) + 6.5891923904418945 * (input['b'] || 0))),
+    'r7': 1 / (1 + 1 / Math.exp(-0.9251946210861206 + 4.724931240081787 * (input['r'] || 0) - 3.1520845890045166 * (input['g'] || 0) - 0.6375225782394409 * (input['b'] || 0))),
+    'g7': 1 / (1 + 1 / Math.exp(-0.7819296717643738 - 1.2503910064697266 * (input['r'] || 0) + 1.8998196125030518 * (input['g'] || 0) - 1.1182212829589844 * (input['b'] || 0))),
+    'b7': 1 / (1 + 1 / Math.exp(-1.061010479927063 - 1.1844040155410767 * (input['r'] || 0) - 3.317383289337158 * (input['g'] || 0) + 5.082843780517578 * (input['b'] || 0))),
+    'r8': 1 / (1 + 1 / Math.exp(-1.2309277057647705 + 3.6269357204437256 * (input['r'] || 0) - 2.266681671142578 * (input['g'] || 0) - 0.4169546663761139 * (input['b'] || 0))),
+    'g8': 1 / (1 + 1 / Math.exp(-1.1100859642028809 - 1.0724881887435913 * (input['r'] || 0) + 1.6812305450439453 * (input['g'] || 0) - 0.938539981842041 * (input['b'] || 0))),
+    'b8': 1 / (1 + 1 / Math.exp(-1.2172935009002686 - 0.5440664887428284 * (input['r'] || 0) - 2.1265528202056885 * (input['g'] || 0) + 3.2103466987609863 * (input['b'] || 0))),
+    'r9': 1 / (1 + 1 / Math.exp(-1.4962072372436523 + 2.6427834033966064 * (input['r'] || 0) - 1.4108394384384155 * (input['g'] || 0) - 0.5690018534660339 * (input['b'] || 0))),
+    'g9': 1 / (1 + 1 / Math.exp(-1.336867094039917 - 0.9712502956390381 * (input['r'] || 0) + 1.4835888147354126 * (input['g'] || 0) - 0.6962610483169556 * (input['b'] || 0))),
+    'b9': 1 / (1 + 1 / Math.exp(-1.4559218883514404 - 0.5221266150474548 * (input['r'] || 0) - 1.4842580556869507 * (input['g'] || 0) + 2.476011276245117 * (input['b'] || 0)))
   };
 }
 

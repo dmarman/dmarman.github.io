@@ -46,13 +46,14 @@ pickrButton.on('change', instance => {
 
 
 document.querySelector('.name').addEventListener('input', (e) => {
-  let name = 'valencia'; 
+  let name = 'valencia';
   if(e.target.value !== '') name = e.target.value;
   draw(output, name)
 });
 
 function draw(output, name = 'valencia')
 {
+  document.getElementById('output0.5').style.backgroundColor = 'rgb(' + output['r0.5']*255 + ',' + output['g0.5']*255 + ',' + output['b0.5']*255 + ')';
   document.getElementById('output1').style.backgroundColor = 'rgb(' + output.r1*255 + ',' + output.g1*255 + ',' + output.b1*255 + ')';
   document.getElementById('output2').style.backgroundColor = 'rgb(' + output.r2*255 + ',' + output.g2*255 + ',' + output.b2*255 + ')';
   document.getElementById('output3').style.backgroundColor = 'rgb(' + output.r3*255 + ',' + output.g3*255 + ',' + output.b3*255 + ')';
@@ -62,6 +63,7 @@ function draw(output, name = 'valencia')
   document.getElementById('output7').style.backgroundColor = 'rgb(' + output.r7*255 + ',' + output.g7*255 + ',' + output.b7*255 + ')';
   document.getElementById('output8').style.backgroundColor = 'rgb(' + output.r8*255 + ',' + output.g8*255 + ',' + output.b8*255 + ')';
   document.getElementById('output9').style.backgroundColor = 'rgb(' + output.r9*255 + ',' + output.g9*255 + ',' + output.b9*255 + ')';
+  document.getElementById('text0.5').style.color = 'rgb(' + output['r0.5']*255 + ',' + output['g0.5']*255 + ',' + output['b0.5']*255 + ')';
   document.getElementById('text1').style.color = 'rgb(' + output.r1*255 + ',' + output.g1*255 + ',' + output.b1*255 + ')';
   document.getElementById('text2').style.color = 'rgb(' + output.r2*255 + ',' + output.g2*255 + ',' + output.b2*255 + ')';
   document.getElementById('text3').style.color = 'rgb(' + output.r3*255 + ',' + output.g3*255 + ',' + output.b3*255 + ')';
@@ -71,6 +73,7 @@ function draw(output, name = 'valencia')
   document.getElementById('text7').style.color = 'rgb(' + output.r7*255 + ',' + output.g7*255 + ',' + output.b7*255 + ')';
   document.getElementById('text8').style.color = 'rgb(' + output.r8*255 + ',' + output.g8*255 + ',' + output.b8*255 + ')';
   document.getElementById('text9').style.color = 'rgb(' + output.r9*255 + ',' + output.g9*255 + ',' + output.b9*255 + ')';
+  document.getElementById('hex0.5').innerHTML = rgbToHex(output['r0.5']*255, output['g0.5']*255, output['b0.5']*255);
   document.getElementById('hex1').innerHTML = rgbToHex(output.r1*255, output.g1*255, output.b1*255);
   document.getElementById('hex2').innerHTML = rgbToHex(output.r2*255, output.g2*255, output.b2*255);
   document.getElementById('hex3').innerHTML = rgbToHex(output.r3*255, output.g3*255, output.b3*255);
@@ -84,6 +87,7 @@ function draw(output, name = 'valencia')
   let view = (output, name) => {
     return {
       'name': name,
+      '50': rgbToHex(output['r0.5']*255, output['g0.5']*255, output['b0.5']*255),
       '100': rgbToHex(output.r1*255, output.g1*255, output.b1*255),
       '200': rgbToHex(output.r2*255, output.g2*255, output.b2*255),
       '300': rgbToHex(output.r3*255, output.g3*255, output.b3*255),
