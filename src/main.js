@@ -1,6 +1,7 @@
 import Pickr from '@simonwep/pickr'
-import '@simonwep/pickr/dist/themes/nano.min.css';
+import '@simonwep/pickr/dist/themes/nano.min.css'
 import model from './model'
+import nameModel from './nameModel'
 import Mustache from 'mustache'
 import stub from './code.stub.html'
 
@@ -40,13 +41,12 @@ draw(output);
 
 pickrButton.on('change', instance => {
   output = model(instance.toHEXA().toString())
-
-  draw(output);
+  draw(output, document.querySelector('.name').value);
 });
 
 
 document.querySelector('.name').addEventListener('input', (e) => {
-  let name = 'valencia';
+  let name = document.querySelector('.name').value;
   if(e.target.value !== '') name = e.target.value;
   draw(output, name)
 });
@@ -100,7 +100,24 @@ function draw(output, name = 'valencia')
     }
   };
 
+  let colors = [];
+  colors.push(nameModel(rgbToHex(output.r4*255, output.g4*255, output.b4*255))[0])
+  colors.push(nameModel(rgbToHex(output.r5*255, output.g5*255, output.b5*255))[0])
+
+  let sortable = [];
+  for (let color in colors) {
+    sortable.push([colors[color]]);
+  }
+
+  sortable.sort(function(a, b) {
+    return b[1] - a[1];
+  });
+
+  if(document.querySelector('.name').value === '') name = sortable[0][0][0];
+
   document.querySelector('.code').innerHTML = Mustache.render(stub, view(output, name));
+
+
 }
 
 
