@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@simonwep/pickr": "^1.7.2",
+    "color-namer": "^1.4.0",
     "mustache": "^4.0.1",
     "tailwindcss": "^1.7.3"
   }
