@@ -8,18 +8,12 @@
 <body>
 <div class="flex items-start">
     <div class="m-4">
-        <div class="w-full mb-4">
-            <label class="font-semibold">Color name</label>
-            <input type="text" placeholder="eg. valencia or empty for auto" class="bg-gray-200 w-full px-4 py-2 rounded-lg name">
-        </div>
         <div class="pickr"></div>
         <div class="pickr-ctrl"></div>
-        <div class="font-mono text-sm bg-gray-800 text-gray-200 rounded-lg my-5 p-4 code pr-12 flex-grow"></div>
-
+        <div class="font-mono text-xs bg-gray-800 text-gray-200 rounded-lg my-5 p-4 code pr-12 flex-grow"></div>
     </div>
     <div class="flex flex-col">
-        <h2 class="uppercase opacity-75 tracking-wide pt-8 pb-4">Palette</h2>
-
+        <h2 class="uppercase opacity-75 tracking-wide pt-3 pb-4">Palette</h2>
         <div class="flex">
             <div class="color-col text-sm" id="shade0"></div>
             <div class="color-col text-sm" id="shade1"></div>
@@ -35,9 +29,14 @@
         <div>
             <h2 class="opacity-75 tracking-wide pt-4 pb-4">
                 BRAND COLOR
-                <span class="bg-yellow-200 border border-yellow-400 rounded-full text-yellow-800 py-1 px-4 ml-2 text-sm hidden" id="fit">Picked color out of shade</span>
             </h2>
             <div id="brand" class="font-mono text-xs text-purple-700"></div>
+            <div class="hidden" id="fit">
+                <div class="inline-block bg-yellow-200 border border-yellow-400 rounded-full text-yellow-800 py-1 px-4 mt-2 text-sm">
+                    Picked color cannot be inserted in any shade, but fits well between
+                </div>
+                <div id="fits-between" class="font-mono text-xs text-purple-700 mt-2"></div>
+            </div>
         </div>
     </div>
 
@@ -71,6 +70,13 @@
         }
         .pcr-app .pcr-interaction .pcr-result {
             border-radius: .4rem;
+        }
+        .pcr-app .pcr-interaction .pcr-save {
+            background: #4285f4;
+            border-radius: .4rem;
+        }
+        .pcr-app .pcr-interaction input {
+            padding: .45em .9em;
         }
     </style>
 </body>

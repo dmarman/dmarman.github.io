@@ -17233,22 +17233,25 @@ function rgbToHex(r, g, b) {
   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
+var initColor = '#0064FF';
 var pickrButton = _simonwep_pickr__WEBPACK_IMPORTED_MODULE_0___default.a.create({
   el: '.pickr',
   theme: 'nano',
   // or 'monolith', or 'nano'
-  "default": '#4B8796',
+  "default": initColor,
   comparison: false,
   showAlways: true,
   container: '.pickr-ctrl',
   appClass: 'picker',
   useAsButton: true,
+  swatches: [// initColor,
+    // '#AEC8B9',
+    // '#576173'
+  ],
   components: {
-    // Main components
     preview: true,
     opacity: false,
     hue: true,
-    // Input / output Options
     interaction: {
       input: true,
       save: true
@@ -17264,55 +17267,43 @@ document.querySelectorAll('.color-col').forEach(function (el, key) {
     color: key
   });
 });
-var output = _models_model__WEBPACK_IMPORTED_MODULE_2___default()('#4B8796');
-paint(output, 0);
-var next = _models_nextModel__WEBPACK_IMPORTED_MODULE_3___default()(rgbToHex(output.r5 * 255, output.g5 * 255, output.b5 * 255));
-var output1 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r1 * 255, next.g1 * 255, next.b1 * 255));
-var output2 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r2 * 255, next.g2 * 255, next.b2 * 255));
-var output3 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r3 * 255, next.g3 * 255, next.b3 * 255));
-var output4 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r4 * 255, next.g4 * 255, next.b4 * 255));
-var output5 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r5 * 255, next.g5 * 255, next.b5 * 255));
-var output6 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r6 * 255, next.g6 * 255, next.b6 * 255));
-var output7 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r7 * 255, next.g7 * 255, next.b7 * 255));
-var output8 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r8 * 255, next.g8 * 255, next.b8 * 255));
-var output9 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r9 * 255, next.g9 * 255, next.b9 * 255));
-paint(output1, 1);
-paint(output2, 2);
-paint(output3, 3);
-paint(output4, 4);
-paint(output5, 5);
-paint(output6, 6);
-paint(output7, 7);
-paint(output8, 8);
-paint(output9, 9);
-name([output, output1, output2, output3, output4, output5, output6, output7, output8, output9]);
-code(output, document.querySelector('.name').value);
-var brandColor = {
-  fit: false
-};
+var color = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(initColor);
+var outputs = calculateColorsHorizontally(color);
+var brandColor = calculateBrandColor(initColor);
+paint(outputs);
+renderTexts();
 pickrButton.on('change', function (instance) {
-  console.log(instance);
-  output = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(instance.toHEXA().toString());
-  next = _models_nextModel__WEBPACK_IMPORTED_MODULE_3___default()(rgbToHex(output.r5 * 255, output.g5 * 255, output.b5 * 255));
-  output1 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r1 * 255, next.g1 * 255, next.b1 * 255));
-  output2 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r2 * 255, next.g2 * 255, next.b2 * 255));
-  output3 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r3 * 255, next.g3 * 255, next.b3 * 255));
-  output4 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r4 * 255, next.g4 * 255, next.b4 * 255));
-  output5 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r5 * 255, next.g5 * 255, next.b5 * 255));
-  output6 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r6 * 255, next.g6 * 255, next.b6 * 255));
-  output7 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r7 * 255, next.g7 * 255, next.b7 * 255));
-  output8 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r8 * 255, next.g8 * 255, next.b8 * 255));
-  output9 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r9 * 255, next.g9 * 255, next.b9 * 255));
+  color = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(instance.toHEXA().toString());
+  outputs = calculateColorsHorizontally(color);
+  brandColor = calculateBrandColor(instance.toHEXA().toString());
+  paint(outputs);
+});
+
+function calculateColorsHorizontally(color) {
+  var next = _models_nextModel__WEBPACK_IMPORTED_MODULE_3___default()(rgbToHex(color.r5 * 255, color.g5 * 255, color.b5 * 255));
+  var color1 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r1 * 255, next.g1 * 255, next.b1 * 255));
+  var color2 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r2 * 255, next.g2 * 255, next.b2 * 255));
+  var color3 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r3 * 255, next.g3 * 255, next.b3 * 255));
+  var color4 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r4 * 255, next.g4 * 255, next.b4 * 255));
+  var color5 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r5 * 255, next.g5 * 255, next.b5 * 255));
+  var color6 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r6 * 255, next.g6 * 255, next.b6 * 255));
+  var color7 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r7 * 255, next.g7 * 255, next.b7 * 255));
+  var color8 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r8 * 255, next.g8 * 255, next.b8 * 255));
+  var color9 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r9 * 255, next.g9 * 255, next.b9 * 255));
+  return [color, color1, color2, color3, color4, color5, color6, color7, color8, color9];
+}
+
+function calculateBrandColor(hex) {
   var distances = {};
 
   for (var i = 0; i < 10; i++) {
     var j = 0;
     i === 0 ? j = 0.5 : j = i;
-    distances['0' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output['r' + j] * 255, output['g' + j] * 255, output['b' + j] * 255), instance.toHEXA().toString());
-    distances['1' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output1['r' + j] * 255, output1['g' + j] * 255, output1['b' + j] * 255), instance.toHEXA().toString());
-    distances['2' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output2['r' + j] * 255, output2['g' + j] * 255, output2['b' + j] * 255), instance.toHEXA().toString());
-    distances['8' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output8['r' + j] * 255, output8['g' + j] * 255, output8['b' + j] * 255), instance.toHEXA().toString());
-    distances['9' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output9['r' + j] * 255, output9['g' + j] * 255, output9['b' + j] * 255), instance.toHEXA().toString());
+    distances['0' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(outputs[0]['r' + j] * 255, outputs[0]['g' + j] * 255, outputs[0]['b' + j] * 255), hex);
+    distances['1' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(outputs[1]['r' + j] * 255, outputs[1]['g' + j] * 255, outputs[1]['b' + j] * 255), hex);
+    distances['2' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(outputs[2]['r' + j] * 255, outputs[2]['g' + j] * 255, outputs[2]['b' + j] * 255), hex);
+    distances['8' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(outputs[8]['r' + j] * 255, outputs[8]['g' + j] * 255, outputs[8]['b' + j] * 255), hex);
+    distances['9' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(outputs[9]['r' + j] * 255, outputs[9]['g' + j] * 255, outputs[9]['b' + j] * 255), hex);
   }
 
   var sortable = [];
@@ -17325,59 +17316,56 @@ pickrButton.on('change', function (instance) {
     return a[1] - b[1];
   });
   var index = sortable[0][0].slice(1);
-  var color = sortable[0][0].slice(0, 1);
+  var colorIndex = sortable[0][0].slice(0, 1);
   brandColor = {
     index: index,
-    color: color
+    color: colorIndex,
+    fit: false,
+    similar: [],
+    hex: hex
   };
-  var replace = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(instance.toHEXA().toString()).rgb();
-  console.log(sortable[0]);
+  sortable.forEach(function (match) {
+    if (match[0].slice(0, 1) === colorIndex) brandColor.similar.push(match);
+  });
+  var replace = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(hex).rgb();
 
-  if (sortable[0][1] < 7.5) {
+  if (sortable[0][1] < 6) {
     brandColor.fit = true;
 
-    if (color === '0') {
-      output['r' + index] = replace[0] / 255;
-      output['g' + index] = replace[1] / 255;
-      output['b' + index] = replace[2] / 255;
+    if (colorIndex === '0') {
+      outputs[0]['r' + index] = replace[0] / 255;
+      outputs[0]['g' + index] = replace[1] / 255;
+      outputs[0]['b' + index] = replace[2] / 255;
     }
 
-    if (color === '1') {
-      output1['r' + index] = replace[0] / 255;
-      output1['g' + index] = replace[1] / 255;
-      output1['b' + index] = replace[2] / 255;
+    if (colorIndex === '1') {
+      outputs[1]['r' + index] = replace[0] / 255;
+      outputs[1]['g' + index] = replace[1] / 255;
+      outputs[1]['b' + index] = replace[2] / 255;
     }
 
-    if (color === '2') {
-      output2['r' + index] = replace[0] / 255;
-      output2['g' + index] = replace[1] / 255;
-      output2['b' + index] = replace[2] / 255;
+    if (colorIndex === '2') {
+      outputs[2]['r' + index] = replace[0] / 255;
+      outputs[2]['g' + index] = replace[1] / 255;
+      outputs[2]['b' + index] = replace[2] / 255;
     }
 
-    if (color === '8') {
-      output8['r' + index] = replace[0] / 255;
-      output8['g' + index] = replace[1] / 255;
-      output8['b' + index] = replace[2] / 255;
+    if (colorIndex === '8') {
+      outputs[8]['r' + index] = replace[0] / 255;
+      outputs[8]['g' + index] = replace[1] / 255;
+      outputs[8]['b' + index] = replace[2] / 255;
     }
 
-    if (color === '9') {
-      output9['r' + index] = replace[0] / 255;
-      output9['g' + index] = replace[1] / 255;
-      output9['b' + index] = replace[2] / 255;
+    if (colorIndex === '9') {
+      outputs[9]['r' + index] = replace[0] / 255;
+      outputs[9]['g' + index] = replace[1] / 255;
+      outputs[9]['b' + index] = replace[2] / 255;
     }
   }
 
-  paint(output, 0);
-  paint(output1, 1);
-  paint(output2, 2);
-  paint(output3, 3);
-  paint(output4, 4);
-  paint(output5, 5);
-  paint(output6, 6);
-  paint(output7, 7);
-  paint(output8, 8);
-  paint(output9, 9);
-});
+  return brandColor;
+}
+
 pickrButton.on('changestop', function () {
   renderTexts();
 });
@@ -17386,18 +17374,8 @@ pickrButton.on('save', function () {
 });
 
 function renderTexts() {
-  var names = name([output, output1, output2, output3, output4, output5, output6, output7, output8, output9]);
-  writeHex(output, 0);
-  writeHex(output1, 1);
-  writeHex(output2, 2);
-  writeHex(output3, 3);
-  writeHex(output4, 4);
-  writeHex(output5, 5);
-  writeHex(output6, 6);
-  writeHex(output7, 7);
-  writeHex(output8, 8);
-  writeHex(output9, 9);
-  code(output, document.querySelector('.name').value);
+  var names = name(outputs);
+  writeHex(outputs);
 
   if (brandColor.fit) {
     document.getElementById('brand').innerHTML = '.bg-' + names[brandColor.color] + '-' + brandColor.index * 100;
@@ -17405,49 +17383,52 @@ function renderTexts() {
   } else {
     document.getElementById('brand').innerHTML = '.bg-brand';
     document.getElementById('fit').classList.remove('hidden');
+    var leftFit = '.bg-' + names[brandColor.similar[0][0].slice(0, 1)] + '-' + brandColor.similar[0][0].slice(1) * 100;
+    var rightFit = '.bg-' + names[brandColor.similar[1][0].slice(0, 1)] + '-' + brandColor.similar[1][0].slice(1) * 100;
+    document.getElementById('fits-between').innerHTML = leftFit + '<br>' + rightFit;
   }
+
+  code(outputs, names, brandColor.hex);
 }
 
-document.querySelector('.name').addEventListener('input', function (e) {
-  var name = document.querySelector('.name').value;
-  if (e.target.value !== '') name = e.target.value;
-  code(output, name);
-});
-
-function code(output, name) {
-  var view = function view(output, name) {
-    return {
-      'name': name,
-      '50': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output['r0.5'] * 255, output['g0.5'] * 255, output['b0.5'] * 255),
-      '100': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r1 * 255, output.g1 * 255, output.b1 * 255),
-      '200': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r2 * 255, output.g2 * 255, output.b2 * 255),
-      '300': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r3 * 255, output.g3 * 255, output.b3 * 255),
-      '400': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r4 * 255, output.g4 * 255, output.b4 * 255),
-      '500': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r5 * 255, output.g5 * 255, output.b5 * 255),
-      '600': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r6 * 255, output.g6 * 255, output.b6 * 255),
-      '700': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r7 * 255, output.g7 * 255, output.b7 * 255),
-      '800': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r8 * 255, output.g8 * 255, output.b8 * 255),
-      '900': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r9 * 255, output.g9 * 255, output.b9 * 255)
-    };
-  };
-
-  if (document.querySelector('.name').value === '') name = document.getElementById('name0').innerHTML;
-  name = name.replace(/\s/g, '');
-  document.querySelector('.code').innerHTML = mustache__WEBPACK_IMPORTED_MODULE_4___default.a.render(_stubs_code_stub_html__WEBPACK_IMPORTED_MODULE_5___default.a, view(output, name));
+function code(outputs, names) {
+  var colors = [];
+  names.forEach(function (name, key) {
+    var output = outputs[key];
+    colors.push({
+      name: name,
+      '50': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output['r0.5'] * 255, output['g0.5'] * 255, output['b0.5'] * 255).hex(),
+      '100': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r1 * 255, output.g1 * 255, output.b1 * 255).hex(),
+      '200': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r2 * 255, output.g2 * 255, output.b2 * 255).hex(),
+      '300': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r3 * 255, output.g3 * 255, output.b3 * 255).hex(),
+      '400': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r4 * 255, output.g4 * 255, output.b4 * 255).hex(),
+      '500': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r5 * 255, output.g5 * 255, output.b5 * 255).hex(),
+      '600': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r6 * 255, output.g6 * 255, output.b6 * 255).hex(),
+      '700': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r7 * 255, output.g7 * 255, output.b7 * 255).hex(),
+      '800': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r8 * 255, output.g8 * 255, output.b8 * 255).hex(),
+      '900': chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r9 * 255, output.g9 * 255, output.b9 * 255).hex()
+    });
+  });
+  document.querySelector('.code').innerHTML = mustache__WEBPACK_IMPORTED_MODULE_4___default.a.render(_stubs_code_stub_html__WEBPACK_IMPORTED_MODULE_5___default.a, {
+    colors: colors,
+    brandColor: brandColor,
+    unfit: !brandColor.fit
+  });
 }
 
-function paint(output) {
-  var i = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  document.getElementById('output' + i + '0.5').style.backgroundColor = 'rgb(' + output['r0.5'] * 255 + ',' + output['g0.5'] * 255 + ',' + output['b0.5'] * 255 + ')';
-  document.getElementById('output' + i + '1').style.backgroundColor = 'rgb(' + output.r1 * 255 + ',' + output.g1 * 255 + ',' + output.b1 * 255 + ')';
-  document.getElementById('output' + i + '2').style.backgroundColor = 'rgb(' + output.r2 * 255 + ',' + output.g2 * 255 + ',' + output.b2 * 255 + ')';
-  document.getElementById('output' + i + '3').style.backgroundColor = 'rgb(' + output.r3 * 255 + ',' + output.g3 * 255 + ',' + output.b3 * 255 + ')';
-  document.getElementById('output' + i + '4').style.backgroundColor = 'rgb(' + output.r4 * 255 + ',' + output.g4 * 255 + ',' + output.b4 * 255 + ')';
-  document.getElementById('output' + i + '5').style.backgroundColor = 'rgb(' + output.r5 * 255 + ',' + output.g5 * 255 + ',' + output.b5 * 255 + ')';
-  document.getElementById('output' + i + '6').style.backgroundColor = 'rgb(' + output.r6 * 255 + ',' + output.g6 * 255 + ',' + output.b6 * 255 + ')';
-  document.getElementById('output' + i + '7').style.backgroundColor = 'rgb(' + output.r7 * 255 + ',' + output.g7 * 255 + ',' + output.b7 * 255 + ')';
-  document.getElementById('output' + i + '8').style.backgroundColor = 'rgb(' + output.r8 * 255 + ',' + output.g8 * 255 + ',' + output.b8 * 255 + ')';
-  document.getElementById('output' + i + '9').style.backgroundColor = 'rgb(' + output.r9 * 255 + ',' + output.g9 * 255 + ',' + output.b9 * 255 + ')'; // document.getElementById('text' + i + '0.5').style.color = 'rgb(' + output['r0.5']*255 + ',' + output['g0.5']*255 + ',' + output['b0.5']*255 + ')';
+function paint(outputs) {
+  outputs.forEach(function (output, i) {
+    document.getElementById('output' + i + '0.5').style.backgroundColor = 'rgb(' + output['r0.5'] * 255 + ',' + output['g0.5'] * 255 + ',' + output['b0.5'] * 255 + ')';
+    document.getElementById('output' + i + '1').style.backgroundColor = 'rgb(' + output.r1 * 255 + ',' + output.g1 * 255 + ',' + output.b1 * 255 + ')';
+    document.getElementById('output' + i + '2').style.backgroundColor = 'rgb(' + output.r2 * 255 + ',' + output.g2 * 255 + ',' + output.b2 * 255 + ')';
+    document.getElementById('output' + i + '3').style.backgroundColor = 'rgb(' + output.r3 * 255 + ',' + output.g3 * 255 + ',' + output.b3 * 255 + ')';
+    document.getElementById('output' + i + '4').style.backgroundColor = 'rgb(' + output.r4 * 255 + ',' + output.g4 * 255 + ',' + output.b4 * 255 + ')';
+    document.getElementById('output' + i + '5').style.backgroundColor = 'rgb(' + output.r5 * 255 + ',' + output.g5 * 255 + ',' + output.b5 * 255 + ')';
+    document.getElementById('output' + i + '6').style.backgroundColor = 'rgb(' + output.r6 * 255 + ',' + output.g6 * 255 + ',' + output.b6 * 255 + ')';
+    document.getElementById('output' + i + '7').style.backgroundColor = 'rgb(' + output.r7 * 255 + ',' + output.g7 * 255 + ',' + output.b7 * 255 + ')';
+    document.getElementById('output' + i + '8').style.backgroundColor = 'rgb(' + output.r8 * 255 + ',' + output.g8 * 255 + ',' + output.b8 * 255 + ')';
+    document.getElementById('output' + i + '9').style.backgroundColor = 'rgb(' + output.r9 * 255 + ',' + output.g9 * 255 + ',' + output.b9 * 255 + ')';
+  }); // document.getElementById('text' + i + '0.5').style.color = 'rgb(' + output['r0.5']*255 + ',' + output['g0.5']*255 + ',' + output['b0.5']*255 + ')';
   // document.getElementById('text' + i + '1').style.color = 'rgb(' + output.r1*255 + ',' + output.g1*255 + ',' + output.b1*255 + ')';
   // document.getElementById('text' + i + '2').style.color = 'rgb(' + output.r2*255 + ',' + output.g2*255 + ',' + output.b2*255 + ')';
   // document.getElementById('text' + i + '3').style.color = 'rgb(' + output.r3*255 + ',' + output.g3*255 + ',' + output.b3*255 + ')';
@@ -17459,18 +17440,19 @@ function paint(output) {
   // document.getElementById('text' + i + '9').style.color = 'rgb(' + output.r9*255 + ',' + output.g9*255 + ',' + output.b9*255 + ')';
 }
 
-function writeHex(output) {
-  var i = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  document.getElementById('hex' + i + '0.5').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output['r0.5'] * 255, output['g0.5'] * 255, output['b0.5'] * 255);
-  document.getElementById('hex' + i + '1').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r1 * 255, output.g1 * 255, output.b1 * 255);
-  document.getElementById('hex' + i + '2').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r2 * 255, output.g2 * 255, output.b2 * 255);
-  document.getElementById('hex' + i + '3').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r3 * 255, output.g3 * 255, output.b3 * 255);
-  document.getElementById('hex' + i + '4').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r4 * 255, output.g4 * 255, output.b4 * 255);
-  document.getElementById('hex' + i + '5').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r5 * 255, output.g5 * 255, output.b5 * 255);
-  document.getElementById('hex' + i + '6').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r6 * 255, output.g6 * 255, output.b6 * 255);
-  document.getElementById('hex' + i + '7').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r7 * 255, output.g7 * 255, output.b7 * 255);
-  document.getElementById('hex' + i + '8').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r8 * 255, output.g8 * 255, output.b8 * 255);
-  document.getElementById('hex' + i + '9').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r9 * 255, output.g9 * 255, output.b9 * 255);
+function writeHex(outputs) {
+  outputs.forEach(function (output, i) {
+    document.getElementById('hex' + i + '0.5').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output['r0.5'] * 255, output['g0.5'] * 255, output['b0.5'] * 255);
+    document.getElementById('hex' + i + '1').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r1 * 255, output.g1 * 255, output.b1 * 255);
+    document.getElementById('hex' + i + '2').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r2 * 255, output.g2 * 255, output.b2 * 255);
+    document.getElementById('hex' + i + '3').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r3 * 255, output.g3 * 255, output.b3 * 255);
+    document.getElementById('hex' + i + '4').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r4 * 255, output.g4 * 255, output.b4 * 255);
+    document.getElementById('hex' + i + '5').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r5 * 255, output.g5 * 255, output.b5 * 255);
+    document.getElementById('hex' + i + '6').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r6 * 255, output.g6 * 255, output.b6 * 255);
+    document.getElementById('hex' + i + '7').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r7 * 255, output.g7 * 255, output.b7 * 255);
+    document.getElementById('hex' + i + '8').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r8 * 255, output.g8 * 255, output.b8 * 255);
+    document.getElementById('hex' + i + '9').innerHTML = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(output.r9 * 255, output.g9 * 255, output.b9 * 255);
+  });
 }
 
 function name(outputs) {
@@ -17618,7 +17600,7 @@ module.exports = model;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<span class=\"text-gray-500\">// tailwind.config.js</span><br>\nmodule.exports = {<br>\n&nbsp;&nbsp;theme: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;extend: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colors: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{name}}: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'50': &nbsp;'{{50}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'100': '{{100}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'200': '{{200}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'300': '{{300}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'400': '{{400}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'500': '{{500}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'600': '{{600}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'700': '{{700}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'800': '{{800}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'900': '{{900}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;}<br>\n}";
+module.exports = "<span class=\"text-gray-500\">// tailwind.config.js</span><br>\nmodule.exports = {<br>\n&nbsp;&nbsp;theme: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;extend: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colors: {<br>\n{{#unfit}}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;brand: '{{brandColor.hex}}',<br>\n{{/unfit}}\n{{#colors}}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{name}}: {<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'50': &nbsp;'{{50}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'100': '{{100}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'200': '{{200}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'300': '{{300}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'400': '{{400}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'500': '{{500}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'600': '{{600}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'700': '{{700}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'800': '{{800}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'900': '{{900}}',<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>\n{{/colors}}\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;&nbsp;&nbsp;}<br>\n&nbsp;&nbsp;}<br>\n}";
 
 /***/ }),
 
