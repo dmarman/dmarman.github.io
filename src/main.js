@@ -19,7 +19,7 @@ const pickrButton = Pickr.create({
   el: '.pickr',
   theme: 'nano', // or 'monolith', or 'nano'
 
-  default: '#D8CF49',
+  default: '#4B8796',
   comparison: false,
   showAlways: true,
   container: '.pickr-ctrl',
@@ -34,8 +34,13 @@ const pickrButton = Pickr.create({
 
     // Input / output Options
     interaction: {
-      input: true
+      input: true,
+      save: true
     }
+  },
+  i18n: {
+    'btn:save': 'Apply',
+    'aria:btn:save': 'Apply',
   }
 });
 
@@ -43,7 +48,7 @@ document.querySelectorAll('.color-col').forEach((el, key) => {
   el.innerHTML = Mustache.render(shadeStub, {color: key});
 });
 
-let output = model('#D8CF49');
+let output = model('#4B8796');
 paint(output, 0);
 
 let next = nextModel(rgbToHex(output.r5*255, output.g5*255, output.b5*255));
@@ -74,6 +79,7 @@ code(output, document.querySelector('.name').value);
 let brandColor = { fit: false };
 
 pickrButton.on('change', instance => {
+  console.log(instance)
   output = model(instance.toHEXA().toString());
 
   next = nextModel(rgbToHex(output.r5*255, output.g5*255, output.b5*255));
@@ -94,10 +100,12 @@ pickrButton.on('change', instance => {
   for(let i = 0; i < 10; i++){
     let j = 0;
     i === 0 ? j = 0.5 : j = i;
-    distances['1' + j] = chroma.deltaE(rgbToHex(output['r' + j]*255, output['g' + j]*255, output['b' + j]*255), instance.toHEXA().toString());
-    distances['2' + j] = chroma.deltaE(rgbToHex(output1['r' + j]*255, output1['g' + j]*255, output1['b' + j]*255), instance.toHEXA().toString());
+    distances['0' + j] = chroma.deltaE(rgbToHex(output['r' + j]*255, output['g' + j]*255, output['b' + j]*255), instance.toHEXA().toString());
+    distances['1' + j] = chroma.deltaE(rgbToHex(output1['r' + j]*255, output1['g' + j]*255, output1['b' + j]*255), instance.toHEXA().toString());
+    distances['2' + j] = chroma.deltaE(rgbToHex(output2['r' + j]*255, output2['g' + j]*255, output2['b' + j]*255), instance.toHEXA().toString());
+    distances['8' + j] = chroma.deltaE(rgbToHex(output8['r' + j]*255, output8['g' + j]*255, output8['b' + j]*255), instance.toHEXA().toString());
+    distances['9' + j] = chroma.deltaE(rgbToHex(output9['r' + j]*255, output9['g' + j]*255, output9['b' + j]*255), instance.toHEXA().toString());
   }
-
   let sortable = [];
   for (let distance in distances) {
     sortable.push([distance, distances[distance]]);
@@ -112,20 +120,36 @@ pickrButton.on('change', instance => {
   brandColor = { index, color };
 
   let replace = chroma(instance.toHEXA().toString()).rgb();
+console.log(sortable[0])
 
-  if(sortable[0][1] < 9){
+  if(sortable[0][1] < 7.5){
 
     brandColor.fit = true;
 
-    if(color === '1'){
+    if(color === '0'){
       output['r' + index] = replace[0]/255;
       output['g' + index] = replace[1]/255;
       output['b' + index] = replace[2]/255;
     }
-    if(color === '2'){
+    if(color === '1'){
       output1['r' + index] = replace[0]/255;
       output1['g' + index] = replace[1]/255;
       output1['b' + index] = replace[2]/255;
+    }
+    if(color === '2'){
+      output2['r' + index] = replace[0]/255;
+      output2['g' + index] = replace[1]/255;
+      output2['b' + index] = replace[2]/255;
+    }
+    if(color === '8'){
+      output8['r' + index] = replace[0]/255;
+      output8['g' + index] = replace[1]/255;
+      output8['b' + index] = replace[2]/255;
+    }
+    if(color === '9'){
+      output9['r' + index] = replace[0]/255;
+      output9['g' + index] = replace[1]/255;
+      output9['b' + index] = replace[2]/255;
     }
   }
 
@@ -142,7 +166,15 @@ pickrButton.on('change', instance => {
 });
 
 pickrButton.on('changestop', () => {
+  renderTexts();
+});
 
+pickrButton.on('save', () => {
+  renderTexts();
+});
+
+function renderTexts()
+{
   let names = name([output, output1, output2, output3, output4, output5, output6, output7, output8, output9]);
 
   writeHex(output, 0);
@@ -159,14 +191,13 @@ pickrButton.on('changestop', () => {
 
 
   if(brandColor.fit){
-    document.getElementById('brand').innerHTML = '.bg-' + names[brandColor.color - 1] + '-' + brandColor.index*100;
+    document.getElementById('brand').innerHTML = '.bg-' + names[brandColor.color] + '-' + brandColor.index*100;
     document.getElementById('fit').classList.add('hidden');
   } else {
     document.getElementById('brand').innerHTML = '.bg-brand';
     document.getElementById('fit').classList.remove('hidden');
   }
-
-});
+}
 
 document.querySelector('.name').addEventListener('input', (e) => {
   let name = document.querySelector('.name').value;

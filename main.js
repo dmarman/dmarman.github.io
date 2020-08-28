@@ -17237,7 +17237,7 @@ var pickrButton = _simonwep_pickr__WEBPACK_IMPORTED_MODULE_0___default.a.create(
   el: '.pickr',
   theme: 'nano',
   // or 'monolith', or 'nano'
-  "default": '#D8CF49',
+  "default": '#4B8796',
   comparison: false,
   showAlways: true,
   container: '.pickr-ctrl',
@@ -17250,8 +17250,13 @@ var pickrButton = _simonwep_pickr__WEBPACK_IMPORTED_MODULE_0___default.a.create(
     hue: true,
     // Input / output Options
     interaction: {
-      input: true
+      input: true,
+      save: true
     }
+  },
+  i18n: {
+    'btn:save': 'Apply',
+    'aria:btn:save': 'Apply'
   }
 });
 document.querySelectorAll('.color-col').forEach(function (el, key) {
@@ -17259,7 +17264,7 @@ document.querySelectorAll('.color-col').forEach(function (el, key) {
     color: key
   });
 });
-var output = _models_model__WEBPACK_IMPORTED_MODULE_2___default()('#D8CF49');
+var output = _models_model__WEBPACK_IMPORTED_MODULE_2___default()('#4B8796');
 paint(output, 0);
 var next = _models_nextModel__WEBPACK_IMPORTED_MODULE_3___default()(rgbToHex(output.r5 * 255, output.g5 * 255, output.b5 * 255));
 var output1 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r1 * 255, next.g1 * 255, next.b1 * 255));
@@ -17286,6 +17291,7 @@ var brandColor = {
   fit: false
 };
 pickrButton.on('change', function (instance) {
+  console.log(instance);
   output = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(instance.toHEXA().toString());
   next = _models_nextModel__WEBPACK_IMPORTED_MODULE_3___default()(rgbToHex(output.r5 * 255, output.g5 * 255, output.b5 * 255));
   output1 = _models_model__WEBPACK_IMPORTED_MODULE_2___default()(rgbToHex(next.r1 * 255, next.g1 * 255, next.b1 * 255));
@@ -17302,8 +17308,11 @@ pickrButton.on('change', function (instance) {
   for (var i = 0; i < 10; i++) {
     var j = 0;
     i === 0 ? j = 0.5 : j = i;
-    distances['1' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output['r' + j] * 255, output['g' + j] * 255, output['b' + j] * 255), instance.toHEXA().toString());
-    distances['2' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output1['r' + j] * 255, output1['g' + j] * 255, output1['b' + j] * 255), instance.toHEXA().toString());
+    distances['0' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output['r' + j] * 255, output['g' + j] * 255, output['b' + j] * 255), instance.toHEXA().toString());
+    distances['1' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output1['r' + j] * 255, output1['g' + j] * 255, output1['b' + j] * 255), instance.toHEXA().toString());
+    distances['2' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output2['r' + j] * 255, output2['g' + j] * 255, output2['b' + j] * 255), instance.toHEXA().toString());
+    distances['8' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output8['r' + j] * 255, output8['g' + j] * 255, output8['b' + j] * 255), instance.toHEXA().toString());
+    distances['9' + j] = chroma_js__WEBPACK_IMPORTED_MODULE_8___default.a.deltaE(rgbToHex(output9['r' + j] * 255, output9['g' + j] * 255, output9['b' + j] * 255), instance.toHEXA().toString());
   }
 
   var sortable = [];
@@ -17322,20 +17331,39 @@ pickrButton.on('change', function (instance) {
     color: color
   };
   var replace = chroma_js__WEBPACK_IMPORTED_MODULE_8___default()(instance.toHEXA().toString()).rgb();
+  console.log(sortable[0]);
 
-  if (sortable[0][1] < 9) {
+  if (sortable[0][1] < 7.5) {
     brandColor.fit = true;
 
-    if (color === '1') {
+    if (color === '0') {
       output['r' + index] = replace[0] / 255;
       output['g' + index] = replace[1] / 255;
       output['b' + index] = replace[2] / 255;
     }
 
-    if (color === '2') {
+    if (color === '1') {
       output1['r' + index] = replace[0] / 255;
       output1['g' + index] = replace[1] / 255;
       output1['b' + index] = replace[2] / 255;
+    }
+
+    if (color === '2') {
+      output2['r' + index] = replace[0] / 255;
+      output2['g' + index] = replace[1] / 255;
+      output2['b' + index] = replace[2] / 255;
+    }
+
+    if (color === '8') {
+      output8['r' + index] = replace[0] / 255;
+      output8['g' + index] = replace[1] / 255;
+      output8['b' + index] = replace[2] / 255;
+    }
+
+    if (color === '9') {
+      output9['r' + index] = replace[0] / 255;
+      output9['g' + index] = replace[1] / 255;
+      output9['b' + index] = replace[2] / 255;
     }
   }
 
@@ -17351,6 +17379,13 @@ pickrButton.on('change', function (instance) {
   paint(output9, 9);
 });
 pickrButton.on('changestop', function () {
+  renderTexts();
+});
+pickrButton.on('save', function () {
+  renderTexts();
+});
+
+function renderTexts() {
   var names = name([output, output1, output2, output3, output4, output5, output6, output7, output8, output9]);
   writeHex(output, 0);
   writeHex(output1, 1);
@@ -17365,13 +17400,14 @@ pickrButton.on('changestop', function () {
   code(output, document.querySelector('.name').value);
 
   if (brandColor.fit) {
-    document.getElementById('brand').innerHTML = '.bg-' + names[brandColor.color - 1] + '-' + brandColor.index * 100;
+    document.getElementById('brand').innerHTML = '.bg-' + names[brandColor.color] + '-' + brandColor.index * 100;
     document.getElementById('fit').classList.add('hidden');
   } else {
     document.getElementById('brand').innerHTML = '.bg-brand';
     document.getElementById('fit').classList.remove('hidden');
   }
-});
+}
+
 document.querySelector('.name').addEventListener('input', function (e) {
   var name = document.querySelector('.name').value;
   if (e.target.value !== '') name = e.target.value;
