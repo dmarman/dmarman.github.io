@@ -120,7 +120,7 @@ function calculateBrandColor(hex)
 
   let replace = chroma(hex).rgb();
 
-  if(sortable[0][1] < 6){
+  if(sortable[0][1] < 5){
 
     brandColor.fit = true;
 
@@ -224,17 +224,17 @@ function paint(outputs)
     document.getElementById('output' + i + '9').style.backgroundColor = 'rgb(' + output.r9*255 + ',' + output.g9*255 + ',' + output.b9*255 + ')';
   });
 
-
-  // document.getElementById('text' + i + '0.5').style.color = 'rgb(' + output['r0.5']*255 + ',' + output['g0.5']*255 + ',' + output['b0.5']*255 + ')';
-  // document.getElementById('text' + i + '1').style.color = 'rgb(' + output.r1*255 + ',' + output.g1*255 + ',' + output.b1*255 + ')';
-  // document.getElementById('text' + i + '2').style.color = 'rgb(' + output.r2*255 + ',' + output.g2*255 + ',' + output.b2*255 + ')';
-  // document.getElementById('text' + i + '3').style.color = 'rgb(' + output.r3*255 + ',' + output.g3*255 + ',' + output.b3*255 + ')';
-  // document.getElementById('text' + i + '4').style.color = 'rgb(' + output.r4*255 + ',' + output.g4*255 + ',' + output.b4*255 + ')';
-  // document.getElementById('text' + i + '5').style.color = 'rgb(' + output.r5*255 + ',' + output.g5*255 + ',' + output.b5*255 + ')';
-  // document.getElementById('text' + i + '6').style.color = 'rgb(' + output.r6*255 + ',' + output.g6*255 + ',' + output.b6*255 + ')';
-  // document.getElementById('text' + i + '7').style.color = 'rgb(' + output.r7*255 + ',' + output.g7*255 + ',' + output.b7*255 + ')';
-  // document.getElementById('text' + i + '8').style.color = 'rgb(' + output.r8*255 + ',' + output.g8*255 + ',' + output.b8*255 + ')';
-  // document.getElementById('text' + i + '9').style.color = 'rgb(' + output.r9*255 + ',' + output.g9*255 + ',' + output.b9*255 + ')';
+  document.getElementById('title10').style.color = 'rgb(' + outputs[0].r7*255 + ',' + outputs[0].g7*255 + ',' + outputs[0].b7*255 + ')';
+  document.getElementById('title9').style.color = 'rgb(' + outputs[0].r8*255 + ',' + outputs[0].g8*255 + ',' + outputs[0].b8*255 + ')';
+  document.getElementById('title8').style.color = 'rgb(' + outputs[0].r9*255 + ',' + outputs[0].g9*255 + ',' + outputs[0].b9*255 + ')';
+  document.getElementById('title7').style.color = 'rgb(' + outputs[0].r2*255 + ',' + outputs[0].g2*255 + ',' + outputs[0].b2*255 + ')';
+  document.getElementById('title6').style.color = 'rgb(' + outputs[0].r3*255 + ',' + outputs[0].g3*255 + ',' + outputs[0].b3*255 + ')';
+  document.getElementById('title5').style.color = 'rgb(' + outputs[0].r4*255 + ',' + outputs[0].g4*255 + ',' + outputs[0].b4*255 + ')';
+  document.getElementById('title4').style.color = 'rgb(' + outputs[0].r5*255 + ',' + outputs[0].g5*255 + ',' + outputs[0].b5*255 + ')';
+  document.getElementById('title3').style.color = 'rgb(' + outputs[0].r6*255 + ',' + outputs[0].g6*255 + ',' + outputs[0].b6*255 + ')';
+  document.getElementById('title2').style.color = 'rgb(' + outputs[0].r7*255 + ',' + outputs[0].g7*255 + ',' + outputs[0].b7*255 + ')';
+  document.getElementById('title1').style.color = 'rgb(' + outputs[0].r8*255 + ',' + outputs[0].g8*255 + ',' + outputs[0].b8*255 + ')';
+  document.getElementById('title0').style.color = 'rgb(' + outputs[0].r9*255 + ',' + outputs[0].g9*255 + ',' + outputs[0].b9*255 + ')';
 
 }
 
