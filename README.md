@@ -1,5 +1,5 @@
 # Tailwind Ink
-Tailwind Ink is an AI palette generator trained with the [Tailwindcss](https://tailwindcss.com/) colors.
+[Tailwind Ink](https://dmarman.github.io/) is an AI palette generator trained with the [Tailwindcss](https://tailwindcss.com/) colors.
 
 **Alert:** This tool was made over a weekend and the code is still messy. 
 
