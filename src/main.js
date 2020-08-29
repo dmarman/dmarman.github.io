@@ -51,9 +51,9 @@ document.querySelectorAll('.color-col').forEach((el, key) => {
   el.innerHTML = Mustache.render(shadeStub, {color: key});
 });
 
-let color = model(initColor);
+let color0 = model(initColor);
 
-let outputs = calculateColorsHorizontally(color);
+let outputs = calculateColorsHorizontally(initColor, color0);
 
 let brandColor = calculateBrandColor(initColor);
 
@@ -62,18 +62,18 @@ renderTexts();
 
 pickrButton.on('change', instance => {
 
-  color = model(instance.toHEXA().toString());
+  color0 = model(instance.toHEXA().toString());
 
-  outputs = calculateColorsHorizontally(color);
+  outputs = calculateColorsHorizontally(instance.toHEXA().toString(), color0);
 
   brandColor = calculateBrandColor(instance.toHEXA().toString());
 
   paint(outputs);
 });
 
-function calculateColorsHorizontally(color)
+function calculateColorsHorizontally(initColor, color0)
 {
-  let next = nextModel(rgbToHex(color.r5*255, color.g5*255, color.b5*255));
+  let next = nextModel(initColor);
   let color1 = model(rgbToHex(next.r1*255, next.g1*255,next.b1*255));
   let color2 = model(rgbToHex(next.r2*255, next.g2*255,next.b2*255));
   let color3 = model(rgbToHex(next.r3*255, next.g3*255,next.b3*255));
@@ -84,7 +84,7 @@ function calculateColorsHorizontally(color)
   let color8 = model(rgbToHex(next.r8*255, next.g8*255,next.b8*255));
   let color9 = model(rgbToHex(next.r9*255, next.g9*255,next.b9*255));
 
-  return [color, color1, color2, color3, color4, color5, color6, color7, color8, color9];
+  return [color0, color1, color2, color3, color4, color5, color6, color7, color8, color9];
 }
 
 function calculateBrandColor(hex)
