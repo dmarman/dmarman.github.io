@@ -58,7 +58,7 @@ colors.forEach((color, key) => {
   });
 });
 
-//dataset = shuffle(dataset)
+dataset = shuffle(dataset)
 
 const SPLIT = 220;
 const trainData = dataset.slice(0, SPLIT);
@@ -66,7 +66,7 @@ const testData = dataset.slice(SPLIT + 1);
 
 const netOptions = {
   activation: 'sigmoid',
-  hiddenLayers: [6],
+  hiddenLayers: [3],
 };
 
 let s0 = [];
@@ -74,9 +74,9 @@ let s1 = [];
 let acc;
 
 const trainingOptions = {
-  iterations: 20000,
+  iterations: 21000,
   errorThresh: 0.0002,
-  learningRate: 0.0005,
+  learningRate: 0.001,
   logPeriod: 1000,
   log: function (details) {
     acc = getAccuracy(this.net, testData)
