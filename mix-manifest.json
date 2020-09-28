@@ -1,4 +1,6 @@
 {
     "/bin/main.js": "/bin/main.js",
-    "/bin/main.css": "/bin/main.css"
+    "/bin/main.css": "/bin/main.css",
+    "/bin/next.js": "/bin/next.js",
+    "/bin/shades.js": "/bin/shades.js"
 }
