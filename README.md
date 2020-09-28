@@ -22,7 +22,7 @@ The picked color is also passed to `nextModel.js` which returns the next 9 color
 are transformed into 50-900 shades using again for each color `model.js`.
 
 ## Development
-Download the repro and run:
+Download the repo and run:
 
 ```
 npm install
