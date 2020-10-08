@@ -1,9 +1,6 @@
-//import * as brain from '../node_modules/brain.js/dist/brain-browser';
-import colors from './dataset';
 import Pickr from '@simonwep/pickr'
 import '@simonwep/pickr/dist/themes/nano.min.css'
-import { getAccuracy } from './getAccuracy';
-const net = require('./shades_training/train');
+const net = require('./training/shades');
 
 const pickrButton = Pickr.create({
   el: '.pickr',
@@ -68,35 +65,8 @@ const hexToRgb = (hex, id = '') => {
   return output;
 };
 
-let dataset = [];
-
-colors.forEach((color, key) => {
-  Object.keys(color).forEach((inputShade) => {
-    let output = {};
-    Object.keys(color).forEach((outputShade) => {
-      Object.assign(output, hexToRgb(color[outputShade], outputShade/100))
-    });
-    dataset.push({
-      input: hexToRgb(color[inputShade]),
-      output: output
-    });
-  });
-});
-
-//dataset = shuffle(dataset)
-
-const SPLIT = 220;
-const trainData = dataset.slice(0, SPLIT);
-const testData = dataset.slice(SPLIT + 1);
-
-
-console.log(net.toFunction().toString())
-const accuracy = getAccuracy(net, testData);
-console.log('mae: ', accuracy);
-
 document.getElementById('result').innerHTML = brain.utilities.toSVG(
   net,
-  //options
 );
 
 function draw(output)

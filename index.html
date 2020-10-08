@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Tailwind Ink</title>
     <link rel="stylesheet" href="./bin/main.css">
+    <link rel="shortcut icon" type="image/x-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHklEQVQ4T2NkSPn/n4ECwDhqAMNoGDCMhgHDsAgDAPdXJjHWoQYSAAAAAElFTkSuQmCC">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179178286-1"></script>
     <script>
@@ -17,7 +18,7 @@
 <body>
 <div>
     <div class="flex justify-between mt-4 mx-4">
-        <div class="flex items-center">
+        <div class="flex items-center select-none">
             <h1 class="text-3xl font-bold tracking-tighter">
                 <span id="title0" class="float-left">T</span>
                 <span id="title1" class="float-left">a</span>
@@ -49,7 +50,10 @@
             <div class="font-mono text-xs bg-gray-800 text-gray-200 rounded-lg my-5 p-4 code pr-12 flex-grow"></div>
         </div>
         <div class="flex flex-col">
-            <h2 class="uppercase opacity-75 tracking-wide pt-3 pb-4">Palette</h2>
+            <div class="flex pt-3 pb-4 items-center">
+                <h2 class="uppercase opacity-75 tracking-wide">Palette</h2>
+                <button class="px-3 ml-4 focus:outline-none bg-gray-200 hover:bg-gray-300 hover:shadow-md transition duration-200 text-gray-900 border-gray-700 shadow border-2 rounded-lg text-s aa-button">Aa</button>
+            </div>
             <div class="flex">
                 <div class="color-col text-sm" id="shade0"></div>
                 <div class="color-col text-sm" id="shade1"></div>

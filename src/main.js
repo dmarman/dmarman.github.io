@@ -1,12 +1,16 @@
 import Pickr from '@simonwep/pickr'
 import '@simonwep/pickr/dist/themes/nano.min.css'
-import model from './models/model'
-import nextModel from './models/nextModel'
+import rawShades from './models/shadesModel'
+import rawNext from './models/nextModel'
+import modelWrapper from './models/wrapper/wrapper'
 import Mustache from 'mustache'
 import codeStub from './stubs/code.stub.html'
 import shadeStub from './stubs/shade.stub.html'
 import namer from 'color-namer'
 import chroma from 'chroma-js'
+
+let nextModel = modelWrapper(rawNext);
+let model = modelWrapper(rawShades);
 
 function rgbToHex(r, g, b) {
   r = parseInt(r);
@@ -69,6 +73,7 @@ pickrButton.on('change', instance => {
   brandColor = calculateBrandColor(instance.toHEXA().toString());
 
   paint(outputs);
+  changeFavicon(instance.toHEXA().toString())
 });
 
 function calculateColorsHorizontally(initColor, color0)
@@ -120,7 +125,7 @@ function calculateBrandColor(hex)
 
   let replace = chroma(hex).rgb();
 
-  if(sortable[0][1] < 5){
+  if(sortable[0][1] < 7){
 
     brandColor.fit = true;
 
@@ -271,6 +276,24 @@ function name(outputs)
   return names;
 }
 
+let backgrounds = document.querySelectorAll('.test-text');
 
+document.querySelector('.aa-button').addEventListener('click', () => {
+  backgrounds.forEach(background => background.classList.toggle('hidden'))
+});
 
+let link = document.querySelector("link[rel~='icon']");
+let canvas = document.createElement("canvas");
+let context = canvas.getContext("2d");
+
+function changeFavicon(hex) {
+  canvas.width = 16;
+  canvas.height = 16;
+  context.fillStyle = hex;
+  context.fillRect(0, 0, 16, 16);
+  context.fill();
+  console.log(canvas.toDataURL())
+  link.type = "image/x-icon";
+  link.href = canvas.toDataURL();
+}
 
