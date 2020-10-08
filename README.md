@@ -1,3 +1,4 @@
+![TailwindInk in action](https://raw.githubusercontent.com/dmarman/dmarman.github.io/master/bin/TailwindInk_small.gif)
 # Tailwind Ink
 [Tailwind Ink](https://dmarman.github.io/) is an AI palette generator trained with the [Tailwindcss](https://tailwindcss.com/) colors.
 
