@@ -10,7 +10,7 @@ import namer from 'color-namer'
 import chroma from 'chroma-js'
 
 let nextModel = modelWrapper(rawNext);
-let model = modelWrapper(rawShades);
+let shadesModel = modelWrapper(rawShades);
 
 function rgbToHex(r, g, b) {
   r = parseInt(r);
@@ -55,7 +55,7 @@ document.querySelectorAll('.color-col').forEach((el, key) => {
   el.innerHTML = Mustache.render(shadeStub, {color: key});
 });
 
-let color0 = model(initColor);
+let color0 = shadesModel(initColor);
 
 let outputs = calculateColorsHorizontally(initColor, color0);
 
@@ -66,7 +66,7 @@ renderTexts();
 
 pickrButton.on('change', instance => {
 
-  color0 = model(instance.toHEXA().toString());
+  color0 = shadesModel(instance.toHEXA().toString());
 
   outputs = calculateColorsHorizontally(instance.toHEXA().toString(), color0);
 
@@ -79,15 +79,15 @@ pickrButton.on('change', instance => {
 function calculateColorsHorizontally(initColor, color0)
 {
   let next = nextModel(initColor);
-  let color1 = model(rgbToHex(next.r1*255, next.g1*255,next.b1*255));
-  let color2 = model(rgbToHex(next.r2*255, next.g2*255,next.b2*255));
-  let color3 = model(rgbToHex(next.r3*255, next.g3*255,next.b3*255));
-  let color4 = model(rgbToHex(next.r4*255, next.g4*255,next.b4*255));
-  let color5 = model(rgbToHex(next.r5*255, next.g5*255,next.b5*255));
-  let color6 = model(rgbToHex(next.r6*255, next.g6*255,next.b6*255));
-  let color7 = model(rgbToHex(next.r7*255, next.g7*255,next.b7*255));
-  let color8 = model(rgbToHex(next.r8*255, next.g8*255,next.b8*255));
-  let color9 = model(rgbToHex(next.r9*255, next.g9*255,next.b9*255));
+  let color1 = shadesModel(rgbToHex(next.r1*255, next.g1*255,next.b1*255));
+  let color2 = shadesModel(rgbToHex(next.r2*255, next.g2*255,next.b2*255));
+  let color3 = shadesModel(rgbToHex(next.r3*255, next.g3*255,next.b3*255));
+  let color4 = shadesModel(rgbToHex(next.r4*255, next.g4*255,next.b4*255));
+  let color5 = shadesModel(rgbToHex(next.r5*255, next.g5*255,next.b5*255));
+  let color6 = shadesModel(rgbToHex(next.r6*255, next.g6*255,next.b6*255));
+  let color7 = shadesModel(rgbToHex(next.r7*255, next.g7*255,next.b7*255));
+  let color8 = shadesModel(rgbToHex(next.r8*255, next.g8*255,next.b8*255));
+  let color9 = shadesModel(rgbToHex(next.r9*255, next.g9*255,next.b9*255));
 
   return [color0, color1, color2, color3, color4, color5, color6, color7, color8, color9];
 }
@@ -125,7 +125,7 @@ function calculateBrandColor(hex)
 
   let replace = chroma(hex).rgb();
 
-  if(sortable[0][1] < 7){
+  if(sortable[0][1] < 1){
 
     brandColor.fit = true;
 
@@ -292,7 +292,6 @@ function changeFavicon(hex) {
   context.fillStyle = hex;
   context.fillRect(0, 0, 16, 16);
   context.fill();
-  console.log(canvas.toDataURL())
   link.type = "image/x-icon";
   link.href = canvas.toDataURL();
 }
