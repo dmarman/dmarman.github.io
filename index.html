@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Primary Meta Tags -->
     <title>Tailwind Ink | AI color palette generator for Tailwindcss</title>
     <meta name="title" content="Tailwind Ink | AI color palette generator for Tailwindcss">
@@ -24,11 +25,13 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179178286-1"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      if(window.location.origin !== 'file://'){
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-      gtag('config', 'UA-179178286-1');
+        gtag('config', 'UA-179178286-1');
+      }
     </script>
 </head>
 <body>
@@ -59,13 +62,8 @@
         </div>
     </div>
 
-    <div class="flex items-start app-ui" style="display: none">
-        <div class="m-4">
-            <div class="pickr"></div>
-            <div class="pickr-ctrl"></div>
-            <div class="font-mono text-xs bg-gray-800 text-gray-200 rounded-lg my-5 p-4 code pr-12 flex-grow"></div>
-        </div>
-        <div class="flex flex-col">
+    <div class="block lg:flex lg:flex-row-reverse items-start float-left app-ui">
+        <div class="flex flex-col pl-4 lg:pl-0">
             <div class="flex pt-3 pb-4 items-center">
                 <h2 class="uppercase opacity-75 tracking-wide">Palette</h2>
                 <button class="px-3 ml-4 focus:outline-none bg-gray-200 hover:bg-gray-300 hover:shadow-md transition duration-200 text-gray-900 border-gray-700 shadow border-2 rounded-lg text-s aa-button">Aa</button>
@@ -95,6 +93,11 @@
                 </div>
             </div>
         </div>
+        <div class="m-4">
+            <div class="pickr"></div>
+            <div class="pickr-ctrl"></div>
+            <div class="font-mono text-xs bg-gray-800 text-gray-200 rounded-lg my-5 p-4 code pr-3 flex-grow hidden md:block"></div>
+        </div>
     </div>
 
 </div>
@@ -103,9 +106,15 @@
             position: inherit;
         }
         .pcr-app[data-theme=nano] {
-            width: 300px;
+            width: 225px;
             border-radius: 0.5rem;
         }
+        @media (min-width: 1300px) {
+            .pcr-app[data-theme=nano] {
+                width: 300px;
+            }
+        }
+
         .pcr-app[data-theme=nano] .pcr-selection .pcr-color-chooser, .pcr-app[data-theme=nano] .pcr-selection .pcr-color-opacity {
             height: 0.9em;
             margin: 0;
@@ -140,8 +149,3 @@
 </html>
 
 <script src="bin/main.js"></script>
-<script>
-  window.addEventListener('load', (event) => {
-    document.querySelector('.app-ui').style.display = 'flex';
-  });
-</script>

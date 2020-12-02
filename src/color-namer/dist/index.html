@@ -1,0 +1,30 @@
+
+<script id="color" type="text/html">
+  <li>
+    <div class="swatch" style="background-color:{{hex}}"></div>
+    <div class="name">{{name}}</div>
+  </li>
+</script>
+
+<html>
+  <head>
+    <title>Color Namer</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ICanHaz.js/0.10.3/ICanHaz.min.js"></script>
+    <script src="color-namer.js"></script>
+    <script src="index.js"></script>
+
+    <link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <section>
+      <form>
+        <h1>Names for</h1>
+        <input type="text" name="query" id="query" placeholder="Color" autocapitalize="off" autocorrect="off" autofocus="autofocus" x-webkit-speech="x-webkit-speech" tabindex=1 />
+      </form>
+      <ul id="colors"></ul>
+    </section>
+  </body>
+</html>
+<body>

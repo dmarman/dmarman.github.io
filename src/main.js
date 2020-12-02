@@ -6,7 +6,7 @@ import modelWrapper from './models/wrapper/wrapper'
 import Mustache from 'mustache'
 import codeStub from './stubs/code.stub.html'
 import shadeStub from './stubs/shade.stub.html'
-import namer from 'color-namer'
+import namer from './color-namer'
 import chroma from 'chroma-js'
 
 let nextModel = modelWrapper(rawNext);
@@ -275,9 +275,14 @@ function name(outputs)
   let names = [];
 
   outputs.forEach((output, i) => {
-    let name = namer(rgbToHex(output.r5*255, output.g5*255, output.b5*255), { pick: ['x11']}).x11[0].name;
+    let namings = namer(rgbToHex(output.r5*255, output.g5*255, output.b5*255), { pick: ['basic']}).basic;
+    let name = namings[0].name;
 
-    if(names.includes(name)) name = namer(rgbToHex(output.r5*255, output.g5*255, output.b5*255), { pick: ['x11']}).x11[1].name;
+    if(names.includes(name)) name = namings[1].name;
+    if(names.includes(name)) name = namings[2].name;
+    if(names.includes(name)) name = namings[3].name;
+    if(names.includes(name)) name = namings[4].name;
+    if(names.includes(name)) name = namings[5].name;
 
     names.push(name);
 
@@ -352,5 +357,5 @@ function calculateBrandColorFit () {
 }
 
 window.addEventListener('load', (event) => {
-  document.querySelector('.app-ui').style.display = 'flex';
+  //document.querySelector('.app-ui').style.display = 'flex';
 });
