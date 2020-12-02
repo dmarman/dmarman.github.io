@@ -20,7 +20,7 @@
     <meta property="twitter:description" content="A tool for creating new color shades based on a neural network and trained with the Tailwindcss palette.">
     <meta property="twitter:image" content="https://raw.githubusercontent.com/dmarman/dmarman.github.io/master/bin/tailwind-ink.png">
 
-    <link rel="stylesheet" href="./bin/main.css?v=1">
+    <link rel="stylesheet" href="./bin/main.css?v=2">
     <link rel="shortcut icon" type="image/x-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHklEQVQ4T2NkSPn/n4ECwDhqAMNoGDCMhgHDsAgDAPdXJjHWoQYSAAAAAElFTkSuQmCC">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179178286-1"></script>
@@ -38,7 +38,7 @@
 <div>
     <div class="flex justify-between mt-4 mx-4">
         <div class="flex items-center select-none">
-            <h1 class="text-3xl font-bold tracking-tighter">
+            <h1 class="text-sm xs:text-2xl sm:text-3xl font-bold tracking-tighter">
                 <span id="title0" class="float-left">T</span>
                 <span id="title1" class="float-left">a</span>
                 <span id="title2" class="float-left">i</span>
@@ -52,36 +52,36 @@
                 <span id="title10" class="float-left">k</span>
                 <span class="float-left ml-2">v2.0</span>
             </h1>
-            <div class="ml-4 mt-2">
+            <div class="ml-4 text-sm md:text-base">
                 <a class="mr-2 hover:text-blue-500" href="https://github.com/dmarman/dmarman.github.io">Github</a>
                 <a class="mr-2 hover:text-blue-500" href="https://twitter.com/manceraio">@manceraio</a>
             </div>
         </div>
-        <div class="flex items-center mt-2">
-            <a class="hover:bg-orange-600 bg-orange-500 text-white py-2 px-4 rounded-lg shadow transition duration-200" target="_blank" href="https://www.buymeacoffee.com/oupycjq">Buy me a coffee</a>
+        <div class="hidden sm:flex items-center mt-2">
+            <a class="hover:bg-royalblue-500 bg-royalblue-600 text-royalblue-100 py-1 px-3 rounded-lg shadow transition duration-200" target="_blank" href="https://www.buymeacoffee.com/oupycjq">Buy me a coffee</a>
         </div>
     </div>
 
-    <div class="block lg:flex lg:flex-row-reverse items-start float-left app-ui">
+    <div class="block lg:flex lg:flex-row-reverse items-start float-left w-full sm:w-auto app-ui">
         <div class="flex flex-col pl-4 lg:pl-0">
             <div class="flex pt-3 pb-4 items-center">
-                <h2 class="uppercase opacity-75 tracking-wide">Palette</h2>
-                <button class="px-3 ml-4 focus:outline-none bg-gray-200 hover:bg-gray-300 hover:shadow-md transition duration-200 text-gray-900 border-gray-700 shadow border-2 rounded-lg text-s aa-button">Aa</button>
+                <h2 class="uppercase opacity-75 tracking-wide text-sm sm:text-base">Palette</h2>
+                <button class="px-2 ml-4 focus:outline-none bg-gray-200 hover:bg-gray-300 hover:shadow-md transition duration-200 text-gray-900 border-gray-700 shadow border-2 rounded-lg text-xs sm:text-sm aa-button">Aa</button>
             </div>
-            <div class="flex">
-                <div class="color-col text-sm" id="shade0"></div>
-                <div class="color-col text-sm" id="shade1"></div>
-                <div class="color-col text-sm" id="shade2"></div>
-                <div class="color-col text-sm" id="shade3"></div>
-                <div class="color-col text-sm" id="shade4"></div>
-                <div class="color-col text-sm" id="shade5"></div>
-                <div class="color-col text-sm" id="shade6"></div>
-                <div class="color-col text-sm" id="shade7"></div>
-                <div class="color-col text-sm" id="shade8"></div>
-                <div class="color-col text-sm" id="shade9"></div>
+            <div class="flex justify-between pr-4">
+                <div class="color-col text-sm w-full sm:w-auto" id="shade0"></div>
+                <div class="color-col text-sm w-full sm:w-auto" id="shade1"></div>
+                <div class="color-col text-sm w-full sm:w-auto" id="shade2"></div>
+                <div class="color-col text-sm w-full sm:w-auto" id="shade3"></div>
+                <div class="color-col text-sm w-full sm:w-auto" id="shade4"></div>
+                <div class="color-col text-sm w-full sm:w-auto" id="shade5"></div>
+                <div class="color-col text-sm w-full sm:w-auto" id="shade6"></div>
+                <div class="color-col text-sm w-full sm:w-auto" id="shade7"></div>
+                <div class="color-col text-sm w-full sm:w-auto" id="shade8"></div>
+                <div class="color-col text-sm w-full sm:w-auto" id="shade9"></div>
             </div>
-            <div>
-                <h2 class="opacity-75 tracking-wide pt-4 pb-4">
+            <div class="hidden sm:block">
+                <h2 class="opacity-75 tracking-wide pt-4 pb-4  text-sm sm:text-base">
                     BRAND COLOR
                 </h2>
                 <div id="brand" class="font-mono text-xs text-purple-700"></div>
@@ -106,10 +106,10 @@
             position: inherit;
         }
         .pcr-app[data-theme=nano] {
-            width: 225px;
+            width: 230px;
             border-radius: 0.5rem;
         }
-        @media (min-width: 1300px) {
+        @media (min-width: 1314px) {
             .pcr-app[data-theme=nano] {
                 width: 300px;
             }
@@ -148,4 +148,4 @@
 </body>
 </html>
 
-<script src="bin/main.js?v=1"></script>
+<script src="bin/main.js?v=2"></script>
