@@ -19,7 +19,7 @@ function rgbToHex(r, g, b) {
   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
-const initColor = '#0064FF';
+const initColor = '#0963EF';
 
 const pickrButton = Pickr.create({
   el: '.pickr',
@@ -42,7 +42,7 @@ const pickrButton = Pickr.create({
     hue: true,
     interaction: {
       input: true,
-      save: true
+      save: false
     }
   },
   i18n: {
@@ -59,21 +59,28 @@ let color0 = shadesModel(initColor);
 
 let outputs = calculateColorsHorizontally(initColor, color0);
 
-let brandColor = calculateBrandColor(initColor);
+let brandColor = calculateBrandColor(initColor, outputs);
 
 paint(outputs);
 renderTexts();
 
-pickrButton.on('change', instance => {
+pickrButton.on('change', (color, instance) => {
+  color0 = shadesModel(color.toHEXA().toString());
 
-  color0 = shadesModel(instance.toHEXA().toString());
+  outputs = calculateColorsHorizontally(color.toHEXA().toString(), color0);
 
-  outputs = calculateColorsHorizontally(instance.toHEXA().toString(), color0);
-
-  brandColor = calculateBrandColor(instance.toHEXA().toString());
+  brandColor = calculateBrandColor(color.toHEXA().toString(), outputs);
 
   paint(outputs);
-  changeFavicon(instance.toHEXA().toString())
+  changeFavicon(color.toHEXA().toString())
+
+  if(instance.changeSource === 'input'){
+    renderTexts();
+  }
+});
+
+pickrButton.on('changestop', (color, instance) => {
+  renderTexts();
 });
 
 function calculateColorsHorizontally(initColor, color0)
@@ -92,7 +99,7 @@ function calculateColorsHorizontally(initColor, color0)
   return [color0, color1, color2, color3, color4, color5, color6, color7, color8, color9];
 }
 
-function calculateBrandColor(hex)
+function calculateBrandColor(hex, outputs)
 {
   let distances = {};
 
@@ -102,6 +109,8 @@ function calculateBrandColor(hex)
     distances['0' + j] = chroma.deltaE(rgbToHex(outputs[0]['r' + j]*255, outputs[0]['g' + j]*255, outputs[0]['b' + j]*255), hex);
     distances['1' + j] = chroma.deltaE(rgbToHex(outputs[1]['r' + j]*255, outputs[1]['g' + j]*255, outputs[1]['b' + j]*255), hex);
     distances['2' + j] = chroma.deltaE(rgbToHex(outputs[2]['r' + j]*255, outputs[2]['g' + j]*255, outputs[2]['b' + j]*255), hex);
+    distances['3' + j] = chroma.deltaE(rgbToHex(outputs[3]['r' + j]*255, outputs[3]['g' + j]*255, outputs[3]['b' + j]*255), hex);
+    distances['7' + j] = chroma.deltaE(rgbToHex(outputs[7]['r' + j]*255, outputs[7]['g' + j]*255, outputs[7]['b' + j]*255), hex);
     distances['8' + j] = chroma.deltaE(rgbToHex(outputs[8]['r' + j]*255, outputs[8]['g' + j]*255, outputs[8]['b' + j]*255), hex);
     distances['9' + j] = chroma.deltaE(rgbToHex(outputs[9]['r' + j]*255, outputs[9]['g' + j]*255, outputs[9]['b' + j]*255), hex);
   }
@@ -117,7 +126,7 @@ function calculateBrandColor(hex)
   let index = sortable[0][0].slice(1);
   let colorIndex = sortable[0][0].slice(0, 1);
 
-  brandColor = { index, color: colorIndex, fit: false, similar: [], hex: hex};
+  brandColor = { index, color: colorIndex, fit: false, similar: [], hex: hex, distance: sortable[0][1]};
 
   sortable.forEach((match) => {
     if(match[0].slice(0, 1) === colorIndex) brandColor.similar.push(match)
@@ -125,7 +134,7 @@ function calculateBrandColor(hex)
 
   let replace = chroma(hex).rgb();
 
-  if(sortable[0][1] < 1){
+  if(sortable[0][1] < 9.5){ // 9.5 will fit 79% of the colors
 
     brandColor.fit = true;
 
@@ -144,6 +153,16 @@ function calculateBrandColor(hex)
       outputs[2]['g' + index] = replace[1]/255;
       outputs[2]['b' + index] = replace[2]/255;
     }
+    if(colorIndex === '3'){
+      outputs[3]['r' + index] = replace[0]/255;
+      outputs[3]['g' + index] = replace[1]/255;
+      outputs[3]['b' + index] = replace[2]/255;
+    }
+    if(colorIndex === '7'){
+      outputs[7]['r' + index] = replace[0]/255;
+      outputs[7]['g' + index] = replace[1]/255;
+      outputs[7]['b' + index] = replace[2]/255;
+    }
     if(colorIndex === '8'){
       outputs[8]['r' + index] = replace[0]/255;
       outputs[8]['g' + index] = replace[1]/255;
@@ -158,14 +177,6 @@ function calculateBrandColor(hex)
 
   return brandColor;
 }
-
-pickrButton.on('changestop', () => {
-  renderTexts();
-});
-
-pickrButton.on('save', () => {
-  renderTexts();
-});
 
 function renderTexts()
 {
@@ -296,3 +307,50 @@ function changeFavicon(hex) {
   link.href = canvas.toDataURL();
 }
 
+function calculateBrandColorFit () {
+  let zero=0, one=0, two=0, three=0, four=0, five=0, six=0, nine=0, eight=0, seven = 0;
+  let dist = [];
+  let it = 1000;
+  for (let i = 0; i < it; i++) {
+    let randomColor = rgbToHex(Math.random()*255, Math.random()*255, Math.random()*255);
+
+    let first = shadesModel(randomColor);
+    let now = calculateColorsHorizontally(randomColor, first);
+    let brand = calculateBrandColor(randomColor, now)
+    dist.push(Math.round(brand.distance))
+    if(brand.fit == true) {
+      console.log('fit')
+      if(brand.color == 0) zero++
+      if(brand.color == 1) one++
+      if(brand.color == 2) two++
+      if(brand.color == 3) three++
+      if(brand.color == 4) four++
+      if(brand.color == 5) five++
+      if(brand.color == 6) six++
+      if(brand.color == 7) seven++
+      if(brand.color == 8) eight++
+      if(brand.color == 9) nine++
+    };
+  }
+
+  console.log(
+    zero/it*100,
+    one/it*100,
+    two/it*100,
+    three/it*100,
+    four/it*100,
+    five/it*100,
+    six/it*100,
+    seven/it*100,
+    eight/it*100,
+    nine/it*100,
+  )
+
+  var counts = {};
+  dist.forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
+  console.log(counts)
+}
+
+window.addEventListener('load', (event) => {
+  document.querySelector('.app-ui').style.display = 'flex';
+});

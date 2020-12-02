@@ -19,7 +19,7 @@
     "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
-    "@simonwep/pickr": "^1.7.2",
+    "@simonwep/pickr": "dmarman/pickr#master",
     "asciichart": "^1.5.25",
     "brain.js": "^2.0.0-beta.2",
     "chroma-js": "^2.1.0",
