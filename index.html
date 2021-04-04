@@ -25,7 +25,8 @@
      <!--Global site tag (gtag.js) - Google Analytics-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179178286-1"></script>
     <script>
-      if(window.location.origin !== 'file://'){
+      if(window.location.origin !== 'http://localhost:8080'){
+        console.log('GA active');
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -146,14 +147,14 @@
                         </div>
                     </div>
                 </div>
-                <div id="code" class="w-full flex p-4 hidden">
-                    <div class="font-mono text-xs bg-gray-800 text-gray-200 rounded-lg p-4 code pr-3 flex-grow md:bloc"></div>
+                <div id="code" class="w-full p-4 relative hidden">
+                    <div class="absolute right-0">
+                        <button id="copy-btn" class="text-sm p-2 border-2 border-gray-400 rounded-lg text-gray-300 hover:text-gray-900 mr-6 mt-2 hover:bg-gray-200" data-clipboard-target="#code-text">Copy</button>
+                    </div>
+                    <div id="code-text" class="font-mono text-xs bg-gray-800 text-gray-200 p-4 rounded-lg code pr-3 flex-grow md:bloc"></div>
                 </div>
             </div>
-
         </div>
-
-
     </div>
 
     <style>

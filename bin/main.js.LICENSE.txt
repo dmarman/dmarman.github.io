@@ -10,6 +10,13 @@
  * Released under the MIT License
  */
 
+/*!
+ * clipboard.js v2.0.8
+ * https://clipboardjs.com/
+ *
+ * Licensed MIT © Zeno Rocha
+ */
+
 /*! NanoPop 2.1.0 MIT | https://github.com/Simonwep/nanopop */
 
 /*! Pickr 1.7.3 MIT | https://github.com/Simonwep/pickr */

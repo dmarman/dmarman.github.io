@@ -12,6 +12,7 @@ import Chart from 'chart.js';
 import 'chartjs-plugin-dragdata'
 import 'chartjs-plugin-annotation'
 import news from './datasets/news-revised';
+import ClipboardJS from 'clipboard'
 
 let nextModel = modelWrapper(rawNext);
 let shadesModel = modelWrapper(rawShades);
@@ -1013,7 +1014,8 @@ function code(names)
     });
   });
 
-  document.querySelector('.code').innerHTML = Mustache.render(codeStub, {colors, brandColor, unfit: !brandColor.fit});
+  let renderedCode = Mustache.render(codeStub, {colors, brandColor, unfit: !brandColor.fit});
+  document.querySelector('.code').innerHTML = renderedCode;
 }
 
 function paint(outputs)
@@ -1529,4 +1531,13 @@ document.getElementById('code-btn').addEventListener('click', (e) => {
   codePage.classList.remove('hidden')
 });
 
+// Copy Button
+let clipboard = new ClipboardJS('#copy-btn');
 
+clipboard.on('success', (e) => {
+  document.getElementById('copy-btn').innerText = 'Copied';
+  e.clearSelection();
+  setTimeout(() => {
+    document.getElementById('copy-btn').innerText = 'Copy';
+  }, 1000)
+});
