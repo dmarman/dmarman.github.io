@@ -22,7 +22,7 @@
 
     <link rel="stylesheet" href="./bin/main.css?v=3">
     <link rel="shortcut icon" type="image/x-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHklEQVQ4T2NkSPn/n4ECwDhqAMNoGDCMhgHDsAgDAPdXJjHWoQYSAAAAAElFTkSuQmCC">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+     Global site tag (gtag.js) - Google Analytics
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179178286-1"></script>
     <script>
       if(window.location.origin !== 'file://'){
@@ -33,83 +33,129 @@
         gtag('config', 'UA-179178286-1');
       }
     </script>
-</head>
-<body>
-<div>
-    <div class="flex justify-between mt-4 mx-4">
-        <div class="flex items-center select-none">
-            <h1 class="text-sm xs:text-2xl sm:text-3xl font-bold tracking-tighter">
-                <span id="title0" class="float-left">T</span>
-                <span id="title1" class="float-left">a</span>
-                <span id="title2" class="float-left">i</span>
-                <span id="title3" class="float-left">l</span>
-                <span id="title4" class="float-left">w</span>
-                <span id="title5" class="float-left">i</span>
-                <span id="title6" class="float-left">n</span>
-                <span id="title7" class="float-left">d</span>
-                <span id="title8" class="float-left">I</span>
-                <span id="title9" class="float-left">n</span>
-                <span id="title10" class="float-left">k</span>
-                <span class="float-left ml-2">v2.0</span>
-            </h1>
-            <div class="ml-4 text-sm md:text-base">
-                <a class="ml-6 mr-10 ml-5 hover:text-blue-500 hidden sm:inline" href="https://github.com/dmarman/dmarman.github.io">Github</a>
-                <a class="mr-10 hover:text-blue-500 hidden sm:inline" href="https://twitter.com/manceraio">@manceraio</a>
-                <a class="gumroad-button hover:text-blue-500 hover:border-blue-500 border-gray-400 bg-gray-100 border-2 p-3 rounded-md" href="https://www.figma.com/community/plugin/931531611557198867/Tailwind-Ink" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-figma inline hover:text-blue-500" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <circle cx="15" cy="12" r="3" />
-                        <rect x="6" y="3" width="12" height="6" rx="3" />
-                        <path d="M9 9a3 3 0 0 0 0 6h3m-3 0a3 3 0 1 0 3 3v-15" />
-                    </svg>
-                    Figma Plugin
-                </a>
-            </div>
-        </div>
-        <div class="hidden sm:flex items-center mt-2">
-            <a class="hover:bg-royalblue-500 bg-royalblue-600 text-royalblue-100 py-1 px-3 rounded-lg shadow transition duration-200 hidden" target="_blank" href="https://www.buymeacoffee.com/oupycjq">Buy me a coffee</a>
-        </div>
-    </div>
 
-    <div class="block lg:flex lg:flex-row-reverse items-start float-left w-full sm:w-auto app-ui">
-        <div class="flex flex-col pl-4 lg:pl-0">
-            <div class="flex pt-3 pb-4 items-center">
-                <h2 class="uppercase opacity-75 tracking-wide text-sm sm:text-base">Palette</h2>
-                <button class="px-2 ml-4 focus:outline-none bg-gray-200 hover:bg-gray-300 hover:shadow-md transition duration-200 text-gray-900 border-gray-700 shadow border-2 rounded-lg text-xs sm:text-sm aa-button">Aa</button>
-            </div>
-            <div class="flex justify-between pr-4">
-                <div class="color-col text-sm w-full sm:w-auto" id="shade0"></div>
-                <div class="color-col text-sm w-full sm:w-auto" id="shade1"></div>
-                <div class="color-col text-sm w-full sm:w-auto" id="shade2"></div>
-                <div class="color-col text-sm w-full sm:w-auto" id="shade3"></div>
-                <div class="color-col text-sm w-full sm:w-auto" id="shade4"></div>
-                <div class="color-col text-sm w-full sm:w-auto" id="shade5"></div>
-                <div class="color-col text-sm w-full sm:w-auto" id="shade6"></div>
-                <div class="color-col text-sm w-full sm:w-auto" id="shade7"></div>
-                <div class="color-col text-sm w-full sm:w-auto" id="shade8"></div>
-                <div class="color-col text-sm w-full sm:w-auto" id="shade9"></div>
-            </div>
-            <div class="hidden sm:block">
-                <h2 class="opacity-75 tracking-wide pt-4 pb-4  text-sm sm:text-base">
-                    BRAND COLOR
-                </h2>
-                <div id="brand" class="font-mono text-xs text-purple-700"></div>
-                <div class="hidden" id="fit">
-                    <div class="inline-block bg-yellow-200 border border-yellow-400 rounded-full text-yellow-800 py-1 px-4 mt-2 text-sm">
-                        Picked color cannot be inserted in any shade, but fits well between
+    <script src="https://d3js.org/d3.v4.js"></script>
+</head>
+<body style="height: 100vh;">
+    <div class="flex w-full h-full app-ui">
+        <div class="border-r">
+            <div class="flex justify-between py-2 px-4 border-b h-10">
+                <div class="flex items-center select-none">
+                    <h1 class="text-xl font-bold tracking-tighter mr-8">
+                        <span id="title0" class="float-left">T</span>
+                        <span id="title1" class="float-left">a</span>
+                        <span id="title2" class="float-left">i</span>
+                        <span id="title3" class="float-left">l</span>
+                        <span id="title4" class="float-left">w</span>
+                        <span id="title5" class="float-left">i</span>
+                        <span id="title6" class="float-left">n</span>
+                        <span id="title7" class="float-left">d</span>
+                        <span id="title8" class="float-left">I</span>
+                        <span id="title9" class="float-left">n</span>
+                        <span id="title10" class="float-left">k</span>
+                    </h1>
+                    <div class="text-sm text-gray-600">
+                        <a class="mr-8 hidden hover:text-gray-800 sm:inline" href="https://github.com/dmarman/dmarman.github.io">Github</a>
+                        <a class="mr-8 hidden hover:text-gray-800 sm:inline" href="https://twitter.com/manceraio">@manceraio</a>
+                        <a class="mr-8 hidden hover:text-gray-800 sm:inline" href="https://www.figma.com/community/plugin/931531611557198867/Tailwind-Ink" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-figma inline" width="15" height="15" viewBox="0 0 24 24" stroke-width="2" stroke="#718096" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <circle cx="15" cy="12" r="3" />
+                                <rect x="6" y="3" width="12" height="6" rx="3" />
+                                <path d="M9 9a3 3 0 0 0 0 6h3m-3 0a3 3 0 1 0 3 3v-15" />
+                            </svg>
+                            Figma Plugin
+                        </a>
                     </div>
-                    <div id="fits-between" class="font-mono text-xs text-purple-700 mt-2"></div>
+                </div>
+                <div class="hidden sm:flex items-center mt-2">
+                    <a class="hover:bg-royalblue-500 bg-royalblue-600 text-royalblue-100 py-1 px-3 rounded-lg shadow transition duration-200 hidden" target="_blank" href="https://www.buymeacoffee.com/oupycjq">Buy me a coffee</a>
+                </div>
+            </div>
+
+            <div class="flex pl-20 text-xs text-gray-800 mb-1 mt-3 ml-2">
+                <div class="w-12 mr-1">50</div>
+                <div class="w-12 mr-1">100</div>
+                <div class="w-12 mr-1">200</div>
+                <div class="w-12 mr-1">300</div>
+                <div class="w-12 mr-1">400</div>
+                <div class="w-12 mr-1">500</div>
+                <div class="w-12 mr-1">600</div>
+                <div class="w-12 mr-1">700</div>
+                <div class="w-12 mr-1">800</div>
+                <div class="w-12 mr-1">900</div>
+            </div>
+            <div class="flex pr-4 palette-grid flex-col ml-2">
+                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade0"></div>
+                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade1"></div>
+                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade2"></div>
+                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade3"></div>
+                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade4"></div>
+                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade5"></div>
+                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade6"></div>
+                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade7"></div>
+                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade8"></div>
+                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade9"></div>
+            </div>
+            <div class="mt-4 ml-20 pr-4 mr-2 pl-2">
+                <div class="pickr"></div>
+                <div class="pickr-ctrl"></div>
+                <div class="hidden sm:block mt-2">
+                    <h3 class="opacity-75 tracking-wide pt-4 pb-4 text-sm inline">Brand Color:</h3>
+                    <span id="brand" class="font-mono text-xs text-purple-700"></span>
+                    <div class="hidden" id="fit">
+                        <div class="inline-block bg-yellow-200 border border-yellow-400 rounded-full text-yellow-800 py-1 px-3 mt-2 text-xs">
+                            Picked color cannot be inserted in any shade, but fits well between
+                        </div>
+                        <div id="fits-between" class="font-mono text-xs text-purple-700 mt-2"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="m-4">
-            <div class="pickr"></div>
-            <div class="pickr-ctrl"></div>
-            <div class="font-mono text-xs bg-gray-800 text-gray-200 rounded-lg my-5 p-4 code pr-3 flex-grow hidden md:block"></div>
+
+        <div class="w-full" style="min-width:200px">
+            <div class="flex justify-between px-4 border-b h-10">
+                <div id="menu-buttons" class="hidden sm:flex items-center text-gray-600 text-sm">
+                    <button id="graphs-btn" class="mr-8 hidden sm:inline border-b-2 border-blue-500 text-blue-500 h-full focus:outline-none cursor-default">Graphs</button>
+                    <button id="code-btn"   class="mr-8 hover:text-gray-800 hidden sm:inline h-full focus:outline-none">Code</button>
+                </div>
+            </div>
+
+            <div id="pages">
+                <div id="graphs" class="w-full flex pl-1 pt-1">
+                    <div class="flex flex-col px-4 lg:pl-0 w-full flex-grow" style="min-width:100px">
+                        <div class="flex flex-col max-w-2xl">
+                            <div style="position: relative; height:30vh;">
+                                <div class="chart-container" style="height: 100%;">
+                                    <canvas class="mt-3" id="luminosity-canva"></canvas>
+                                    <canvas class="mt-3" id="chroma-canva"></canvas>
+                                    <canvas class="mt-3" id="hue-canva"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col pl-4 lg:pl-0 w-full flex-grow pr-4" style="min-width: 100px">
+                        <div class="flex flex-col max-w-2xl">
+                            <div style="position: relative; height:30vh;">
+                                <div class="chart-container" style="height: 100%;">
+                                    <canvas class="mt-3" id="contrast-canva"></canvas>
+                                    <canvas class="mt-3" id="contrast-black-canva"></canvas>
+                                    <canvas class="mt-3" id="contrast-white-canva"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="code" class="w-full flex p-4 hidden">
+                    <div class="font-mono text-xs bg-gray-800 text-gray-200 rounded-lg p-4 code pr-3 flex-grow md:bloc"></div>
+                </div>
+            </div>
+
         </div>
+
+
     </div>
 
-</div>
     <style>
         .picker {
             position: inherit;
@@ -131,14 +177,11 @@
             margin-top: 25px;
 
         }
-        .pcr-app[data-theme=nano] .pcr-selection {
-            height: 300px;
-        }
         .pcr-app[data-theme=nano] .pcr-selection .pcr-color-preview .pcr-current-color {
-            width: 4em;
-            height: 4em;
+            width: 3em;
+            height: 3em;
             border-radius: 0.5rem;
-            margin-left: 10px;
+            margin-left: .6em;
         }
         .pcr-app[data-theme=nano] .pcr-selection .pcr-color-preview {
             margin-left: 0;
@@ -152,6 +195,25 @@
         }
         .pcr-app .pcr-interaction input {
             padding: .45em .9em;
+        }
+
+        .pcr-app[data-theme=nano] {
+            width: 100%;
+        }
+
+        .pcr-app[data-theme=nano] .pcr-selection {
+            height: 20vh;
+            display: grid;
+            grid-gap: .6em;
+            grid-template-columns: 1fr 7fr;
+            grid-template-rows: 7fr 2fr 0fr;
+            align-items: center;
+            width: 100%;
+            align-self: flex-start;
+        }
+
+        .pcr-app .pcr-interaction input {
+            margin-top: 0;
         }
     </style>
 </body>

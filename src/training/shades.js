@@ -12,8 +12,17 @@ const grays = require('./../datasets/grays');
 const news = require('./../datasets/news');
 const ui = require('./../datasets/ui');
 
+const hand = require('./../datasets/hand');
+const newsRevised = require('./../datasets/news-revised');
+const newsRevisedDes = require('./../datasets/news-revised-desaturated');
+const newsRevisedDes2 = require('./../datasets/news-revised-desaturated-2');
+const newsRevisedDes3 = require('./../datasets/news-revised-desaturated-3');
+const newsRevisedDes4 = require('./../datasets/news-revised-desaturated-4');
+const newsRevisedDes5 = require('./../datasets/news-revised-desaturated-5');
+const newsRevisedDes6 = require('./../datasets/news-revised-desaturated-6');
+
 let data = [];
-let datasets = [news, originals, ui, grays];
+let datasets = [newsRevised, newsRevisedDes, newsRevisedDes2, newsRevisedDes3, newsRevisedDes3, newsRevisedDes4, newsRevisedDes5, newsRevisedDes6];
 
 // Prepare data for NN
 datasets.forEach((dataset) => {
@@ -35,7 +44,7 @@ datasets.forEach((dataset) => {
 
 dataset = shuffle(data);
 
-const SPLIT = data.length*0.9;
+const SPLIT = data.length*0.8;
 const trainData = dataset.slice(0, SPLIT);
 const testData = dataset.slice(SPLIT + 1);
 
@@ -54,7 +63,7 @@ const trainingOptions = {
   learningRate: 0.001,
   logPeriod: 1000,
   log: function (details) { // Log accuracy while training
-    acc = getAccuracy(this.net, testData);
+    acc = 0;//getAccuracy(this.net, testData);
     s0.push(details.error);
     s1.push(acc);
 
@@ -66,7 +75,8 @@ const trainingOptions = {
       process.stdout.write(JSON.stringify(details.iterations) + ' Acc_test_data: ' + acc + ' error: ' + details.error);
     } else { // Log in browser console
       console.clear();
-      console.log(asciichart.plot([s0, s1],  { height: 30,colors: [asciichart.blue, asciichart.red] }));
+
+      console.log(asciichart.plot([s0, s1],  { height: 30,colors: [asciichart.red, asciichart.blue] }));
       console.log(JSON.stringify(details.iterations) + ' Acc_test_data: ' + acc + ' error: ' + details.error);
     }
   },
