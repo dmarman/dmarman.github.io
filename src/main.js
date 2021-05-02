@@ -25,6 +25,7 @@ function rgbToHex(r, g, b) {
 }
 
 const initColor = '#0963EF';
+let palette = [];
 
 const pickrButton = Pickr.create({
   el: '.pickr',
@@ -59,9 +60,11 @@ let options = {
         return tooltipItem.yLabel.toFixed(1);
 
       },
-      title: function(tooltipItem, data) {
-        let name = palette[tooltipItem[0].datasetIndex].name;
-        return name.charAt(0).toUpperCase() + name.slice(1) + ' ' + tooltipItem[0].label;
+      title: (tooltipItem, data) => {
+        let colorName = palette[tooltipItem[0].datasetIndex].name;
+        if(colorName === undefined) colorName = name(outputs)[tooltipItem[0].datasetIndex]; // hotfix for error when just inputing color and dragging on chart
+
+        return colorName.charAt(0).toUpperCase() + colorName.slice(1) + ' ' + tooltipItem[0].label;
       }
     }
   },
@@ -648,7 +651,7 @@ function closeTooltip(chart) {
   return chart.canvas.dispatchEvent(mouseOutEvent);
 }
 
-function hideTooltip(chart){
+function hideTooltip(chart) {
   chart.options.tooltips.enabled = false;
   chart.update();
 }
@@ -848,7 +851,6 @@ for (const colors in news) {
 outputs = outputShades;
 
 let brandColor = calculateBrandColor(initColor, outputs);
-let palette = [];
 
 normalizeToLCH(outputs);
 paint(outputs);
@@ -862,15 +864,14 @@ pickrButton.on('change', (color, instance) => {
   brandColor = calculateBrandColor(color.toHEXA().toString(), outputs);
 
   normalizeToLCH(outputs);
-
-  toCharts();
-
   paint(outputs);
   changeFavicon(color.toHEXA().toString())
 
   if(instance.changeSource === 'input'){
     renderTexts();
   }
+
+  toCharts();
 });
 
 pickrButton.on('changestop', (color, instance) => {
