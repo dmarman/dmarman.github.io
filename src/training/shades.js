@@ -20,10 +20,12 @@ const newsRevisedDes3 = require('./../datasets/news-revised-desaturated-3');
 const newsRevisedDes4 = require('./../datasets/news-revised-desaturated-4');
 const newsRevisedDes5 = require('./../datasets/news-revised-desaturated-5');
 const newsRevisedDes6 = require('./../datasets/news-revised-desaturated-6');
+const may = require('./../datasets/may/may');
 
 let data = [];
-let datasets = [newsRevised, newsRevisedDes, newsRevisedDes2, newsRevisedDes3, newsRevisedDes3, newsRevisedDes4, newsRevisedDes5, newsRevisedDes6];
-
+//let datasets = [newsRevised, newsRevisedDes, newsRevisedDes2, newsRevisedDes3, newsRevisedDes3, newsRevisedDes4, newsRevisedDes5, newsRevisedDes6];
+let datasets = [may];
+console.log(datasets)
 // Prepare data for NN
 datasets.forEach((dataset) => {
   Object.keys(dataset).forEach((color) => {
