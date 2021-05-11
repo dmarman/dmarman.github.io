@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Chart.js Drag Data Points Plugin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+  <script src="assets/chartjs-plugin-dragdata.min.js"></script>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      background-color: #eee;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="chartJSContainer" style="height: 90%; width: 90%;"></canvas>
+  <script>
+    var options = {
+      type: 'radar',
+      data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          pointHitRadius: 25
+        }]
+      },
+      options: {
+        dragData: true,
+        dragDataRound: 0,
+        dragOptions: {
+          showTooltip: true
+        },
+        onDragStart: function(e) {
+          // console.log(e)
+        },
+        onDrag: function(e, datasetIndex, index, value) {
+          e.target.style.cursor = 'grabbing'
+          // console.log(datasetIndex, index, value)
+        },
+        onDragEnd: function(e, datasetIndex, index, value) {
+          e.target.style.cursor = 'default' 
+          // console.log(datasetIndex, index, value)
+        },
+        hover: {
+          onHover: function(e) {
+            const point = this.getElementAtEvent(e)
+            if (point.length) e.target.style.cursor = 'grab'
+            else e.target.style.cursor = 'default'
+          }
+        },
+        scale: {
+          ticks: {
+            max: 20,
+            min: 0,
+            stepSize: 1
+          }
+        }
+      }
+    }
+
+    var ctx = document.getElementById('chartJSContainer').getContext('2d');
+    window.test = new Chart(ctx, options);
+  </script>
+</body>
+
+</html>

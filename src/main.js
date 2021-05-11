@@ -9,7 +9,7 @@ import shadeStub from './stubs/shade.stub.html'
 import namer from './color-namer'
 import chroma from 'chroma-js'
 import Chart from 'chart.js';
-import 'chartjs-plugin-dragdata'
+import './chartjs-plugin-dragdata/src/index.js'
 import 'chartjs-plugin-annotation'
 import news from './datasets/news-revised';
 import ClipboardJS from 'clipboard'

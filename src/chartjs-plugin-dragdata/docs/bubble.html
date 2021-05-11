@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Chart.js Drag Data Points Plugin</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+    <script src="assets/chartjs-plugin-dragdata.min.js"></script>
+    <style>
+    html,body{
+      margin: 0;
+      padding: 0;
+    }
+    canvas {
+      background-color : #eee;
+      position: absolute;
+      margin: auto;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+    </style>
+  </head>
+  <body>
+    <canvas id="chartJSContainer" style="height: 90%; width: 90%;"></canvas>
+    <script>
+      var options = {
+        type: 'bubble',
+        data: {
+          labels: ["Red"],
+          datasets: [
+            {
+              label: 'Bubble',
+              data: [{
+                x: 10,
+                y: 15,
+                r: 30
+              }],
+              borderWidth: 1,
+              backgroundColor: 'rgb(189, 80, 105, 1)',
+              pointHitRadius: 25
+            }
+          ]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+                ticks: {
+                    max: 25,
+                    min: 0
+                }
+            }],
+            xAxes: [{
+              ticks: {
+                max: 11,
+                min: 9
+              }
+            }]
+          },
+          dragDataRound: 2,
+          dragOptions: {
+            showTooltip: true
+          },
+          responsive: false,
+          dragData: true,
+          dragX: true,
+          onDragStart: function(e) {
+            // console.log(e)
+          },
+          onDrag: function(e, datasetIndex, index, value) {
+            e.target.style.cursor = 'grabbing'
+            // console.log(datasetIndex, index, value)
+          },
+          onDragEnd: function(e, datasetIndex, index, value) {
+            e.target.style.cursor = 'default' 
+            // console.log(datasetIndex, index, value)
+          },
+          hover: {
+            onHover: function(e) {
+              const point = this.getElementAtEvent(e)
+              if (point.length) e.target.style.cursor = 'grab'
+              else e.target.style.cursor = 'default'
+            }
+          }
+        }
+      }
+
+      var ctx = document.getElementById('chartJSContainer').getContext('2d');
+      window.test = new Chart(ctx, options);
+    </script>
+  </body>
+</html>
