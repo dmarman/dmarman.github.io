@@ -20,7 +20,7 @@
     <meta property="twitter:description" content="A tool for creating new color shades based on a neural network and trained with the Tailwindcss palette.">
     <meta property="twitter:image" content="https://raw.githubusercontent.com/dmarman/dmarman.github.io/master/bin/tailwind-ink.png">
 
-    <link rel="stylesheet" href="./bin/main.css?v=6">
+    <link rel="stylesheet" href="./bin/main.css?v=7">
     <link rel="shortcut icon" type="image/x-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHklEQVQ4T2NkSPn/n4ECwDhqAMNoGDCMhgHDsAgDAPdXJjHWoQYSAAAAAElFTkSuQmCC">
      <!--Global site tag (gtag.js) - Google Analytics-->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179178286-1"></script>
@@ -76,7 +76,10 @@
             <div class="">
                 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CESDVK3L&placement=tailwindink" id="_carbonads_js"></script>
             </div>
-
+            <div class="slidecontainer w-full hidden">
+                <input type="range" min="1" max="200" value="50" class="slider" id="shadeSaturation">
+            </div>
+            <button id="straightHueBtn" class="hidden">Straight Hue</button>
             <div class="flex pl-20 text-xs text-gray-800 mb-1 mt-3 ml-2">
                 <div class="w-12 mr-1">50</div>
                 <div class="w-12 mr-1">100</div>
@@ -121,6 +124,7 @@
             <div class="flex justify-between px-4 border-b h-10">
                 <div id="menu-buttons" class="hidden sm:flex items-center text-gray-600 text-sm">
                     <button id="graphs-btn" class="mr-8 hidden sm:inline border-b-2 border-blue-500 text-blue-500 h-full focus:outline-none cursor-default">Graphs</button>
+                    <button id="context-btn"   class="mr-8 hover:text-gray-800 hidden sm:inline h-full focus:outline-none">Context</button>
                     <button id="code-btn"   class="mr-8 hover:text-gray-800 hidden sm:inline h-full focus:outline-none">Code</button>
                 </div>
             </div>
@@ -155,6 +159,293 @@
                         <button id="copy-btn" class="text-sm p-2 border-2 border-gray-400 rounded-lg text-gray-300 hover:text-gray-900 mr-6 mt-2 hover:bg-gray-200" data-clipboard-target="#code-text">Copy</button>
                     </div>
                     <div id="code-text" class="font-mono text-xs bg-gray-800 text-gray-200 p-4 rounded-lg code pr-3 flex-grow md:bloc"></div>
+                </div>
+                <div id="context" class="w-full p-4 relative hidden text-sm leading-tight">
+                    <div class="flex">
+                        <div class="px-5 pb-5 flex">
+                            <div class="card border-2 bg-white rounded-lg pt-0 flex flex-col w-full mt-10 md:mt-0 z-10">
+                                <div class="px-6 py-2 rounded-t header font-medium">Alert</div>
+                                <div class="px-6 pb-6">
+                                    <h2 class="text-gray-900 text-lg mb-1 mt-3 font-medium title-font title">Feedback</h2>
+                                    <p class="leading-relaxed mb-5 text-gray-600 subtitle">Post-ironic portland shabby chic echo park, banjo fashion axe</p>
+                                    <div class="relative mb-4">
+                                        <label for="email" class="leading-7 text-sm text-gray-600 label">Email</label>
+                                        <input type="email" id="email" name="email" value="hello@email.com" class="context-input w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8">
+                                    </div>
+                                    <button class="text-white bg-indigo-500 w-full border-0 py-2 px-6 focus:outline-none mx-auto rounded text-lg button">Button</button>
+                                    <p class="text-xs text-gray-500 mt-3 small-copy">Chicharrones blog helvetica normcore iceland tousled brook viral artisan.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-5 pb-5 flex">
+                            <div class="card-2 border-2 bg-white rounded-lg pt-0 flex flex-col w-full mt-10 md:mt-0 z-10">
+                                <div class="px-6 py-2 rounded-t header font-medium">Alert</div>
+                                <div class="px-6 pb-6">
+                                    <h2 class="text-gray-900 text-lg mb-1 mt-3 font-medium title-font title">Feedback</h2>
+                                    <p class="leading-relaxed mb-5 text-gray-600 subtitle">Post-ironic portland shabby chic echo park, banjo fashion axe</p>
+                                    <div class="relative mb-4">
+                                        <label for="email" class="leading-7 text-sm text-gray-600 label">Email</label>
+                                        <input type="email" id="email" name="email" value="hello@email.com" class="context-input w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8">
+                                    </div>
+                                    <button class="text-white bg-indigo-500 w-full border-0 py-2 px-6 focus:outline-none mx-auto rounded text-lg button">Button</button>
+                                    <p class="text-xs text-gray-500 mt-3 small-copy">Chicharrones blog helvetica normcore iceland tousled brook viral artisan.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="white-theme flex items-center py-2">
+                        <div class="w-40 pl-8">White Theme</div>
+                        <div class="flex">
+                            <div class="bg-black w-12 h-12 m-2 bg-black rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-900 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-800 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-700 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-600 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-500 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-400 rounded-md"></div>
+                            <div class="flex flex-col self-center mx-2 text-black">
+                                <div class="text-base font-medium">Large Black</div>
+                                <div>Normal Black</div>
+                                <div class="text-xs contrast-black"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-900">
+                                <div class="text-base font-medium">Large 900</div>
+                                <div>Normal 900</div>
+                                <div class="text-xs contrast-900"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-800">
+                                <div class="text-base font-medium">Large 800</div>
+                                <div>Normal 800</div>
+                                <div class="text-xs contrast-800"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-700">
+                                <div class="text-base font-medium">Large 700</div>
+                                <div>Normal 700</div>
+                                <div class="text-xs contrast-700"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-600">
+                                <div class="text-base font-medium">Large 600</div>
+                                <div>Normal 600</div>
+                                <div class="text-xs contrast-600"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-500">
+                                <div class="text-base font-medium">Large 500</div>
+                                <div>Normal 500</div>
+                                <div class="text-xs contrast-500"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="light-theme flex items-center py-2 bg-50">
+                        <div class="w-40 pl-8">Light Theme</div>
+                        <div class="flex">
+                            <div class="bg-black w-12 h-12 m-2 bg-black rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-900 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-800 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-700 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-600 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-500 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-400 rounded-md"></div>
+                            <div class="flex flex-col self-center mx-2 text-black">
+                                <div class="text-base font-medium">Large Black</div>
+                                <div>Normal Black</div>
+                                <div class="text-xs contrast-black"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-900">
+                                <div class="text-base font-medium">Large 900</div>
+                                <div>Normal 900</div>
+                                <div class="text-xs contrast-900"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-800">
+                                <div class="text-base font-medium">Large 800</div>
+                                <div>Normal 800</div>
+                                <div class="text-xs contrast-800"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-700">
+                                <div class="text-base font-medium">Large 700</div>
+                                <div>Normal 700</div>
+                                <div class="text-xs contrast-700"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-600">
+                                <div class="text-base font-medium">Large 600</div>
+                                <div>Normal 600</div>
+                                <div class="text-xs contrast-600"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-500">
+                                <div class="text-base font-medium">Large 500</div>
+                                <div>Normal 500</div>
+                                <div class="text-xs contrast-500"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="light-theme-ii flex items-center py-2 bg-100">
+                        <div class="w-40 pl-8">Light Theme II</div>
+                        <div class="flex">
+                            <div class="bg-black w-12 h-12 m-2 bg-black rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-900 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-800 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-700 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-600 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-500 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-400 rounded-md"></div>
+                            <div class="flex flex-col self-center mx-2 text-black">
+                                <div class="text-base font-medium">Large Black</div>
+                                <div>Normal Black</div>
+                                <div class="text-xs contrast-black"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-900">
+                                <div class="text-base font-medium">Large 900</div>
+                                <div>Normal 900</div>
+                                <div class="text-xs contrast-900"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-800">
+                                <div class="text-base font-medium">Large 800</div>
+                                <div>Normal 800</div>
+                                <div class="text-xs contrast-800"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-700">
+                                <div class="text-base font-medium">Large 700</div>
+                                <div>Normal 700</div>
+                                <div class="text-xs contrast-700"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-600">
+                                <div class="text-base font-medium">Large 600</div>
+                                <div>Normal 600</div>
+                                <div class="text-xs contrast-600"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-500">
+                                <div class="text-base font-medium">Large 500</div>
+                                <div>Normal 500</div>
+                                <div class="text-xs contrast-500"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dark-theme-ii flex items-center py-2 bg-800">
+                        <div class="w-40 pl-8 text-white">Dark Theme II</div>
+                        <div class="flex">
+                            <div class="bg-black w-12 h-12 m-2 bg-white rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-50 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-100 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-200 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-300 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-400 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-500 rounded-md"></div>
+                            <div class="flex flex-col self-center mx-2 text-white">
+                                <div class="text-base font-medium">Large White</div>
+                                <div>Normal White</div>
+                                <div class="text-xs contrast-white"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-50">
+                                <div class="text-base font-medium">Large 50</div>
+                                <div>Normal 50</div>
+                                <div class="text-xs contrast-50"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-100">
+                                <div class="text-base font-medium">Large 100</div>
+                                <div>Normal 100</div>
+                                <div class="text-xs contrast-100"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-200">
+                                <div class="text-base font-medium">Large 200</div>
+                                <div>Normal 200</div>
+                                <div class="text-xs contrast-200"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-300">
+                                <div class="text-base font-medium">Large 300</div>
+                                <div>Normal 300</div>
+                                <div class="text-xs contrast-300"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-400">
+                                <div class="text-base font-medium">Large 400</div>
+                                <div>Normal 400</div>
+                                <div class="text-xs contrast-400"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dark-theme flex items-center py-2 bg-900">
+                        <div class="w-40 pl-8 text-white">Dark Theme</div>
+                        <div class="flex">
+                            <div class="bg-black w-12 h-12 m-2 bg-white rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-50 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-100 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-200 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-300 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-400 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-500 rounded-md"></div>
+                            <div class="flex flex-col self-center mx-2 text-white">
+                                <div class="text-base font-medium">Large White</div>
+                                <div>Normal White</div>
+                                <div class="text-xs contrast-white"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-50">
+                                <div class="text-base font-medium">Large 50</div>
+                                <div>Normal 50</div>
+                                <div class="text-xs contrast-50"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-100">
+                                <div class="text-base font-medium">Large 100</div>
+                                <div>Normal 100</div>
+                                <div class="text-xs contrast-100"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-200">
+                                <div class="text-base font-medium">Large 200</div>
+                                <div>Normal 200</div>
+                                <div class="text-xs contrast-200"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-300">
+                                <div class="text-base font-medium">Large 300</div>
+                                <div>Normal 300</div>
+                                <div class="text-xs contrast-300"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-400">
+                                <div class="text-base font-medium">Large 400</div>
+                                <div>Normal 400</div>
+                                <div class="text-xs contrast-400"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="black-theme flex items-center bg-black py-2">
+                        <div class="w-40 pl-8 text-white">Black Theme</div>
+                        <div class="flex">
+                            <div class="bg-black w-12 h-12 m-2 bg-white rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-50 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-100 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-200 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-300 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-400 rounded-md"></div>
+                            <div class="bg-black w-12 h-12 m-2 bg-500 rounded-md"></div>
+                            <div class="flex flex-col self-center mx-2 text-white">
+                                <div class="text-base font-medium">Large White</div>
+                                <div>Normal White</div>
+                                <div class="text-xs contrast-white"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-50">
+                                <div class="text-base font-medium">Large 50</div>
+                                <div>Normal 50</div>
+                                <div class="text-xs contrast-50"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-100">
+                                <div class="text-base font-medium">Large 100</div>
+                                <div>Normal 100</div>
+                                <div class="text-xs contrast-100"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-200">
+                                <div class="text-base font-medium">Large 200</div>
+                                <div>Normal 200</div>
+                                <div class="text-xs contrast-200"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-300">
+                                <div class="text-base font-medium">Large 300</div>
+                                <div>Normal 300</div>
+                                <div class="text-xs contrast-300"></div>
+                            </div>
+                            <div class="flex flex-col self-center mx-2 text-400">
+                                <div class="text-base font-medium">Large 400</div>
+                                <div>Normal 400</div>
+                                <div class="text-xs contrast-400"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -306,4 +597,4 @@
 </body>
 </html>
 
-<script src="bin/main.js?v=7"></script>
+<script src="bin/main.js?v=8"></script>

@@ -75,9 +75,9 @@ function calcRadar(e, chartInstance) {
   return v
 }
 
-let lastY = 0;
+let lasts = [];
 function calcPosition(e, chartInstance, datasetIndex, index, data) {
-  let x, y
+  let x, y;
   if (e.touches) {
     x = chartInstance.scales[scaleX].getValueForPixel(e.touches[0].clientX - chartInstance.canvas.getBoundingClientRect().left)
     y = chartInstance.scales[scale].getValueForPixel(e.touches[0].clientY - chartInstance.canvas.getBoundingClientRect().top)
@@ -86,10 +86,17 @@ function calcPosition(e, chartInstance, datasetIndex, index, data) {
     y = chartInstance.scales[scale].getValueForPixel(e.clientY - chartInstance.canvas.getBoundingClientRect().top)
 
     if(e.metaKey || e.altKey || e.ctrlKey){
-      let sign = Math.sign(lastY - e.clientY);
-      lastY = e.clientY;
-      y = data + sign*0.05
+      if(lasts[chartInstance.id] === undefined) lasts[chartInstance.id] = [];
+      if(lasts[chartInstance.id][datasetIndex] === undefined) lasts[chartInstance.id][datasetIndex] = [];
+      if(lasts[chartInstance.id][datasetIndex][index] === undefined) lasts[chartInstance.id][datasetIndex][index] = e.clientY;
+
+      if(lasts[chartInstance.id][datasetIndex][index] !== undefined) y = data + (lasts[chartInstance.id][datasetIndex][index] - e.clientY)/15;
     }
+    if(lasts[chartInstance.id] === undefined) lasts[chartInstance.id] = [];
+    if(lasts[chartInstance.id][datasetIndex] === undefined) lasts[chartInstance.id][datasetIndex] = [];
+    if(lasts[chartInstance.id][datasetIndex][index] === undefined) lasts[chartInstance.id][datasetIndex][index] = e.clientY;
+
+    lasts[chartInstance.id][datasetIndex][index] = e.clientY;
   }
 
   x = roundValue(x, chartInstance.options.dragDataRound)

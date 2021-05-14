@@ -11,7 +11,7 @@ import chroma from 'chroma-js'
 import Chart from 'chart.js';
 import './chartjs-plugin-dragdata/src/index.js'
 import 'chartjs-plugin-annotation'
-import news from './datasets/news-revised';
+import news from './datasets/stripe-revised';
 import ClipboardJS from 'clipboard'
 
 let nextModel = modelWrapper(rawNext);
@@ -97,7 +97,7 @@ let options = {
     showTooltip: true
   },
   animation: {
-    duration: 200
+    duration: 0
   },
   onDragEnd: function() {
     hideTooltip(luminosityCanva);
@@ -113,6 +113,7 @@ let options = {
     setGradients(contrastWhiteCanva);
     setGradients(contrastBlackCanva);
     renderTexts();
+    paintContext(palette);
   },
   hover: {
     onHover: function(e) {
@@ -364,8 +365,18 @@ options.annotation = {
     yScaleID: 'y-axis-0',
     xScaleID: 'x-axis-0',
     yMin: 1,
-    yMax: 1.4,
+    yMax: 1.3,
     xMin: 3,
+    xMax: 4,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)'
+  },{
+    type: 'box',
+    drawTime: 'beforeDatasetsDraw',
+    yScaleID: 'y-axis-0',
+    xScaleID: 'x-axis-0',
+    yMin: 1,
+    yMax: 1.4,
+    xMin: 4,
     xMax: 8,
     backgroundColor: 'rgba(0, 0, 0, 0.3)'
   },{
@@ -423,6 +434,10 @@ let contrastCanva = new Chart('contrast-canva', {
       {
         data: [],
         fill: false
+      },
+      {
+        data: [],
+        fill: false
       }
     ],
     labels: ['White-50', '50-100', '100-200', '200-300', '300-400', '400-500', '500-600', '600-700', '700-800', '800-900', '900-Black']
@@ -444,16 +459,7 @@ options.annotation = {
     xMin: 4,
     xMax: 5,
     backgroundColor: 'rgba(0, 0, 0, 0.3)'
-  }, {
-    type: 'box',
-    drawTime: 'beforeDatasetsDraw',
-    yScaleID: 'y-axis-0',
-    xScaleID: 'x-axis-0',
-    yMin: 1,
-    yMax: 4.3,
-    xMin: 5,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)'
-  }, {
+  },{
     type: 'box',
     drawTime: 'beforeDatasetsDraw',
     yScaleID: 'y-axis-0',
@@ -461,6 +467,25 @@ options.annotation = {
     yMin: 4.7,
     //yMax: 4.5,
     xMax: 5,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)'
+  },{
+    type: 'box',
+    drawTime: 'beforeDatasetsDraw',
+    yScaleID: 'y-axis-0',
+    xScaleID: 'x-axis-0',
+    yMin: 1,
+    yMax: 4.3,
+    xMin: 5,
+    xMax: 7,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)'
+  },{
+    type: 'box',
+    drawTime: 'beforeDatasetsDraw',
+    yScaleID: 'y-axis-0',
+    xScaleID: 'x-axis-0',
+    yMin: 1,
+    yMax: 7,
+    xMin: 7,
     backgroundColor: 'rgba(0, 0, 0, 0.3)'
   }]
 };
@@ -826,15 +851,11 @@ let color0 = shadesModel(initColor);
 
 let outputs = calculateColorsHorizontally(initColor, color0);
 
+//outputs = [color0]
+
 outputs = [];
 let outputShades = [];
 let i = 0;
-
-//delete news.gray
-//delete news.rose
-//delete news.pink
-//delete news.fuchsia
-//delete news.purple
 
 for (const colors in news) {
   if(i < 10) {
@@ -853,7 +874,7 @@ outputs = outputShades;
 let brandColor = calculateBrandColor(initColor, outputs);
 
 normalizeToLCH(outputs);
-paint(outputs);
+paint(palette);
 renderTexts();
 toCharts();
 
@@ -861,17 +882,60 @@ pickrButton.on('change', (color, instance) => {
   color0 = shadesModel(color.toHEXA().toString());
 
   outputs = calculateColorsHorizontally(color.toHEXA().toString(), color0);
+  //outputs = [color0];
   brandColor = calculateBrandColor(color.toHEXA().toString(), outputs);
 
   normalizeToLCH(outputs);
-  paint(outputs);
-  changeFavicon(color.toHEXA().toString())
+  paint(palette);
+  //changeFavicon(color.toHEXA().toString())
 
   if(instance.changeSource === 'input'){
     renderTexts();
   }
 
   toCharts();
+  paintContext(palette);
+  original = [palette[0][6][0], palette[0][6][2]];
+});
+
+let original = [palette[0][6][0], palette[0][6][2]];
+
+document.getElementById('shadeSaturation').addEventListener('input', (e) => {
+
+  let color = chroma.lch(original[0], e.target.value, original[1]).hex().toUpperCase();
+  color0 = shadesModel(color);
+
+  outputs[0] = color0;
+  //outputs = calculateColorsHorizontally(color, color0);
+  //brandColor = calculateBrandColor(color, outputs);
+
+  normalizeToLCH(outputs);
+  paint(palette);
+  //changeFavicon(color.toHEXA().toString())
+
+  renderTexts();
+
+  toCharts();
+  paintContext(palette);
+});
+
+document.getElementById('straightHueBtn').addEventListener('click', () => {
+  let sum = 0;
+
+  palette[0].forEach((color) => {
+    sum += color[2]
+  });
+
+  let mean = sum/palette[0].length;
+
+  palette[0].map((color, index) => {
+    color[2] = mean;
+    editHue(0, index, mean);
+    return color;
+  });
+
+  renderTexts();
+  paintContext(palette);
 });
 
 pickrButton.on('changestop', (color, instance) => {
@@ -901,14 +965,19 @@ function calculateBrandColor(hex, outputs)
   for(let i = 0; i < 10; i++){
     let j = 0;
     i === 0 ? j = 0.5 : j = i;
-    distances['0' + j] = chroma.deltaE(rgbToHex(outputs[0]['r' + j]*255, outputs[0]['g' + j]*255, outputs[0]['b' + j]*255), hex);
-    distances['1' + j] = chroma.deltaE(rgbToHex(outputs[1]['r' + j]*255, outputs[1]['g' + j]*255, outputs[1]['b' + j]*255), hex);
-    distances['2' + j] = chroma.deltaE(rgbToHex(outputs[2]['r' + j]*255, outputs[2]['g' + j]*255, outputs[2]['b' + j]*255), hex);
-    distances['3' + j] = chroma.deltaE(rgbToHex(outputs[3]['r' + j]*255, outputs[3]['g' + j]*255, outputs[3]['b' + j]*255), hex);
-    distances['7' + j] = chroma.deltaE(rgbToHex(outputs[7]['r' + j]*255, outputs[7]['g' + j]*255, outputs[7]['b' + j]*255), hex);
-    distances['8' + j] = chroma.deltaE(rgbToHex(outputs[8]['r' + j]*255, outputs[8]['g' + j]*255, outputs[8]['b' + j]*255), hex);
-    distances['9' + j] = chroma.deltaE(rgbToHex(outputs[9]['r' + j]*255, outputs[9]['g' + j]*255, outputs[9]['b' + j]*255), hex);
+
+    outputs.forEach((output, index) => {
+      distances[index.toString() + j] = chroma.deltaE(rgbToHex(output['r' + j]*255, output['g' + j]*255, output['b' + j]*255), hex);
+    });
+    // distances['0' + j] = chroma.deltaE(rgbToHex(outputs[0]['r' + j]*255, outputs[0]['g' + j]*255, outputs[0]['b' + j]*255), hex);
+    // distances['1' + j] = chroma.deltaE(rgbToHex(outputs[1]['r' + j]*255, outputs[1]['g' + j]*255, outputs[1]['b' + j]*255), hex);
+    // distances['2' + j] = chroma.deltaE(rgbToHex(outputs[2]['r' + j]*255, outputs[2]['g' + j]*255, outputs[2]['b' + j]*255), hex);
+    // distances['3' + j] = chroma.deltaE(rgbToHex(outputs[3]['r' + j]*255, outputs[3]['g' + j]*255, outputs[3]['b' + j]*255), hex);
+    // distances['7' + j] = chroma.deltaE(rgbToHex(outputs[7]['r' + j]*255, outputs[7]['g' + j]*255, outputs[7]['b' + j]*255), hex);
+    // distances['8' + j] = chroma.deltaE(rgbToHex(outputs[8]['r' + j]*255, outputs[8]['g' + j]*255, outputs[8]['b' + j]*255), hex);
+    // distances['9' + j] = chroma.deltaE(rgbToHex(outputs[9]['r' + j]*255, outputs[9]['g' + j]*255, outputs[9]['b' + j]*255), hex);
   }
+
   let sortable = [];
   for (let distance in distances) {
     sortable.push([distance, distances[distance]]);
@@ -1019,32 +1088,28 @@ function code(names)
   document.querySelector('.code').innerHTML = renderedCode;
 }
 
-function paint(outputs)
+function paint(palette)
 {
-  outputs.forEach((output, i) => {
-    document.getElementById('output' + i + '0.5').style.backgroundColor = 'rgb(' + output['r0.5']*255 + ',' + output['g0.5']*255 + ',' + output['b0.5']*255 + ')';
-    document.getElementById('output' + i + '1').style.backgroundColor = 'rgb(' + output.r1*255 + ',' + output.g1*255 + ',' + output.b1*255 + ')';
-    document.getElementById('output' + i + '2').style.backgroundColor = 'rgb(' + output.r2*255 + ',' + output.g2*255 + ',' + output.b2*255 + ')';
-    document.getElementById('output' + i + '3').style.backgroundColor = 'rgb(' + output.r3*255 + ',' + output.g3*255 + ',' + output.b3*255 + ')';
-    document.getElementById('output' + i + '4').style.backgroundColor = 'rgb(' + output.r4*255 + ',' + output.g4*255 + ',' + output.b4*255 + ')';
-    document.getElementById('output' + i + '5').style.backgroundColor = 'rgb(' + output.r5*255 + ',' + output.g5*255 + ',' + output.b5*255 + ')';
-    document.getElementById('output' + i + '6').style.backgroundColor = 'rgb(' + output.r6*255 + ',' + output.g6*255 + ',' + output.b6*255 + ')';
-    document.getElementById('output' + i + '7').style.backgroundColor = 'rgb(' + output.r7*255 + ',' + output.g7*255 + ',' + output.b7*255 + ')';
-    document.getElementById('output' + i + '8').style.backgroundColor = 'rgb(' + output.r8*255 + ',' + output.g8*255 + ',' + output.b8*255 + ')';
-    document.getElementById('output' + i + '9').style.backgroundColor = 'rgb(' + output.r9*255 + ',' + output.g9*255 + ',' + output.b9*255 + ')';
+  palette.forEach((colors, i) => {
+    colors.forEach((color, j) => {
+      let index = j;
+      if(j === 0) index = 0.5;
+      document.getElementById('output' + i + index).style.backgroundColor = chroma.lch(color).hex();
+    });
   });
 
-  document.getElementById('title10').style.color = 'rgb(' + outputs[0].r7*255 + ',' + outputs[0].g7*255 + ',' + outputs[0].b7*255 + ')';
-  document.getElementById('title9').style.color = 'rgb(' + outputs[0].r8*255 + ',' + outputs[0].g8*255 + ',' + outputs[0].b8*255 + ')';
-  document.getElementById('title8').style.color = 'rgb(' + outputs[0].r9*255 + ',' + outputs[0].g9*255 + ',' + outputs[0].b9*255 + ')';
-  document.getElementById('title7').style.color = 'rgb(' + outputs[0].r2*255 + ',' + outputs[0].g2*255 + ',' + outputs[0].b2*255 + ')';
-  document.getElementById('title6').style.color = 'rgb(' + outputs[0].r3*255 + ',' + outputs[0].g3*255 + ',' + outputs[0].b3*255 + ')';
-  document.getElementById('title5').style.color = 'rgb(' + outputs[0].r4*255 + ',' + outputs[0].g4*255 + ',' + outputs[0].b4*255 + ')';
-  document.getElementById('title4').style.color = 'rgb(' + outputs[0].r5*255 + ',' + outputs[0].g5*255 + ',' + outputs[0].b5*255 + ')';
-  document.getElementById('title3').style.color = 'rgb(' + outputs[0].r6*255 + ',' + outputs[0].g6*255 + ',' + outputs[0].b6*255 + ')';
-  document.getElementById('title2').style.color = 'rgb(' + outputs[0].r7*255 + ',' + outputs[0].g7*255 + ',' + outputs[0].b7*255 + ')';
-  document.getElementById('title1').style.color = 'rgb(' + outputs[0].r8*255 + ',' + outputs[0].g8*255 + ',' + outputs[0].b8*255 + ')';
-  document.getElementById('title0').style.color = 'rgb(' + outputs[0].r9*255 + ',' + outputs[0].g9*255 + ',' + outputs[0].b9*255 + ')';
+
+  // document.getElementById('title10').style.color = 'rgb(' + outputs[0].r7*255 + ',' + outputs[0].g7*255 + ',' + outputs[0].b7*255 + ')';
+  // document.getElementById('title9').style.color = 'rgb(' + outputs[0].r8*255 + ',' + outputs[0].g8*255 + ',' + outputs[0].b8*255 + ')';
+  // document.getElementById('title8').style.color = 'rgb(' + outputs[0].r9*255 + ',' + outputs[0].g9*255 + ',' + outputs[0].b9*255 + ')';
+  // document.getElementById('title7').style.color = 'rgb(' + outputs[0].r2*255 + ',' + outputs[0].g2*255 + ',' + outputs[0].b2*255 + ')';
+  // document.getElementById('title6').style.color = 'rgb(' + outputs[0].r3*255 + ',' + outputs[0].g3*255 + ',' + outputs[0].b3*255 + ')';
+  // document.getElementById('title5').style.color = 'rgb(' + outputs[0].r4*255 + ',' + outputs[0].g4*255 + ',' + outputs[0].b4*255 + ')';
+  // document.getElementById('title4').style.color = 'rgb(' + outputs[0].r5*255 + ',' + outputs[0].g5*255 + ',' + outputs[0].b5*255 + ')';
+  // document.getElementById('title3').style.color = 'rgb(' + outputs[0].r6*255 + ',' + outputs[0].g6*255 + ',' + outputs[0].b6*255 + ')';
+  // document.getElementById('title2').style.color = 'rgb(' + outputs[0].r7*255 + ',' + outputs[0].g7*255 + ',' + outputs[0].b7*255 + ')';
+  // document.getElementById('title1').style.color = 'rgb(' + outputs[0].r8*255 + ',' + outputs[0].g8*255 + ',' + outputs[0].b8*255 + ')';
+  // document.getElementById('title0').style.color = 'rgb(' + outputs[0].r9*255 + ',' + outputs[0].g9*255 + ',' + outputs[0].b9*255 + ')';
 
 }
 
@@ -1251,113 +1316,39 @@ function createGradient(colorIndex)
 
 function setGradients(chart)
 {
-  let colors = {
-    0: palette[0].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    1: palette[1].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    2: palette[2].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    3: palette[3].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    4: palette[4].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    5: palette[5].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    6: palette[6].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    7: palette[7].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    8: palette[8].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    9: palette[9].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-  };
+  let colors = [];
 
-  chart.data.datasets[0].borderColor = createGradient(0);
-  chart.data.datasets[1].borderColor = createGradient(1);
-  chart.data.datasets[2].borderColor = createGradient(2);
-  chart.data.datasets[3].borderColor = createGradient(3);
-  chart.data.datasets[4].borderColor = createGradient(4);
-  chart.data.datasets[5].borderColor = createGradient(5);
-  chart.data.datasets[6].borderColor = createGradient(6);
-  chart.data.datasets[7].borderColor = createGradient(7);
-  chart.data.datasets[8].borderColor = createGradient(8);
-  chart.data.datasets[9].borderColor = createGradient(9);
+  palette.forEach((shades, index) => {
+    colors.push(shades.map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}));
+    colors[index].push('#000000');
+    chart.data.datasets[index].borderColor = createGradient(index);
+  });
 
-  chart.data.datasets[0].pointBackgroundColor = colors[0];
-  chart.data.datasets[1].pointBackgroundColor = colors[1];
-  chart.data.datasets[2].pointBackgroundColor = colors[2];
-  chart.data.datasets[3].pointBackgroundColor = colors[3];
-  chart.data.datasets[4].pointBackgroundColor = colors[4];
-  chart.data.datasets[5].pointBackgroundColor = colors[5];
-  chart.data.datasets[6].pointBackgroundColor = colors[6];
-  chart.data.datasets[7].pointBackgroundColor = colors[7];
-  chart.data.datasets[8].pointBackgroundColor = colors[8];
-  chart.data.datasets[9].pointBackgroundColor = colors[9];
-
-  chart.data.datasets[0].pointBorderColor = colors[0];
-  chart.data.datasets[1].pointBorderColor = colors[1];
-  chart.data.datasets[2].pointBorderColor = colors[2];
-  chart.data.datasets[3].pointBorderColor = colors[3];
-  chart.data.datasets[4].pointBorderColor = colors[4];
-  chart.data.datasets[5].pointBorderColor = colors[5];
-  chart.data.datasets[6].pointBorderColor = colors[6];
-  chart.data.datasets[7].pointBorderColor = colors[7];
-  chart.data.datasets[8].pointBorderColor = colors[8];
-  chart.data.datasets[9].pointBorderColor = colors[9];
+  chart.data.datasets.forEach((data, index) => {
+    chart.data.datasets[index].pointBackgroundColor = colors[index];
+    chart.data.datasets[index].pointBorderColor = colors[index];
+  });
 
   chart.update()
 }
 
 function updateChart(chart, values)
 {
-  let colors = {
-    0: palette[0].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    1: palette[1].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    2: palette[2].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    3: palette[3].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    4: palette[4].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    5: palette[5].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    6: palette[6].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    7: palette[7].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    8: palette[8].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-    9: palette[9].map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}),
-  };
+  let colors = [];
 
-  chart.data.datasets[0].data = values[0];
-  chart.data.datasets[1].data = values[1];
-  chart.data.datasets[2].data = values[2];
-  chart.data.datasets[3].data = values[3];
-  chart.data.datasets[4].data = values[4];
-  chart.data.datasets[5].data = values[5];
-  chart.data.datasets[6].data = values[6];
-  chart.data.datasets[7].data = values[7];
-  chart.data.datasets[8].data = values[8];
-  chart.data.datasets[9].data = values[9];
+  palette.forEach((shades, index) => {
+    colors.push(shades.map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}));
+    colors[index].push('#000000');
+    chart.data.datasets[index].borderColor = createGradient(index);
+  });
 
-  chart.data.datasets[0].borderColor = createGradient(0);
-  chart.data.datasets[1].borderColor = createGradient(1);
-  chart.data.datasets[2].borderColor = createGradient(2);
-  chart.data.datasets[3].borderColor = createGradient(3);
-  chart.data.datasets[4].borderColor = createGradient(4);
-  chart.data.datasets[5].borderColor = createGradient(5);
-  chart.data.datasets[6].borderColor = createGradient(6);
-  chart.data.datasets[7].borderColor = createGradient(7);
-  chart.data.datasets[8].borderColor = createGradient(8);
-  chart.data.datasets[9].borderColor = createGradient(9);
+  chart.data.datasets.forEach((data, index) => {
+    chart.data.datasets[index].data = values[index];
+    chart.data.datasets[index].pointBackgroundColor = colors[index];
 
-  chart.data.datasets[0].pointBackgroundColor = colors[0];
-  chart.data.datasets[1].pointBackgroundColor = colors[1];
-  chart.data.datasets[2].pointBackgroundColor = colors[2];
-  chart.data.datasets[3].pointBackgroundColor = colors[3];
-  chart.data.datasets[4].pointBackgroundColor = colors[4];
-  chart.data.datasets[5].pointBackgroundColor = colors[5];
-  chart.data.datasets[6].pointBackgroundColor = colors[6];
-  chart.data.datasets[7].pointBackgroundColor = colors[7];
-  chart.data.datasets[8].pointBackgroundColor = colors[8];
-  chart.data.datasets[9].pointBackgroundColor = colors[9];
+    chart.data.datasets[index].pointBorderColor = colors[index];
+  });
 
-  chart.data.datasets[0].pointBorderColor = colors[0];
-  chart.data.datasets[1].pointBorderColor = colors[1];
-  chart.data.datasets[2].pointBorderColor = colors[2];
-  chart.data.datasets[3].pointBorderColor = colors[3];
-  chart.data.datasets[4].pointBorderColor = colors[4];
-  chart.data.datasets[5].pointBorderColor = colors[5];
-  chart.data.datasets[6].pointBorderColor = colors[6];
-  chart.data.datasets[7].pointBorderColor = colors[7];
-  chart.data.datasets[8].pointBorderColor = colors[8];
-  chart.data.datasets[9].pointBorderColor = colors[9];
   chart.update();
 }
 
@@ -1490,6 +1481,7 @@ function grayOutLines(chart, datasetIndex){
 let menuButtons = Array.from(document.getElementById('menu-buttons').children);
 let graphsPage = document.getElementById('graphs');
 let codePage = document.getElementById('code');
+let contextPage = document.getElementById('context');
 let pages = Array.from(document.getElementById('pages').children);
 
 document.getElementById('graphs-btn').addEventListener('click', (e) => {
@@ -1530,6 +1522,125 @@ document.getElementById('code-btn').addEventListener('click', (e) => {
   e.target.classList.add('cursor-default');
 
   codePage.classList.remove('hidden')
+});
+
+function paintContext(palette)
+{
+  document.querySelector('.title').style.color =               chroma.lch(palette[0][9]).hex();
+  document.querySelector('.subtitle').style.color =            chroma.lch(palette[0][8]).hex();
+  document.querySelector('.label').style.color =               chroma.lch(palette[0][7]).hex();
+  document.querySelector('.button').style.backgroundColor =    chroma.lch(palette[0][6]).hex();
+  document.querySelector('.button').style.color           =    chroma.lch(palette[0][0]).hex();
+  document.querySelector('.small-copy').style.color =          chroma.lch(palette[0][7]).hex();
+  document.querySelector('.header').style.backgroundColor =    chroma.lch(palette[0][1]).hex();
+  document.querySelector('.header').style.color =              chroma.lch(palette[0][7]).hex();
+  document.querySelector('.card').style.borderColor =          chroma.lch(palette[0][2]).hex();
+  document.querySelector('.context-input').style.borderColor = chroma.lch(palette[0][3]).hex();
+  document.querySelector('.context-input').style.backgroundColor = chroma.lch(palette[0][0]).hex();
+
+  document.querySelector('.card-2').style.backgroundColor =                chroma.lch(palette[0][8]).hex();
+  document.querySelector('.card-2').style.borderColor =                    chroma.lch(palette[0][5]).hex();
+  document.querySelector('.card-2 .button').style.backgroundColor =        chroma.lch(palette[0][4]).hex();
+  document.querySelector('.card-2 .button').style.color           =        chroma.lch(palette[0][9]).hex();
+  document.querySelector('.card-2 .header').style.backgroundColor =        chroma.lch(palette[0][9]).hex();
+  document.querySelector('.card-2 .header').style.color =                  chroma.lch(palette[0][2]).hex();
+  document.querySelector('.card-2 .title').style.color =                   chroma.lch(palette[0][0]).hex();
+  document.querySelector('.card-2 .subtitle').style.color =                chroma.lch(palette[0][1]).hex();
+  document.querySelector('.card-2 .label').style.color =                   chroma.lch(palette[0][1]).hex();
+  document.querySelector('.card-2 .small-copy').style.color =              chroma.lch(palette[0][2]).hex();
+  document.querySelector('.card-2 .context-input').style.borderColor =     chroma.lch(palette[0][7]).hex();
+  document.querySelector('.card-2 .context-input').style.color       =     chroma.lch(palette[0][2]).hex();
+  document.querySelector('.card-2 .context-input').style.backgroundColor = chroma.lch(palette[0][9]).hex();
+
+  document.querySelectorAll('.bg-900').forEach(el => el.style.backgroundColor = chroma.lch(palette[0][9]).hex());
+  document.querySelectorAll('.bg-800').forEach(el => el.style.backgroundColor = chroma.lch(palette[0][8]).hex());
+  document.querySelectorAll('.bg-700').forEach(el => el.style.backgroundColor = chroma.lch(palette[0][7]).hex());
+  document.querySelectorAll('.bg-600').forEach(el => el.style.backgroundColor = chroma.lch(palette[0][6]).hex());
+  document.querySelectorAll('.bg-500').forEach(el => el.style.backgroundColor = chroma.lch(palette[0][5]).hex());
+  document.querySelectorAll('.bg-400').forEach(el => el.style.backgroundColor = chroma.lch(palette[0][4]).hex());
+  document.querySelectorAll('.bg-300').forEach(el => el.style.backgroundColor = chroma.lch(palette[0][3]).hex());
+  document.querySelectorAll('.bg-200').forEach(el => el.style.backgroundColor = chroma.lch(palette[0][2]).hex());
+  document.querySelectorAll('.bg-100').forEach(el => el.style.backgroundColor = chroma.lch(palette[0][1]).hex());
+  document.querySelectorAll('.bg-50').forEach(el =>  el.style.backgroundColor = chroma.lch(palette[0][0]).hex());
+
+  document.querySelectorAll('.text-900').forEach(el => el.style.color = chroma.lch(palette[0][9]).hex());
+  document.querySelectorAll('.text-800').forEach(el => el.style.color = chroma.lch(palette[0][8]).hex());
+  document.querySelectorAll('.text-700').forEach(el => el.style.color = chroma.lch(palette[0][7]).hex());
+  document.querySelectorAll('.text-600').forEach(el => el.style.color = chroma.lch(palette[0][6]).hex());
+  document.querySelectorAll('.text-500').forEach(el => el.style.color = chroma.lch(palette[0][5]).hex());
+  document.querySelectorAll('.text-400').forEach(el => el.style.color = chroma.lch(palette[0][4]).hex());
+  document.querySelectorAll('.text-300').forEach(el => el.style.color = chroma.lch(palette[0][3]).hex());
+  document.querySelectorAll('.text-200').forEach(el => el.style.color = chroma.lch(palette[0][2]).hex());
+  document.querySelectorAll('.text-100').forEach(el => el.style.color = chroma.lch(palette[0][1]).hex());
+  document.querySelectorAll('.text-50').forEach(el =>  el.style.color = chroma.lch(palette[0][0]).hex());
+
+  document.querySelector('.white-theme .contrast-black').innerHTML = chroma.contrast('white', 'black');
+  document.querySelector('.white-theme .contrast-900').innerHTML   = chroma.contrast('white', chroma.lch(palette[0][9])).toFixed(2);
+  document.querySelector('.white-theme .contrast-800').innerHTML   = chroma.contrast('white', chroma.lch(palette[0][8])).toFixed(2);
+  document.querySelector('.white-theme .contrast-700').innerHTML   = chroma.contrast('white', chroma.lch(palette[0][7])).toFixed(2);
+  document.querySelector('.white-theme .contrast-600').innerHTML   = chroma.contrast('white', chroma.lch(palette[0][6])).toFixed(2);
+  document.querySelector('.white-theme .contrast-500').innerHTML   = chroma.contrast('white', chroma.lch(palette[0][5])).toFixed(2);
+
+  let light = chroma.lch(palette[0][0]);
+  document.querySelector('.light-theme .contrast-black').innerHTML = chroma.contrast(light, 'black').toFixed(2);
+  document.querySelector('.light-theme .contrast-900').innerHTML   = chroma.contrast(light, chroma.lch(palette[0][9])).toFixed(2);
+  document.querySelector('.light-theme .contrast-800').innerHTML   = chroma.contrast(light, chroma.lch(palette[0][8])).toFixed(2);
+  document.querySelector('.light-theme .contrast-700').innerHTML   = chroma.contrast(light, chroma.lch(palette[0][7])).toFixed(2);
+  document.querySelector('.light-theme .contrast-600').innerHTML   = chroma.contrast(light, chroma.lch(palette[0][6])).toFixed(2);
+  document.querySelector('.light-theme .contrast-500').innerHTML   = chroma.contrast(light, chroma.lch(palette[0][5])).toFixed(2);
+
+  let lightIi = chroma.lch(palette[0][1]);
+  document.querySelector('.light-theme-ii .contrast-black').innerHTML = chroma.contrast(lightIi, 'black').toFixed(2);
+  document.querySelector('.light-theme-ii .contrast-900').innerHTML   = chroma.contrast(lightIi, chroma.lch(palette[0][9])).toFixed(2);
+  document.querySelector('.light-theme-ii .contrast-800').innerHTML   = chroma.contrast(lightIi, chroma.lch(palette[0][8])).toFixed(2);
+  document.querySelector('.light-theme-ii .contrast-700').innerHTML   = chroma.contrast(lightIi, chroma.lch(palette[0][7])).toFixed(2);
+  document.querySelector('.light-theme-ii .contrast-600').innerHTML   = chroma.contrast(lightIi, chroma.lch(palette[0][6])).toFixed(2);
+  document.querySelector('.light-theme-ii .contrast-500').innerHTML   = chroma.contrast(lightIi, chroma.lch(palette[0][5])).toFixed(2);
+
+  let darkIi = chroma.lch(palette[0][8]);
+  document.querySelector('.dark-theme-ii .contrast-white').innerHTML = chroma.contrast(darkIi, 'white').toFixed(2);
+  document.querySelector('.dark-theme-ii .contrast-50').innerHTML    = chroma.contrast(darkIi, chroma.lch(palette[0][0])).toFixed(2);
+  document.querySelector('.dark-theme-ii .contrast-100').innerHTML   = chroma.contrast(darkIi, chroma.lch(palette[0][1])).toFixed(2);
+  document.querySelector('.dark-theme-ii .contrast-200').innerHTML   = chroma.contrast(darkIi, chroma.lch(palette[0][2])).toFixed(2);
+  document.querySelector('.dark-theme-ii .contrast-300').innerHTML   = chroma.contrast(darkIi, chroma.lch(palette[0][3])).toFixed(2);
+  document.querySelector('.dark-theme-ii .contrast-400').innerHTML   = chroma.contrast(darkIi, chroma.lch(palette[0][4])).toFixed(2);
+
+  let dark = chroma.lch(palette[0][9]);
+  document.querySelector('.dark-theme .contrast-white').innerHTML = chroma.contrast(dark, 'white').toFixed(2);
+  document.querySelector('.dark-theme .contrast-50').innerHTML    = chroma.contrast(dark, chroma.lch(palette[0][0])).toFixed(2);
+  document.querySelector('.dark-theme .contrast-100').innerHTML   = chroma.contrast(dark, chroma.lch(palette[0][1])).toFixed(2);
+  document.querySelector('.dark-theme .contrast-200').innerHTML   = chroma.contrast(dark, chroma.lch(palette[0][2])).toFixed(2);
+  document.querySelector('.dark-theme .contrast-300').innerHTML   = chroma.contrast(dark, chroma.lch(palette[0][3])).toFixed(2);
+  document.querySelector('.dark-theme .contrast-400').innerHTML   = chroma.contrast(dark, chroma.lch(palette[0][4])).toFixed(2);
+
+  document.querySelector('.black-theme .contrast-white').innerHTML = chroma.contrast('black', 'white');
+  document.querySelector('.black-theme .contrast-50').innerHTML    = chroma.contrast('black', chroma.lch(palette[0][0])).toFixed(2);
+  document.querySelector('.black-theme .contrast-100').innerHTML   = chroma.contrast('black', chroma.lch(palette[0][1])).toFixed(2);
+  document.querySelector('.black-theme .contrast-200').innerHTML   = chroma.contrast('black', chroma.lch(palette[0][2])).toFixed(2);
+  document.querySelector('.black-theme .contrast-300').innerHTML   = chroma.contrast('black', chroma.lch(palette[0][3])).toFixed(2);
+  document.querySelector('.black-theme .contrast-400').innerHTML   = chroma.contrast('black', chroma.lch(palette[0][4])).toFixed(2);
+}
+
+document.getElementById('context-btn').addEventListener('click', (e) => {
+  paintContext(palette);
+
+  menuButtons.forEach((button) => {
+    button.classList.remove('border-b-2');
+    button.classList.remove('border-blue-500');
+    button.classList.remove('text-blue-500');
+    button.classList.add('hover:text-gray-800');
+    button.classList.remove('cursor-default');
+  });
+
+  pages.forEach((page) => { page.classList.add('hidden')});
+
+  e.target.classList.add('border-b-2');
+  e.target.classList.add('border-blue-500');
+  e.target.classList.add('text-blue-500');
+  e.target.classList.remove('hover:text-gray-800');
+  e.target.classList.add('cursor-default');
+
+  contextPage.classList.remove('hidden')
 });
 
 // Copy Button
