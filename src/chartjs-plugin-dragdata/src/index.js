@@ -75,7 +75,8 @@ function calcRadar(e, chartInstance) {
   return v
 }
 
-let lasts = [];
+let last = null;
+
 function calcPosition(e, chartInstance, datasetIndex, index, data) {
   let x, y;
   if (e.touches) {
@@ -86,17 +87,14 @@ function calcPosition(e, chartInstance, datasetIndex, index, data) {
     y = chartInstance.scales[scale].getValueForPixel(e.clientY - chartInstance.canvas.getBoundingClientRect().top)
 
     if(e.metaKey || e.altKey || e.ctrlKey){
-      if(lasts[chartInstance.id] === undefined) lasts[chartInstance.id] = [];
-      if(lasts[chartInstance.id][datasetIndex] === undefined) lasts[chartInstance.id][datasetIndex] = [];
-      if(lasts[chartInstance.id][datasetIndex][index] === undefined) lasts[chartInstance.id][datasetIndex][index] = e.clientY;
-
-      if(lasts[chartInstance.id][datasetIndex][index] !== undefined) y = data + (lasts[chartInstance.id][datasetIndex][index] - e.clientY)/15;
+      if(last !== null) {
+        y = data + (last - e.clientY)/50;
+      } else {
+        y = data;
+      }
     }
-    if(lasts[chartInstance.id] === undefined) lasts[chartInstance.id] = [];
-    if(lasts[chartInstance.id][datasetIndex] === undefined) lasts[chartInstance.id][datasetIndex] = [];
-    if(lasts[chartInstance.id][datasetIndex][index] === undefined) lasts[chartInstance.id][datasetIndex][index] = e.clientY;
 
-    lasts[chartInstance.id][datasetIndex][index] = e.clientY;
+    last = e.clientY;
   }
 
   x = roundValue(x, chartInstance.options.dragDataRound)
@@ -176,6 +174,7 @@ function applyMagnet(chartInstance, i, j) {
 
 function dragEndCallback(chartInstance, callback) {
   return () => {
+    last = null;
     curDatasetIndex, curIndex = undefined
     if (typeof callback === 'function' && element) {
       const e = event.sourceEvent

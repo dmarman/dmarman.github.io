@@ -239,6 +239,8 @@ options.onDrag = function(e, datasetIndex, index, value) {
   grayOutLines(contrastWhiteCanva, datasetIndex);
 };
 options.scales.yAxes[0].ticks.max = 110;
+options.scales.yAxes[0].ticks.stepSize = 10;
+
 options.title.text = 'Chroma';
 
 let chromaCanva = new Chart('chroma-canva', {
@@ -301,7 +303,8 @@ options.onDrag = function(e, datasetIndex, index, value) {
   grayOutLines(contrastBlackCanva, datasetIndex);
   grayOutLines(contrastWhiteCanva, datasetIndex);
 };
-options.scales.yAxes[0].ticks.max = 400;
+options.scales.yAxes[0].ticks.max = 360;
+options.scales.yAxes[0].ticks.stepSize = 40;
 options.title.text = 'Hue';
 let hueCanva = new Chart('hue-canva', {
   type: 'line',
@@ -353,8 +356,9 @@ let hueCanva = new Chart('hue-canva', {
   options: options
 });
 
-options.scales.yAxes[0].ticks.max = 2.6;
+options.scales.yAxes[0].ticks.max = 2;
 options.scales.yAxes[0].ticks.min = 1;
+options.scales.yAxes[0].ticks.stepSize = 0.1;
 options.title.text = 'Contrast WCAG';
 options.dragData = false;
 options.tooltips.callbacks.label = function(tooltipItem, data) {return tooltipItem.yLabel.toFixed(2);};
@@ -447,6 +451,7 @@ let contrastCanva = new Chart('contrast-canva', {
 
 options.scales.yAxes[0].ticks.max = 20;
 options.scales.yAxes[0].ticks.min = 1;
+options.scales.yAxes[0].ticks.stepSize = 1;
 options.title.text = 'Contrast WCAG over White';
 options.annotation = {
   annotations: [{
