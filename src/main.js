@@ -24,8 +24,9 @@ function rgbToHex(r, g, b) {
   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
-const initColor = '#0963EF';
+const initColor = '#1D6CE4';
 let palette = [];
+let stopChange = false;
 
 const pickrButton = Pickr.create({
   el: '.pickr',
@@ -62,7 +63,7 @@ let options = {
       },
       title: (tooltipItem, data) => {
         let colorName = palette[tooltipItem[0].datasetIndex].name;
-        if(colorName === undefined) colorName = name(outputs)[tooltipItem[0].datasetIndex]; // hotfix for error when just inputing color and dragging on chart
+        if(colorName === undefined) colorName = name(palette)[tooltipItem[0].datasetIndex]; // hotfix for error when just inputing color and dragging on chart
 
         return colorName.charAt(0).toUpperCase() + colorName.slice(1) + ' ' + tooltipItem[0].label;
       }
@@ -118,6 +119,7 @@ let options = {
   hover: {
     onHover: function(e) {
       const point = this.getElementAtEvent(e);
+
       if (point.length) e.target.style.cursor = 'grab';
       else e.target.style.cursor = 'default';
       var item = this.getElementAtEvent(e);
@@ -181,48 +183,6 @@ options.title.text = 'Luminosity';
 let luminosityCanva = new Chart('luminosity-canva', {
   type: 'line',
   data: {
-    datasets: [
-      {
-        data: [],
-        fill: false,
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      }
-    ],
     labels: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'],
   },
   options: options
@@ -246,48 +206,6 @@ options.title.text = 'Chroma';
 let chromaCanva = new Chart('chroma-canva', {
   type: 'line',
   data: {
-    datasets: [
-      {
-        data: [],
-        fill: false,
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      }
-    ],
     labels: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
   },
   options: options
@@ -309,48 +227,6 @@ options.title.text = 'Hue';
 let hueCanva = new Chart('hue-canva', {
   type: 'line',
   data: {
-    datasets: [
-      {
-        data: [],
-        fill: false,
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      }
-    ],
     labels: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
   },
   options: options
@@ -398,52 +274,6 @@ options.annotation = {
 let contrastCanva = new Chart('contrast-canva', {
   type: 'line',
   data: {
-    datasets: [
-      {
-        data: [],
-        fill: false,
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      }
-    ],
     labels: ['White-50', '50-100', '100-200', '200-300', '300-400', '400-500', '500-600', '600-700', '700-800', '800-900', '900-Black']
   },
   options: options
@@ -497,48 +327,6 @@ options.annotation = {
 let contrastWhiteCanva = new Chart('contrast-white-canva', {
   type: 'line',
   data: {
-    datasets: [
-      {
-        data: [],
-        fill: false,
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      }
-    ],
     labels: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
   },
   options: options
@@ -562,48 +350,6 @@ options.annotation = {
 let contrastBlackCanva = new Chart('contrast-black-canva', {
   type: 'line',
   data: {
-    datasets: [
-      {
-        data: [],
-        fill: false,
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      },
-      {
-        data: [],
-        fill: false
-      }
-    ],
     labels: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
   },
   options: options
@@ -622,43 +368,8 @@ window.addEventListener('click', function(e){
     // Clicked in box
   } else{
     // Clicked outside the box
-    showAllLines();
+    //showAllLines();
   }
-});
-
-document.querySelectorAll('.color-col').forEach((el, key) => {
-  el.innerHTML = Mustache.render(shadeStub, {color: key});
-
-  el.addEventListener('click', (e) => {
-    showLine(e.target.id.substr(6, 1))
-  })
-
-  el.addEventListener('mouseover', (e) => {
-    let hidden = hiddenDatasets(luminosityCanva.data.datasets);
-    let dataset = parseInt(e.target.id.substr(6, 1));
-    let index = parseInt(e.target.id.substr(7, 1));
-
-    if(dataset && hidden.length === 9 && !hidden.includes(dataset)) {
-      openTooltip(luminosityCanva, dataset, index)
-      openTooltip(chromaCanva, dataset, index)
-      openTooltip(hueCanva, dataset, index)
-      openTooltip(contrastCanva, dataset, index)
-      openTooltip(contrastBlackCanva, dataset, index)
-      openTooltip(contrastWhiteCanva, dataset, index)
-    }
-  });
-
-  el.addEventListener('mouseleave', (e) => {
-    //let hidden = hiddenDatasets(luminosityCanva.data.datasets);
-    //let target = parseInt(e.target.id.substr(6, 1));
-    //if(target && hidden.length === 9 && !hidden.includes(target)) openTooltip(luminosityCanva, e.target.id.substr(6, 1), e.target.id.substr(7, 1))
-    closeTooltip(luminosityCanva);
-    closeTooltip(chromaCanva);
-    closeTooltip(hueCanva);
-    closeTooltip(contrastCanva);
-    closeTooltip(contrastBlackCanva);
-    closeTooltip(contrastWhiteCanva);
-  });
 });
 
 function openTooltip(chart, index, test) {
@@ -692,101 +403,47 @@ function showLine(col) {
   let hidden = hiddenDatasets(luminosityCanva.data.datasets);
 
   if(hidden.length === 0){
-    luminosityCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = true;
-      hideSelectedIndicator(key);
+    palette.forEach((color, key) => {
+      luminosityCanva.data.datasets[key].hidden = true;
+      chromaCanva.data.datasets[key].hidden = true;
+      hueCanva.data.datasets[key].hidden = true;
+      contrastCanva.data.datasets[key].hidden = true;
+      contrastWhiteCanva.data.datasets[key].hidden = true;
+      contrastBlackCanva.data.datasets[key].hidden = true;
 
       if (key === col) {
-        dataset.hidden = !dataset.hidden;
-        toggleSelectedIndicator(key);
+        luminosityCanva.data.datasets[key].hidden = !luminosityCanva.data.datasets[key].hidden;
+        chromaCanva.data.datasets[key].hidden = !chromaCanva.data.datasets[key].hidden;
+        hueCanva.data.datasets[key].hidden = !hueCanva.data.datasets[key].hidden;
+        contrastCanva.data.datasets[key].hidden = !contrastCanva.data.datasets[key].hidden;
+        contrastWhiteCanva.data.datasets[key].hidden = !contrastWhiteCanva.data.datasets[key].hidden;
+        contrastBlackCanva.data.datasets[key].hidden = !contrastBlackCanva.data.datasets[key].hidden;
+      } else {
+        document.getElementById('name' + key).classList.remove('bg-yellow-300');
       }
     });
-  } else if(hidden.length === 9 && !hidden.includes(col)){
-    luminosityCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = false;
-      showSelectedIndicator(key)
-    });
+  } else if(hidden.length + 1 === palette.length && !hidden.includes(col)){
+    palette.forEach((color, key) => {
+      luminosityCanva.data.datasets[key].hidden = false;
+      chromaCanva.data.datasets[key].hidden = false;
+      hueCanva.data.datasets[key].hidden = false;
+      contrastCanva.data.datasets[key].hidden = false;
+      contrastWhiteCanva.data.datasets[key].hidden = false;
+      contrastBlackCanva.data.datasets[key].hidden = false;
+      document.getElementById('name' + key).classList.add('bg-yellow-300');
+    })
+
   } else {
-    luminosityCanva.data.datasets.forEach((dataset, key) => {
+    palette.forEach((color, key) => {
       if (key === col) {
-        dataset.hidden = !dataset.hidden;
-        toggleSelectedIndicator(key);
+        luminosityCanva.data.datasets[key].hidden = !luminosityCanva.data.datasets[key].hidden;
+        chromaCanva.data.datasets[key].hidden = !chromaCanva.data.datasets[key].hidden;
+        hueCanva.data.datasets[key].hidden = !hueCanva.data.datasets[key].hidden;
+        contrastCanva.data.datasets[key].hidden = !contrastCanva.data.datasets[key].hidden;
+        contrastWhiteCanva.data.datasets[key].hidden = !contrastWhiteCanva.data.datasets[key].hidden;
+        contrastBlackCanva.data.datasets[key].hidden = !contrastBlackCanva.data.datasets[key].hidden;
+        document.getElementById('name' + key).classList.toggle('bg-yellow-300');
       }
-    });
-  }
-
-  if(hidden.length === 0){
-    chromaCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = true;
-      if (key === col) dataset.hidden = !dataset.hidden;
-    });
-  } else if(hidden.length === 9 && !hidden.includes(col)){
-    chromaCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = false;
-    });
-  } else {
-    chromaCanva.data.datasets.forEach((dataset, key) => {
-      if (key === col) dataset.hidden = !dataset.hidden;
-    });
-  }
-
-  if(hidden.length === 0){
-    hueCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = true;
-      if (key === col) dataset.hidden = !dataset.hidden;
-    });
-  } else if(hidden.length === 9 && !hidden.includes(col)){
-    hueCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = false;
-    });
-  } else {
-    hueCanva.data.datasets.forEach((dataset, key) => {
-      if (key === col) dataset.hidden = !dataset.hidden;
-    });
-  }
-
-  if(hidden.length === 0){
-    contrastCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = true;
-      if (key === col) dataset.hidden = !dataset.hidden;
-    });
-  } else if(hidden.length === 9 && !hidden.includes(col)){
-    contrastCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = false;
-    });
-  } else {
-    contrastCanva.data.datasets.forEach((dataset, key) => {
-      if (key === col) dataset.hidden = !dataset.hidden;
-    });
-  }
-
-  if(hidden.length === 0){
-    contrastBlackCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = true;
-      if (key === col) dataset.hidden = !dataset.hidden;
-    });
-  } else if(hidden.length === 9 && !hidden.includes(col)){
-    contrastBlackCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = false;
-    });
-  } else {
-    contrastBlackCanva.data.datasets.forEach((dataset, key) => {
-      if (key === col) dataset.hidden = !dataset.hidden;
-    });
-  }
-
-  if(hidden.length === 0){
-    contrastWhiteCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = true;
-      if (key === col) dataset.hidden = !dataset.hidden;
-    });
-  } else if(hidden.length === 9 && !hidden.includes(col)){
-    contrastWhiteCanva.data.datasets.forEach((dataset, key) => {
-      dataset.hidden = false;
-    });
-  } else {
-    contrastWhiteCanva.data.datasets.forEach((dataset, key) => {
-      if (key === col) dataset.hidden = !dataset.hidden;
     });
   }
 
@@ -796,21 +453,6 @@ function showLine(col) {
   contrastCanva.update();
   contrastBlackCanva.update();
   contrastWhiteCanva.update();
-}
-
-function showSelectedIndicator(color)
-{
-  document.getElementById('selected' + color).classList.remove('opacity-0')
-}
-
-function hideSelectedIndicator(color)
-{
-  document.getElementById('selected' + color).classList.add('opacity-0')
-}
-
-function toggleSelectedIndicator(color)
-{
-  document.getElementById('selected' + color).classList.toggle('opacity-0')
 }
 
 function hiddenDatasets(datasets)
@@ -823,10 +465,21 @@ function hiddenDatasets(datasets)
   return hidden;
 }
 
+function selectedFamily(datasets)
+{
+  let selected = [];
+  datasets.forEach((dataset, key) => {
+    if(!dataset.hidden) selected.push(key);
+  });
+
+  if(selected.length === 1) return selected[0];
+
+  return null;
+}
+
 function showAllLines() {
   luminosityCanva.data.datasets.forEach((dataset, key) => {
     dataset.hidden = false;
-    showSelectedIndicator(key)
   });
   chromaCanva.data.datasets.forEach((dataset, key) => {
     dataset.hidden = false;
@@ -856,25 +509,25 @@ let color0 = shadesModel(initColor);
 
 let outputs = calculateColorsHorizontally(initColor, color0);
 
-//outputs = [color0]
+outputs = [color0]
 
-outputs = [];
-let outputShades = [];
-let i = 0;
-
-for (const colors in news) {
-  if(i < 10) {
-    outputShades[i] = {};
-    for(const shade in news[colors]){
-      outputShades[i]['r' + shade/100] = chroma.hex(news[colors][shade]).rgb()[0]/255;
-      outputShades[i]['g' + shade/100] = chroma.hex(news[colors][shade]).rgb()[1]/255;
-      outputShades[i]['b' + shade/100] = chroma.hex(news[colors][shade]).rgb()[2]/255;
-    }
-    i++;
-  }
-}
-
-outputs = outputShades;
+// outputs = [];
+// let outputShades = [];
+// let i = 0;
+//
+// for (const colors in news) {
+//   if(i < 10) {
+//     outputShades[i] = {};
+//     for(const shade in news[colors]){
+//       outputShades[i]['r' + shade/100] = chroma.hex(news[colors][shade]).rgb()[0]/255;
+//       outputShades[i]['g' + shade/100] = chroma.hex(news[colors][shade]).rgb()[1]/255;
+//       outputShades[i]['b' + shade/100] = chroma.hex(news[colors][shade]).rgb()[2]/255;
+//     }
+//     i++;
+//   }
+// }
+//
+// outputs = outputShades;
 
 let brandColor = calculateBrandColor(initColor, outputs);
 
@@ -883,24 +536,39 @@ paint(palette);
 renderTexts();
 toCharts();
 
-pickrButton.on('change', (color, instance) => {
+pickrButton.on('change', (color, source) => {
+  if(stopChange) return;
   color0 = shadesModel(color.toHEXA().toString());
 
-  outputs = calculateColorsHorizontally(color.toHEXA().toString(), color0);
+  //outputs = calculateColorsHorizontally(color.toHEXA().toString(), color0);
   //outputs = [color0];
+
+  let familyShown = selectedFamily(luminosityCanva.data.datasets);
+  let familySelected = document.querySelector('#color-palette .color-row:not(.border-white)').dataset.familyIndex;
+  palette[familySelected] = normalizeFamily(color0)
+  outputs[familySelected] = color0;
+
+  // if(familySelected !== null) {
+  //   palette[familySelected] = normalizeFamily(color0)
+  //   outputs[familySelected] = color0;
+  // } else {
+  //   outputs[outputs.length - 1] = color0;
+  //   palette[palette.length - 1] = normalizeFamily(color0)
+  // }
   brandColor = calculateBrandColor(color.toHEXA().toString(), outputs);
 
-  normalizeToLCH(outputs);
+  //normalizeToLCH(outputs);
   paint(palette);
   //changeFavicon(color.toHEXA().toString())
 
-  if(instance.changeSource === 'input'){
+  if(source.changeSource === 'input'){
     renderTexts();
   }
 
   toCharts();
   paintContext(palette);
   original = [palette[0][6][0], palette[0][6][2]];
+  //console.log(hsluv)
 });
 
 let original = [palette[0][6][0], palette[0][6][2]];
@@ -912,7 +580,7 @@ document.getElementById('shadeSaturation').addEventListener('input', (e) => {
 
   outputs[0] = color0;
   //outputs = calculateColorsHorizontally(color, color0);
-  //brandColor = calculateBrandColor(color, outputs);
+  brandColor = calculateBrandColor(color, outputs);
 
   normalizeToLCH(outputs);
   paint(palette);
@@ -949,6 +617,7 @@ pickrButton.on('changestop', (color, instance) => {
 
 function calculateColorsHorizontally(initColor, color0)
 {
+  return [color0];
   let next = nextModel(initColor);
   let color1 = shadesModel(rgbToHex(next.r1*255, next.g1*255,next.b1*255));
   let color2 = shadesModel(rgbToHex(next.r2*255, next.g2*255,next.b2*255));
@@ -995,7 +664,7 @@ function calculateBrandColor(hex, outputs)
   let index = sortable[0][0].slice(1);
   let colorIndex = sortable[0][0].slice(0, 1);
 
-  brandColor = { index, color: colorIndex, fit: false, similar: [], hex: hex, distance: sortable[0][1]};
+  brandColor = {index, color: colorIndex, fit: false, similar: [], hex: hex, distance: sortable[0][1]};
 
   sortable.forEach((match) => {
     if(match[0].slice(0, 1) === colorIndex) brandColor.similar.push(match)
@@ -1003,45 +672,15 @@ function calculateBrandColor(hex, outputs)
 
   let replace = chroma(hex).rgb();
 
-  if(sortable[0][1] < 9.5){ // 9.5 will fit 79% of the colors
+  //if(palette.length) palette[colorIndex][index] = [chroma(hex).lch()[0], chroma(hex).lch()[1], chroma(hex).lch()[2]]
+
+  if(sortable[0][1] < 100){ // 9.5 will fit 79% of the colors
 
     brandColor.fit = true;
 
-    if(colorIndex === '0'){
-      outputs[0]['r' + index] = replace[0]/255;
-      outputs[0]['g' + index] = replace[1]/255;
-      outputs[0]['b' + index] = replace[2]/255;
-    }
-    if(colorIndex === '1'){
-      outputs[1]['r' + index] = replace[0]/255;
-      outputs[1]['g' + index] = replace[1]/255;
-      outputs[1]['b' + index] = replace[2]/255;
-    }
-    if(colorIndex === '2'){
-      outputs[2]['r' + index] = replace[0]/255;
-      outputs[2]['g' + index] = replace[1]/255;
-      outputs[2]['b' + index] = replace[2]/255;
-    }
-    if(colorIndex === '3'){
-      outputs[3]['r' + index] = replace[0]/255;
-      outputs[3]['g' + index] = replace[1]/255;
-      outputs[3]['b' + index] = replace[2]/255;
-    }
-    if(colorIndex === '7'){
-      outputs[7]['r' + index] = replace[0]/255;
-      outputs[7]['g' + index] = replace[1]/255;
-      outputs[7]['b' + index] = replace[2]/255;
-    }
-    if(colorIndex === '8'){
-      outputs[8]['r' + index] = replace[0]/255;
-      outputs[8]['g' + index] = replace[1]/255;
-      outputs[8]['b' + index] = replace[2]/255;
-    }
-    if(colorIndex === '9'){
-      outputs[9]['r' + index] = replace[0]/255;
-      outputs[9]['g' + index] = replace[1]/255;
-      outputs[9]['b' + index] = replace[2]/255;
-    }
+    outputs[colorIndex]['r' + index] = replace[0]/255;
+    outputs[colorIndex]['g' + index] = replace[1]/255;
+    outputs[colorIndex]['b' + index] = replace[2]/255;
   }
 
   return brandColor;
@@ -1049,9 +688,9 @@ function calculateBrandColor(hex, outputs)
 
 function renderTexts()
 {
-  let names = name(outputs);
+  let names = name(palette);
 
-  displayHex();
+  //displayHex();
 
   if(brandColor.fit){
     document.getElementById('brand').innerHTML = '.bg-' + names[brandColor.color] + '-' + brandColor.index*100;
@@ -1099,47 +738,84 @@ function paint(palette)
     colors.forEach((color, j) => {
       let index = j;
       if(j === 0) index = 0.5;
-      document.getElementById('output' + i + index).style.backgroundColor = chroma.lch(color).hex();
+
+      let colorElement = document.getElementById('output' + i + index);
+
+      if(colorElement) {
+        colorElement.style.backgroundColor = chroma.lch(color).hex();
+      } else {
+        let paletteElement = document.getElementById('color-palette');
+
+        paletteElement.appendChild(createElementFromHTML('<div data-family-index="' + i + '" class="box-border border-2 rounded-md color-row text-sm w-full sm:w-auto flex flex-row items-start" id="shade-parent-' + i  +'"></div>'));
+
+        let shadeElement = document.getElementById('shade-parent-' + i);
+        shadeElement.innerHTML = Mustache.render(shadeStub, {color: i, uuid: Math.floor(Math.random() * 10000000000000000)});
+
+        document.getElementById('name' + i).addEventListener('click', () => {
+          showLine(shadeElement.dataset.familyIndex);
+        });
+
+        shadeElement.querySelector('.family-swatches').addEventListener('click', () => {
+          paletteElement.childNodes.forEach((el, key) => {
+            el.classList.add('border-white');
+            if(key === i) el.classList.remove('border-white')
+          });
+
+          stopChange = true;
+          pickrButton.setColor(chroma.lch(palette[i][5]).hex());
+          stopChange = false;
+        });
+
+        document.getElementById('delete' + i).addEventListener('click', () => {
+          deleteFamilyColor(i);
+        });
+
+        shadeElement.addEventListener('mouseover', (e) => {
+          let hidden = hiddenDatasets(luminosityCanva.data.datasets);
+          let dataset = parseInt(e.target.dataset.colorFamily);
+          let index = parseInt(e.target.dataset.color);
+
+          if(!isNaN(dataset) && hidden.length === luminosityCanva.data.datasets.length - 1 && !hidden.includes(dataset)) {
+            openTooltip(luminosityCanva, dataset, index)
+            openTooltip(chromaCanva, dataset, index)
+            openTooltip(hueCanva, dataset, index)
+            openTooltip(contrastCanva, dataset, index)
+            openTooltip(contrastBlackCanva, dataset, index)
+            openTooltip(contrastWhiteCanva, dataset, index)
+          }
+        });
+
+        document.getElementById('shade' + i).addEventListener('mouseleave', (e) => {
+          //let hidden = hiddenDatasets(luminosityCanva.data.datasets);
+          //let target = parseInt(e.target.id.substr(6, 1));
+          //if(target && hidden.length === 9 && !hidden.includes(target)) openTooltip(luminosityCanva, e.target.id.substr(6, 1), e.target.id.substr(7, 1))
+          closeTooltip(luminosityCanva);
+          closeTooltip(chromaCanva);
+          closeTooltip(hueCanva);
+          closeTooltip(contrastCanva);
+          closeTooltip(contrastBlackCanva);
+          closeTooltip(contrastWhiteCanva);
+        });
+
+        document.getElementById('output' + i + index).style.backgroundColor = chroma.lch(color).hex();
+      }
     });
   });
-
-
-  // document.getElementById('title10').style.color = 'rgb(' + outputs[0].r7*255 + ',' + outputs[0].g7*255 + ',' + outputs[0].b7*255 + ')';
-  // document.getElementById('title9').style.color = 'rgb(' + outputs[0].r8*255 + ',' + outputs[0].g8*255 + ',' + outputs[0].b8*255 + ')';
-  // document.getElementById('title8').style.color = 'rgb(' + outputs[0].r9*255 + ',' + outputs[0].g9*255 + ',' + outputs[0].b9*255 + ')';
-  // document.getElementById('title7').style.color = 'rgb(' + outputs[0].r2*255 + ',' + outputs[0].g2*255 + ',' + outputs[0].b2*255 + ')';
-  // document.getElementById('title6').style.color = 'rgb(' + outputs[0].r3*255 + ',' + outputs[0].g3*255 + ',' + outputs[0].b3*255 + ')';
-  // document.getElementById('title5').style.color = 'rgb(' + outputs[0].r4*255 + ',' + outputs[0].g4*255 + ',' + outputs[0].b4*255 + ')';
-  // document.getElementById('title4').style.color = 'rgb(' + outputs[0].r5*255 + ',' + outputs[0].g5*255 + ',' + outputs[0].b5*255 + ')';
-  // document.getElementById('title3').style.color = 'rgb(' + outputs[0].r6*255 + ',' + outputs[0].g6*255 + ',' + outputs[0].b6*255 + ')';
-  // document.getElementById('title2').style.color = 'rgb(' + outputs[0].r7*255 + ',' + outputs[0].g7*255 + ',' + outputs[0].b7*255 + ')';
-  // document.getElementById('title1').style.color = 'rgb(' + outputs[0].r8*255 + ',' + outputs[0].g8*255 + ',' + outputs[0].b8*255 + ')';
-  // document.getElementById('title0').style.color = 'rgb(' + outputs[0].r9*255 + ',' + outputs[0].g9*255 + ',' + outputs[0].b9*255 + ')';
-
 }
 
-function displayHex()
-{
-  palette.forEach((color, i) => {
-    document.getElementById('hex' + i + '0.5').innerHTML = chroma(color[0][0], color[0][1], color[0][2]);
-    document.getElementById('hex' + i + '1').innerHTML =   chroma(color[1][0], color[1][1], color[1][2]);
-    document.getElementById('hex' + i + '2').innerHTML =   chroma(color[2][0], color[2][1], color[2][2]);
-    document.getElementById('hex' + i + '3').innerHTML =   chroma(color[3][0], color[3][1], color[3][2]);
-    document.getElementById('hex' + i + '4').innerHTML =   chroma(color[4][0], color[4][1], color[4][2]);
-    document.getElementById('hex' + i + '5').innerHTML =   chroma(color[5][0], color[5][1], color[5][2]);
-    document.getElementById('hex' + i + '6').innerHTML =   chroma(color[6][0], color[6][1], color[6][2]);
-    document.getElementById('hex' + i + '7').innerHTML =   chroma(color[7][0], color[7][1], color[7][2]);
-    document.getElementById('hex' + i + '8').innerHTML =   chroma(color[8][0], color[8][1], color[8][2]);
-    document.getElementById('hex' + i + '9').innerHTML =   chroma(color[9][0], color[9][1], color[9][2]);
-  });
+function createElementFromHTML(htmlString) {
+  let div = document.createElement('div');
+  div.innerHTML = htmlString.trim();
+
+  return div.firstChild;
 }
 
-function name(outputs)
+function name(palette)
 {
   let names = [];
 
-  outputs.forEach((output, i) => {
-    let namings = namer(rgbToHex(output.r5*255, output.g5*255, output.b5*255), { pick: ['basic']}).basic;
+  palette.forEach((color, i) => {
+    let namings = namer(chroma.lch(color[5]).hex(), { pick: ['basic']}).basic;
     let name = namings[0].name;
 
     if(names.includes(name)) name = namings[1].name;
@@ -1218,10 +894,6 @@ function calculateBrandColorFit () {
   console.log(counts)
 }
 
-window.addEventListener('load', (event) => {
-  //document.querySelector('.app-ui').style.display = 'flex';
-});
-
 function normalizeToLCH(inputs){
   palette = [];
 
@@ -1243,6 +915,22 @@ function normalizeToLCH(inputs){
   return palette;
 }
 
+function normalizeFamily(color)
+{
+  return [
+    chroma(color['r0.5']*255, color['g0.5']*255, color['b0.5']*255).lch(),
+    chroma(color.r1*255, color.g1*255, color.b1*255).lch(),
+    chroma(color.r2*255, color.g2*255, color.b2*255).lch(),
+    chroma(color.r3*255, color.g3*255, color.b3*255).lch(),
+    chroma(color.r4*255, color.g4*255, color.b4*255).lch(),
+    chroma(color.r5*255, color.g5*255, color.b5*255).lch(),
+    chroma(color.r6*255, color.g6*255, color.b6*255).lch(),
+    chroma(color.r7*255, color.g7*255, color.b7*255).lch(),
+    chroma(color.r8*255, color.g8*255, color.b8*255).lch(),
+    chroma(color.r9*255, color.g9*255, color.b9*255).lch(),
+  ]
+}
+
 function toCharts()
 {
   let luminosities = [];
@@ -1260,19 +948,11 @@ function toCharts()
     contrastsBlack[key] = [];
     contrastsWhite[key] = [];
 
-    color.forEach((shade) => {
-      luminosities[key].push(shade[0])
-    });
-
-    color.forEach((shade) => {
-      chromas[key].push(shade[1])
-    });
-
-    color.forEach((shade) => {
-      hues[key].push(shade[2])
-    });
-
     color.forEach((shade, shadeKey) => {
+      luminosities[key].push(shade[0]);
+      chromas[key].push(shade[1]);
+      hues[key].push(shade[2]);
+
       if(shadeKey > 0 && shadeKey <= 9) {
         contrasts[key].push(chroma.contrast(chroma.lch(color[shadeKey - 1]), chroma.lch(shade).hex()));
       } else if(shadeKey === 0){
@@ -1281,13 +961,8 @@ function toCharts()
       if(shadeKey === 9){
         contrasts[key].push(chroma.contrast('#000000', chroma.lch(color[shadeKey]).hex()));
       }
-    });
-
-    color.forEach((shade, shadeKey) => {
-      contrastsWhite[key].push(chroma.contrast('#ffffff', chroma.lch(color[shadeKey]).hex()))
-    });
-    color.forEach((shade, shadeKey) => {
-      contrastsBlack[key].push(chroma.contrast('#000000', chroma.lch(color[shadeKey]).hex()))
+      contrastsWhite[key].push(chroma.contrast('#ffffff', chroma.lch(color[shadeKey]).hex()));
+      contrastsBlack[key].push(chroma.contrast('#000000', chroma.lch(color[shadeKey]).hex()));
     });
   });
 
@@ -1297,7 +972,6 @@ function toCharts()
   updateChart(contrastCanva, contrasts);
   updateChart(contrastWhiteCanva, contrastsWhite);
   updateChart(contrastBlackCanva, contrastsBlack);
-
 }
 
 function createGradient(colorIndex)
@@ -1340,18 +1014,21 @@ function setGradients(chart)
 function updateChart(chart, values)
 {
   let colors = [];
-
   palette.forEach((shades, index) => {
     colors.push(shades.map((color) => { return chroma.lch(color[0],color[1],color[2]).hex()}));
     colors[index].push('#000000');
-    chart.data.datasets[index].borderColor = createGradient(index);
-  });
 
-  chart.data.datasets.forEach((data, index) => {
-    chart.data.datasets[index].data = values[index];
-    chart.data.datasets[index].pointBackgroundColor = colors[index];
+    let hidden = false;
+    if(chart.data.datasets[index]) hidden = chart.data.datasets[index].hidden;
 
-    chart.data.datasets[index].pointBorderColor = colors[index];
+    chart.data.datasets[index] = {
+      data: values[index],
+      fill: false,
+      pointBackgroundColor: colors[index],
+      pointBorderColor: colors[index],
+      borderColor: createGradient(index),
+      hidden: hidden
+    }
   });
 
   chart.update();
@@ -1626,6 +1303,79 @@ function paintContext(palette)
   document.querySelector('.black-theme .contrast-400').innerHTML   = chroma.contrast('black', chroma.lch(palette[0][4])).toFixed(2);
 }
 
+document.getElementById('add-color').addEventListener('click', () => {
+  let next = nextModel(chroma.lch(palette[palette.length - 1][5]).hex());
+  let color1 = shadesModel(rgbToHex(next.r1*255, next.g1*255,next.b1*255));
+
+  palette.push(normalizeFamily(color1));
+
+  //normalizeToLCH(outputs);
+
+  document.getElementById('color-palette').childNodes.forEach((el, key) => {
+    el.classList.add('border-white');
+  });
+
+  paint(palette);
+  renderTexts();
+  toCharts();
+  pickrButton.setColor(rgbToHex(next.r1*255, next.g1*255,next.b1*255));
+});
+
+function deleteFamilyColor(index)
+{
+  let familySelected = parseInt(document.querySelector('#color-palette .color-row:not(.border-white) .family-swatches').dataset.index);
+
+  palette.splice(index, 1);
+  document.getElementById('color-palette').innerHTML = '';
+
+  paint(palette);
+  renderTexts();
+
+  // Show all curves if a unique selected color is deleted
+  let hidden = hiddenDatasets(luminosityCanva.data.datasets);
+  if(!hidden.includes(index) && hidden.length - palette.length === 0) showAllLines();
+
+  // Remove curves from plots
+  luminosityCanva.data.datasets.splice(index, 1);
+  chromaCanva.data.datasets.splice(index, 1);
+  hueCanva.data.datasets.splice(index, 1);
+  contrastBlackCanva.data.datasets.splice(index, 1);
+  contrastWhiteCanva.data.datasets.splice(index, 1);
+  contrastCanva.data.datasets.splice(index, 1);
+
+  luminosityCanva.update();
+  chromaCanva.update();
+  hueCanva.update();
+  contrastWhiteCanva.update();
+  contrastBlackCanva.update();
+  contrastCanva.update();
+
+  // In case a muted color is deleted and the new palette needs to have same status as before deletion
+  luminosityCanva.data.datasets.forEach((colorFamily, key) => {
+    if(colorFamily.hidden) document.getElementById('name' + key).classList.remove('bg-yellow-300')
+  });
+
+  document.getElementById('color-palette').childNodes.forEach((el, key) => {
+    el.classList.add('border-white');
+  });
+
+  // Keep selection on family after other deletion
+  let newSelected = 0;
+  if(index < familySelected) {
+    newSelected = familySelected - 1;
+    document.getElementById('shade-parent-' + newSelected).classList.remove('border-white');
+  } else if(index > familySelected) {
+    newSelected = familySelected;
+    document.getElementById('shade-parent-' + newSelected).classList.remove('border-white');
+  } else {
+    newSelected = palette.length - 1;
+    document.getElementById('shade-parent-' + newSelected).classList.remove('border-white');
+    stopChange = true;
+    pickrButton.setColor(chroma.lch(palette[newSelected][5]).hex());
+    stopChange = false;
+  }
+}
+
 document.getElementById('context-btn').addEventListener('click', (e) => {
   paintContext(palette);
 
@@ -1646,6 +1396,167 @@ document.getElementById('context-btn').addEventListener('click', (e) => {
   e.target.classList.add('cursor-default');
 
   contextPage.classList.remove('hidden')
+});
+
+function deselectShadesInChart()
+{
+  let xAxes = [{ticks: {min: '50', max: '900'}}];
+
+  luminosityCanva.options.scales = {
+    yAxes: [{
+      ticks: {
+        max: 100,
+        min: 0
+      }
+    }],
+    xAxes: xAxes,
+  };
+
+  chromaCanva.options.scales = {
+    yAxes: [{
+      ticks: {
+        max: 110,
+        min: 0,
+        stepSize: 10
+      }
+    }],
+    xAxes: xAxes,
+
+  };
+
+  hueCanva.options.scales = {
+    yAxes: [{
+      ticks: {
+        max: 360,
+        min: 0,
+        stepSize: 40
+      }
+    }],
+    xAxes: xAxes,
+  };
+
+  luminosityCanva.update();
+  chromaCanva.update();
+  hueCanva.update();
+}
+
+let shadeBtns = document.querySelectorAll('.shade-btn');
+
+shadeBtns.forEach((shadeBtn) => {
+  shadeBtn.addEventListener('click', () => {
+
+    if(shadeBtn.classList.contains('bg-blue-300')) {
+      deselectShadesInChart();
+      shadeBtn.classList.remove('bg-blue-300')
+      return;
+    }
+
+    shadeBtns.forEach((btn) => {
+      btn.classList.remove('bg-blue-300');
+    });
+    shadeBtn.classList.add('bg-blue-300');
+
+    let index = parseInt(shadeBtn.dataset.value);
+    let values = {
+      luminosity: [],
+      chroma: [],
+      hue: []
+    };
+
+    palette.forEach((family) => {
+      values.luminosity.push(family[index][0]);
+      values.chroma.push(family[index][1]);
+      values.hue.push(family[index][2]);
+      if(index < 9) {
+        values.luminosity.push(family[index + 1][0]);
+        values.chroma.push(family[index + 1][1]);
+        values.hue.push(family[index + 1][2]);
+      }
+      if(index > 1) {
+        values.luminosity.push(family[index - 1][0]);
+        values.chroma.push(family[index - 1][1]);
+        values.hue.push(family[index - 1][2]);
+      }
+    });
+
+    let yMax = {
+      luminosity: Math.max(...values.luminosity),
+      chroma: Math.max(...values.chroma),
+      hue: Math.max(...values.hue),
+    };
+    let yMin = {
+      luminosity: Math.min(...values.luminosity),
+      chroma: Math.min(...values.chroma),
+      hue: Math.min(...values.hue),
+    };
+
+    let xMax = index + 1;
+    let xMin = index - 1;
+
+    let top = {
+      luminosity: Math.ceil(yMax.luminosity/5)*5,
+      chroma: Math.ceil(yMax.chroma/5)*5,
+      hue: Math.ceil(yMax.hue/50)*50,
+    };
+    let bottom = {
+      luminosity: Math.trunc(yMin.luminosity/5)*5,
+      chroma: Math.trunc(yMin.chroma/5)*5,
+      hue: Math.trunc(yMin.hue/50)*50,
+    };
+
+    if(top.luminosity > 100) top.luminosity = 100;
+    if(top.hue > 350) top.hue = 360;
+
+    luminosityCanva.options.scales = {
+      yAxes: [{
+        ticks: {
+          max: top.luminosity,
+          min: bottom.luminosity
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          min: xMin + '00',
+          max: xMax + '00'
+        }
+      }],
+    };
+
+    chromaCanva.options.scales = {
+      yAxes: [{
+        ticks: {
+          max: top.chroma,
+          min: bottom.chroma
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          min: xMin + '00',
+          max: xMax + '00'
+        }
+      }],
+    };
+
+    hueCanva.options.scales = {
+      yAxes: [{
+        ticks: {
+          max: top.hue,
+          min: bottom.hue,
+          stepSize: 40
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          min: xMin + '00',
+          max: xMax + '00',
+        }
+      }],
+    };
+
+    luminosityCanva.update();
+    chromaCanva.update();
+    hueCanva.update();
+  });
 });
 
 // Copy Button

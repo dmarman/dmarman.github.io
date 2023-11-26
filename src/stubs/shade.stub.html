@@ -1,82 +1,94 @@
-<h2 class="capitalize font-semibold text-xs hidden sm:block sm:hidde w-20 text-right pr-4" id="name{{color}}"></h2>
-
-<div class="pr-1 pt-1">
-    <div id="output{{color}}0.5" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
+<div class="mx-2">
+    <button class="capitalize font-semibold text-xs hidden sm:block sm:hidde w-16 text-r bg-gray-300 bg-yellow-300 rounded hover:shadow-sm border border-gray-50 mt-1 select-none" id="name{{color}}"></button>
+    <button class="border rounded bg-gray-200 mt-2 px-1" id="delete{{color}}">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <line x1="4" y1="7" x2="20" y2="7" />
+            <line x1="10" y1="11" x2="10" y2="17" />
+            <line x1="14" y1="11" x2="14" y2="17" />
+            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+        </svg>
+    </button>
+</div>
+<div id="shade{{color}}" class="flex items-center family-swatches" data-index="{{color}}">
+<div class="pr-1 py-">
+    <div id="output{{color}}0.5" data-color-family="{{color}}" data-color="0" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
     </div>
     <div class="text-gray-800 leading-none flex justify-between">
         <div id="hex{{color}}0.5" class="opacity-75 uppercase text-xs font-mono hidden sm:block sm:hidden"></div>
     </div>
 </div>
 
-<div class="pr-1 pt-1">
-    <div id="output{{color}}1" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
+<div class="pr-1 py-1">
+    <div id="output{{color}}1" data-color-family="{{color}}" data-color="1" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
     </div>
     <div class="text-gray-800 leading-none flex justify-between">
         <div id="hex{{color}}1" class="opacity-75 uppercase text-xs font-mono hidden sm:block sm:hidden"></div>
     </div>
 </div>
 
-<div class="pr-1 pt-1">
-    <div id="output{{color}}2" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
+<div class="pr-1 py-1">
+    <div id="output{{color}}2" data-color-family="{{color}}" data-color="2" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
     </div>
     <div class="text-gray-800 leading-none flex justify-between">
         <div id="hex{{color}}2" class="opacity-75 uppercase text-xs font-mono hidden sm:block sm:hidden"></div>
     </div>
 </div>
 
-<div class="pr-1 pt-1">
-    <div id="output{{color}}3" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
+<div class="pr-1 py-1">
+    <div id="output{{color}}3" data-color-family="{{color}}" data-color="3" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
     </div>
     <div class="text-gray-800 leading-none flex justify-between">
         <div id="hex{{color}}3" class="opacity-75 uppercase text-xs font-mono hidden sm:block sm:hidden"></div>
     </div>
 </div>
 
-<div class="pr-1 pt-1">
-    <div id="output{{color}}4" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
+<div class="pr-1 py-1">
+    <div id="output{{color}}4" data-color-family="{{color}}" data-color="4" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
     </div>
     <div class="text-gray-800 leading-none flex justify-between">
         <div id="hex{{color}}4" class="opacity-75 uppercase text-xs font-mono hidden sm:block sm:hidden"></div>
     </div>
 </div>
 
-<div class="pr-1 pt-1">
-    <div id="output{{color}}5" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
+<div class="pr-1 py-1">
+    <div id="output{{color}}5" data-color-family="{{color}}" data-color="5" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
     </div>
     <div class="text-gray-800 leading-none flex justify-between">
         <div id="hex{{color}}5" class="opacity-75 uppercase text-xs font-mono hidden sm:block sm:hidden"></div>
     </div>
 </div>
 
-<div class="pr-1 pt-1">
-    <div id="output{{color}}6" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
+<div class="pr-1 py-1">
+    <div id="output{{color}}6" data-color-family="{{color}}" data-color="6" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
     </div>
     <div class="text-gray-800 leading-none flex justify-between">
         <div id="hex{{color}}6" class="opacity-75 uppercase text-xs font-mono hidden sm:block sm:hidden"></div>
     </div>
 </div>
 
-<div class="pr-1 pt-1">
-    <div id="output{{color}}7" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
+<div class="pr-1 py-1">
+    <div id="output{{color}}7" data-color-family="{{color}}" data-color="7" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
     </div>
     <div class="text-gray-800 leading-none flex justify-between">
         <div id="hex{{color}}7" class="opacity-75 uppercase text-xs font-mono hidden sm:block sm:hidden"></div>
     </div>
 </div>
 
-<div class="pr-1 pt-1">
-    <div id="output{{color}}8" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
+<div class="pr-1 py-1">
+    <div id="output{{color}}8" data-color-family="{{color}}" data-color="8" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
     </div>
     <div class="text-gray-800 leading-none flex justify-between">
         <div id="hex{{color}}8" class="opacity-75 uppercase text-xs font-mono hidden sm:block sm:hidden"></div>
     </div>
 </div>
 
-<div class="pr-1 pt-1">
-    <div id="output{{color}}9" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
+<div class="pr-1 py-1">
+    <div id="output{{color}}9" data-color-family="{{color}}" data-color="9" class="h-6 xs:h-12 sm:w-12 rounded border-2 border-transparent">
     </div>
     <div class="text-gray-800 leading-none flex justify-between">
         <div id="hex{{color}}9" class="opacity-75 uppercase text-xs font-mono hidden sm:block sm:hidden"></div>
     </div>
 </div>
-<div class="h-1 w-1 bg-gray-700 rounded-full" id="selected{{color}}"></div>
+</div>

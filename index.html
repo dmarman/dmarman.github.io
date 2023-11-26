@@ -80,29 +80,22 @@
                 <input type="range" min="1" max="200" value="50" class="slider" id="shadeSaturation">
             </div>
             <button id="straightHueBtn" class="hidden">Straight Hue</button>
-            <div class="flex pl-20 text-xs text-gray-800 mb-1 mt-3 ml-2">
-                <div class="w-12 mr-1">50</div>
-                <div class="w-12 mr-1">100</div>
-                <div class="w-12 mr-1">200</div>
-                <div class="w-12 mr-1">300</div>
-                <div class="w-12 mr-1">400</div>
-                <div class="w-12 mr-1">500</div>
-                <div class="w-12 mr-1">600</div>
-                <div class="w-12 mr-1">700</div>
-                <div class="w-12 mr-1">800</div>
-                <div class="w-12 mr-1">900</div>
+            <div class="flex ml-5 text-xs text-gray-800 mb-1 mt-3">
+                <button class="opacity-0 all-shade-btn w-16 mr-1 bg-gray-200 rounded hover:shadow-sm hover:bg-gray-300 duration-150 transition">All</button>
+                <button class="shade-btn w-12 mr-1 bg-gray-300 rounded hover:shadow-sm select-none" data-value="0">50</button>
+                <button class="shade-btn w-12 mr-1 bg-gray-300 rounded hover:shadow-sm select-none" data-value="1">100</button>
+                <button class="shade-btn w-12 mr-1 bg-gray-300 rounded hover:shadow-sm select-none" data-value="2">200</button>
+                <button class="shade-btn w-12 mr-1 bg-gray-300 rounded hover:shadow-sm select-none" data-value="3">300</button>
+                <button class="shade-btn w-12 mr-1 bg-gray-300 rounded hover:shadow-sm select-none" data-value="4">400</button>
+                <button class="shade-btn w-12 mr-1 bg-gray-300 rounded hover:shadow-sm select-none" data-value="5">500</button>
+                <button class="shade-btn w-12 mr-1 bg-gray-300 rounded hover:shadow-sm select-none" data-value="6">600</button>
+                <button class="shade-btn w-12 mr-1 bg-gray-300 rounded hover:shadow-sm select-none" data-value="7">700</button>
+                <button class="shade-btn w-12 mr-1 bg-gray-300 rounded hover:shadow-sm select-none" data-value="8">800</button>
+                <button class="shade-btn w-12 mr-1 bg-gray-300 rounded hover:shadow-sm select-none" data-value="9">900</button>
             </div>
-            <div class="flex pr-4 palette-grid flex-col ml-2">
-                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade0"></div>
-                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade1"></div>
-                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade2"></div>
-                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade3"></div>
-                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade4"></div>
-                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade5"></div>
-                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade6"></div>
-                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade7"></div>
-                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade8"></div>
-                <div class="color-col text-sm w-full sm:w-auto flex flex-row items-center" id="shade9"></div>
+            <div class="flex pr-4 palette-grid flex-col ml-2" id="color-palette"></div>
+            <div class="flex justify-end mx-6 mt-4">
+                <button class="text-sm border rounded px-2 py- font-medium border-gray-500 text-gray-600 shadow hover:shadow-md transition-shadow duration-150" id="add-color">+Add color</button>
             </div>
             <div class="mt-4 ml-20 pr-4 mr-2 pl-2">
                 <div class="pickr"></div>
@@ -450,7 +443,7 @@
             </div>
         </div>
     </div>
-    <div class="opacity-0"></div>
+    <div class="opacity-0 border-white"></div>
     <style>
         .picker {
             position: inherit;
